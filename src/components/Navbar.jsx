@@ -46,7 +46,7 @@ export function Navbar() {
       </div>
 
       {/* Right Section */}
-      <div className="flex items-center space-x-4">
+      <div className="flex items-center space-x-4 ml-auto">
         <div className="flex items-center gap-2">
           <Link href="/">
             <Button 
@@ -78,44 +78,6 @@ export function Navbar() {
               Teams
             </Button>
           </Link>
-        </div>
-        <Select onValueChange={(value) => {
-          const team = teams.find(t => t.name === value);
-          if (team) selectTeam(team, 'team1');
-        }}>
-          <SelectTrigger className="w-[180px] bg-blue-800 text-white border-blue-700">
-            <SelectValue placeholder="Select Team 1" />
-          </SelectTrigger>
-          <SelectContent>
-            {teams.map((team) => (
-              <SelectItem key={team.name} value={team.name}>
-                {team.name}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-        <Select onValueChange={(value) => {
-          const team = teams.find(t => t.name === value);
-          if (team) selectTeam(team, 'team2');
-        }}>
-          <SelectTrigger className="w-[180px] bg-blue-800 text-white border-blue-700">
-            <SelectValue placeholder="Select Team 2" />
-          </SelectTrigger>
-          <SelectContent>
-            {teams.map((team) => (
-              <SelectItem key={team.name} value={team.name}>
-                {team.name}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-        <div className="relative">
-          <Input
-            type="search"
-            placeholder="Search teams..."
-            className="w-[200px] bg-blue-800 text-white placeholder:text-gray-300 border-blue-700"
-          />
-          <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-300" />
         </div>
       </div>
     </nav>
