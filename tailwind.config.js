@@ -6,9 +6,13 @@ module.exports = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {
-      colors: {
-        gray: {
+    colors: {
+      inherit: 'inherit',
+      current: 'currentColor',
+      transparent: 'transparent',
+      black: '#000000',
+      white: '#ffffff',
+      gray: {
           50: '#F9FAFB',
           100: '#F3F4F6',
           200: '#E5E7EB',
@@ -38,6 +42,7 @@ module.exports = {
           700: '#1976D2',
         }
       },
+    extend: {
       fontFamily: {
         sans: [
           'system-ui',
