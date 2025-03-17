@@ -10,11 +10,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import Image from "next/image";
-import { Search, Home } from "lucide-react";
+import Link from "next/link";
+import { Search, Home, LineChart, Users } from "lucide-react";
+import { usePathname } from "next/navigation";
 import { useTeams } from "@/app/context/TeamContext";
 
 export function Navbar() {
   const { teams, selectTeam } = useTeams();
+  const pathname = usePathname();
   return (
     <nav className="bg-blue-900 px-4 py-2 flex items-center justify-between shadow-lg">
       {/* AFL Logo */}
@@ -44,10 +47,38 @@ export function Navbar() {
 
       {/* Right Section */}
       <div className="flex items-center space-x-4">
-        <Button variant="destructive" size="sm" className="flex items-center gap-2">
-          <Home className="h-4 w-4" />
-          Home
-        </Button>
+        <div className="flex items-center gap-2">
+          <Link href="/">
+            <Button 
+              variant={pathname === "/" ? "default" : "destructive"} 
+              size="sm" 
+              className="flex items-center gap-2"
+            >
+              <Home className="h-4 w-4" />
+              Home
+            </Button>
+          </Link>
+          <Link href="/prediction">
+            <Button 
+              variant={pathname === "/prediction" ? "default" : "destructive"} 
+              size="sm" 
+              className="flex items-center gap-2"
+            >
+              <LineChart className="h-4 w-4" />
+              Prediction
+            </Button>
+          </Link>
+          <Link href="/teams">
+            <Button 
+              variant={pathname === "/teams" ? "default" : "destructive"} 
+              size="sm" 
+              className="flex items-center gap-2"
+            >
+              <Users className="h-4 w-4" />
+              Teams
+            </Button>
+          </Link>
+        </div>
         <Select onValueChange={(value) => {
           const team = teams.find(t => t.name === value);
           if (team) selectTeam(team, 'team1');
