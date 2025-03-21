@@ -1,7 +1,7 @@
 "use client";
 
 import { Navbar } from "@/components/Navbar";
-import { MatchPrediction } from "@/components/MatchPrediction";
+import { TeamComparison } from "@/components/TeamComparison";
 
 export default function PredictionPage() {
   return (
@@ -9,7 +9,7 @@ export default function PredictionPage() {
       <Navbar />
       <div className="container mx-auto px-4 py-6">
         <div className="max-w-4xl mx-auto">
-          <MatchPrediction />
+          <TeamComparison />
         </div>
       </div>
     </main>
