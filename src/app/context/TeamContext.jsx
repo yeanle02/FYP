@@ -38,12 +38,24 @@ export function TeamProvider({ children }) {
     });
   };
 
+  const resetPrediction = () => {
+    setSelectedTeams({
+      team1: null,
+      team2: null
+    });
+    setPrediction({
+      team1Score: null,
+      team2Score: null
+    });
+  };
+
   return (
     <TeamContext.Provider value={{
       teams,
       selectedTeams,
       prediction,
-      selectTeam
+      selectTeam,
+      resetPrediction
     }}>
       {children}
     </TeamContext.Provider>

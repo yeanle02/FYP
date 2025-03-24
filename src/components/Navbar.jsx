@@ -19,18 +19,34 @@ export function Navbar() {
   const { teams, selectTeam } = useTeams();
   const pathname = usePathname();
   return (
-    <nav className="bg-blue-900 px-4 py-2 flex items-center justify-between shadow-lg">
+    <nav className="bg-blue-950 px-4 py-2 flex items-center justify-between shadow-lg">
       {/* AFL Logo */}
       <div className="flex-shrink-0">
-        <Image src="/next.svg" alt="AFL Logo" width={80} height={40} className="h-10 w-auto" />
+        <Image src="/afl_logo.png" alt="AFL Logo" width={90} height={90} className="h-12 w-30" />
       </div>
 
-      {/* Scrollable Team Logos */}
-      <div className="flex-1 mx-4 overflow-x-auto scrollbar-hide">
-        <div className="flex space-x-4 px-2">
+      {/* Infinite Sliding Team Logos */}
+      <div className="flex-1 mx-4 overflow-hidden">
+        <div className="animate-infinite-scroll flex space-x-4 px-2">
+          {/* Original set of logos */}
           {teams.map((team) => (
             <div
               key={team.name}
+              className="flex-shrink-0 cursor-pointer hover:opacity-80 transition-opacity"
+            >
+              <Image
+                src={team.logo}
+                alt={`${team.name} logo`}
+                width={40}
+                height={40}
+                className="h-8 w-8"
+              />
+            </div>
+          ))}
+          {/* Duplicated set of logos for seamless scrolling */}
+          {teams.map((team) => (
+            <div
+              key={`${team.name}-duplicate`}
               className="flex-shrink-0 cursor-pointer hover:opacity-80 transition-opacity"
             >
               <Image
@@ -50,7 +66,7 @@ export function Navbar() {
         <div className="flex items-center gap-2">
           <Link href="/">
             <Button 
-              variant={pathname === "/" ? "default" : "destructive"} 
+              variant={pathname === "/" ? "default" : "secondary"} 
               size="sm" 
               className="flex items-center gap-2"
             >
@@ -60,7 +76,7 @@ export function Navbar() {
           </Link>
           <Link href="/prediction">
             <Button 
-              variant={pathname === "/prediction" ? "default" : "destructive"} 
+              variant={pathname === "/prediction" ? "default" : "secondary"} 
               size="sm" 
               className="flex items-center gap-2"
             >
@@ -70,7 +86,7 @@ export function Navbar() {
           </Link>
           <Link href="/teams">
             <Button 
-              variant={pathname === "/teams" ? "default" : "destructive"} 
+              variant={pathname === "/teams" ? "default" : "secondary"} 
               size="sm" 
               className="flex items-center gap-2"
             >
