@@ -1,7 +1,7 @@
 export const teams = [
   {
     name: "Collingwood",
-    logo: "/globe.svg",
+    logo: "/teams/Collingwood.png",
     stats: {
       wins: 4,
       losses: 1,
@@ -12,7 +12,7 @@ export const teams = [
   },
   {
     name: "Carlton",
-    logo: "/globe.svg",
+    logo: "/teams/Carlton.svg",
     stats: {
       wins: 4,
       losses: 1,
@@ -23,7 +23,7 @@ export const teams = [
   },
   {
     name: "Melbourne",
-    logo: "/globe.svg",
+    logo: "/teams/Melbournefc.png",
     stats: {
       wins: 4,
       losses: 1,
@@ -34,7 +34,7 @@ export const teams = [
   },
   {
     name: "Brisbane Lions",
-    logo: "/globe.svg",
+    logo: "/teams/Brisbane_Lions.png",
     stats: {
       wins: 3,
       losses: 2,
@@ -45,7 +45,7 @@ export const teams = [
   },
   {
     name: "Sydney",
-    logo: "/globe.svg",
+    logo: "/teams/Sydney_Swans.png",
     stats: {
       wins: 3,
       losses: 2,
@@ -56,7 +56,7 @@ export const teams = [
   },
   {
     name: "Western Bulldogs",
-    logo: "/globe.svg",
+    logo: "/teams/Western_Bulldogs.png",
     stats: {
       wins: 3,
       losses: 2,

@@ -2,6 +2,92 @@
 @tailwind components;
 @tailwind utilities;
 
+@keyframes flyToTeam1 {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  40% {
+    transform: translate(-150px, -300px) scale(1.5);
+    opacity: 1;
+  }
+  90% {
+    transform: translate(-250px, -450px) scale(2);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translate(-250px, -450px) scale(2);
+    opacity: 0;
+  }
+}
+
+@keyframes flyToTeam2 {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  40% {
+    transform: translate(150px, -300px) scale(1.5);
+    opacity: 1;
+  }
+  90% {
+    transform: translate(250px, -450px) scale(2);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translate(250px, -450px) scale(2);
+    opacity: 0;
+  }
+}
+
+@keyframes fadeInTeam {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@layer utilities {
+  /* Custom Scrollbar */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: #1e40af;
+    border-radius: 3px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: #60a5fa;
+    border-radius: 3px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background: #93c5fd;
+  }
+
+  .animate-fly-to-team1 {
+    animation: flyToTeam1 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  }
+
+  .animate-fly-to-team2 {
+    animation: flyToTeam2 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  }
+
+  .animate-fade-in-team {
+    animation: fadeInTeam 0.3s ease-out forwards;
+  }
+}
+
 @layer base {
   * {
     @apply border-border;

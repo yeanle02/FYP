@@ -17,36 +17,25 @@ export function TeamProvider({ children }) {
   });
 
   const selectTeam = (team, position) => {
-    setSelectedTeams(prev => ({
-      ...prev,
-      [position]: team
-    }));
-
-    // Mock prediction logic based on team stats
-    if (position === 'team2' && selectedTeams.team1) {
-      const team1 = selectedTeams.team1;
-      const team2 = team;
+    setSelectedTeams(prev => {
+      const newTeams = {
+        ...prev,
+        [position]: team
+      };
       
-      // Simple prediction based on win percentage and team percentage
-      const team1Rating = (team1.stats.percentage * (team1.stats.wins / (team1.stats.wins + team1.stats.losses)));
-      const team2Rating = (team2.stats.percentage * (team2.stats.wins / (team2.stats.wins + team2.stats.losses)));
+      // If both teams are selected, update prediction
+      if (newTeams.team1 && newTeams.team2) {
+        const team1Rating = (newTeams.team1.stats.percentage * (newTeams.team1.stats.wins / (newTeams.team1.stats.wins + newTeams.team1.stats.losses)));
+        const team2Rating = (newTeams.team2.stats.percentage * (newTeams.team2.stats.wins / (newTeams.team2.stats.wins + newTeams.team2.stats.losses)));
+        
+        setPrediction({
+          team1Score: Math.round(70 + (team1Rating / 10)),
+          team2Score: Math.round(70 + (team2Rating / 10))
+        });
+      }
       
-      setPrediction({
-        team1Score: Math.round(70 + (team1Rating / 10)),
-        team2Score: Math.round(70 + (team2Rating / 10))
-      });
-    } else if (position === 'team1' && selectedTeams.team2) {
-      const team1 = team;
-      const team2 = selectedTeams.team2;
-      
-      const team1Rating = (team1.stats.percentage * (team1.stats.wins / (team1.stats.wins + team1.stats.losses)));
-      const team2Rating = (team2.stats.percentage * (team2.stats.wins / (team2.stats.wins + team2.stats.losses)));
-      
-      setPrediction({
-        team1Score: Math.round(70 + (team1Rating / 10)),
-        team2Score: Math.round(70 + (team2Rating / 10))
-      });
-    }
+      return newTeams;
+    });
   };
 
   return (
