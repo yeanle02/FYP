@@ -67,13 +67,13 @@ module.exports = {
         },
         "infinite-scroll": {
           from: { transform: "translateX(0)" },
-          to: { transform: "translateX(-50%)" },
+          to: { transform: "translateX(calc(-50% - 1rem))" },
         },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "infinite-scroll": "infinite-scroll 25s linear infinite",
+        "infinite-scroll": "infinite-scroll 15s linear infinite",
       },
     },
   },

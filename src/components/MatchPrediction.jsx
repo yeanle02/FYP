@@ -80,9 +80,12 @@ export function MatchPrediction() {
       <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-lg shadow-xl overflow-hidden ring-1 ring-gray-700/50">
         <div className="p-6">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-2xl font-bold text-gray-100 mb-6 text-center">
+            <h2 className="text-2xl font-bold text-gray-100 mb-2 text-center">
               Match Prediction
             </h2>
+            <p className="text-gray-300 text-sm mb-6 text-center">
+              Current Week - 17 April 2024 (Week 6)
+            </p>
             
             <div className="flex justify-center items-center gap-8 mb-6">
               {/* Team 1 */}

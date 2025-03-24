@@ -26,8 +26,8 @@ export function Navbar() {
       </div>
 
       {/* Infinite Sliding Team Logos */}
-      <div className="flex-1 mx-4 overflow-hidden">
-        <div className="animate-infinite-scroll flex space-x-4 px-2">
+      <div className="flex-1 mx-4 overflow-hidden whitespace-nowrap">
+        <div className="animate-infinite-scroll inline-flex space-x-4 px-2">
           {/* Original set of logos */}
           {teams.map((team) => (
             <div
