@@ -53,20 +53,25 @@
   }
 
   /* Utility classes */
-  .scrollbar-thin {
+  .custom-scrollbar {
     scrollbar-width: thin;
+    scrollbar-color: rgb(75 85 99) rgb(31 41 55);
   }
 
-  .scrollbar-thin::-webkit-scrollbar {
+  .custom-scrollbar::-webkit-scrollbar {
     width: 6px;
   }
 
-  .scrollbar-thin::-webkit-scrollbar-track {
+  .custom-scrollbar::-webkit-scrollbar-track {
     @apply bg-gray-800 rounded;
   }
 
-  .scrollbar-thin::-webkit-scrollbar-thumb {
-    @apply bg-gray-600 rounded hover:bg-gray-500 transition-colors;
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-gray-600 rounded hover:bg-gray-500 transition-colors duration-200;
+  }
+
+  .scroll-smooth {
+    scroll-behavior: smooth;
   }
 
   .animate-fly-up {

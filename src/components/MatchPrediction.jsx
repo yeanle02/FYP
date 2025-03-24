@@ -74,13 +74,13 @@ export function MatchPrediction() {
 
   return (
     <div className="flex flex-col gap-8">
-      {/* Prediction Section */}
-      <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-lg shadow-xl overflow-hidden ring-1 ring-gray-700/50">
-        <div className="p-6">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-2xl font-bold text-gray-100 mb-2 text-center">
-              Match Prediction
-            </h2>
+    {/* Prediction Section */}
+    <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-lg shadow-xl overflow-hidden ring-1 ring-gray-700/50">
+      <div className="p-6">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-2xl font-bold text-gray-100 mb-2 text-center">
+            Match Prediction
+          </h2>
             
             
             <div className="flex justify-center items-center gap-8 mb-6">
@@ -224,16 +224,17 @@ export function MatchPrediction() {
       </div>
 
       {/* Match List Section */}
-      <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-lg shadow-xl p-8 ring-1 ring-gray-600/50">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-2xl font-bold text-gray-100 mb-6 text-center">
+      <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-lg shadow-xl p-6 ring-1 ring-gray-600/50">
+        <div className="w-full">
+          <h2 className="text-2xl font-bold text-gray-100 mb-4 text-center">
             Today's Matches
           </h2>
-          <div className="max-h-[500px] overflow-y-auto space-y-4 p-2 scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800">
-            {mockMatches.map((match, index) => (
+          <div className="relative">
+            <div className="max-h-[calc(100vh-620px)] min-h-[250px] overflow-y-auto space-y-2 p-2 custom-scrollbar scroll-smooth">
+              {mockMatches.map((match, index) => (
               <div
                 key={index}
-                className={`group bg-gradient-to-br from-gray-700 to-gray-600 p-4 rounded-lg cursor-pointer match-box-3d 
+                className={`group bg-gradient-to-br from-gray-700 to-gray-600 py-2.5 px-3 rounded-lg cursor-pointer match-box-3d 
                   border-t-2 border-gray-500 shadow-[0_10px_20px_rgba(0,0,0,0.3)]
                   hover:from-gray-600 hover:to-gray-500 transition-all duration-300 
                   hover:border-gray-400
@@ -260,7 +261,7 @@ export function MatchPrediction() {
                         height={50}
                         className="rounded-full transform transition-transform group-hover:scale-110 duration-300"
                       />
-                    </div>
+                      </div>
                     <span className="text-gray-200 text-sm font-semibold group-hover:text-white transition-colors duration-300 text-center w-full">
                       {match.team1.name}
                     </span>
@@ -289,7 +290,14 @@ export function MatchPrediction() {
                   </div>
                 </div>
               </div>
-            ))}
+              ))}
+            </div>
+            <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-gray-800 to-transparent pointer-events-none"></div>
+            <div className="text-center mt-2">
+              <span className="text-gray-400 text-sm animate-bounce block">
+                Scroll for more matches ↓
+              </span>
+            </div>
           </div>
         </div>
       </div>
