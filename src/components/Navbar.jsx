@@ -96,21 +96,22 @@ export function Navbar() {
           </div>
 
           {/* Sliding Team Logos */}
-          <div className="flex-1 max-w-xl ml-8 logo-scroll-container h-10">
+          <div className="flex-1 max-w-3xl ml-8 logo-scroll-container h-12">
             <div className="logos-wrapper">
               <div className="logos-slide">
                 {[...teams, ...teams].map((team, index) => (
                   <div
                     key={`${team.name}-${index}`}
-                    className="flex-shrink-0 cursor-pointer hover:opacity-80 transition-opacity px-2"
+                    className="flex-shrink-0 cursor-pointer hover:opacity-80 transition-opacity px-3"
                     onClick={() => selectTeam(team, 'team1')}
+                    title={team.name}
                   >
                     <Image
                       src={team.logo}
                       alt={`${team.name} logo`}
                       width={40}
                       height={40}
-                      className="h-6 w-6"
+                      className="h-8 w-8 object-contain"
                     />
                   </div>
                 ))}

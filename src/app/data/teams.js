@@ -44,7 +44,7 @@ export const teams = [
     }
   },
   {
-    name: "Sydney",
+    name: "Sydney Swans",
     logo: "/teams/Sydney_Swans.png",
     stats: {
       wins: 3,
@@ -63,6 +63,138 @@ export const teams = [
       draws: 0,
       percentage: 110.5,
       points: 12
+    }
+  },
+  {
+    name: "Port Adelaide",
+    logo: "/teams/Port_Adelaide.png",
+    stats: {
+      wins: 3,
+      losses: 2,
+      draws: 0,
+      percentage: 108.9,
+      points: 12
+    }
+  },
+  {
+    name: "Geelong Cats",
+    logo: "/teams/Geelong_Cats.png",
+    stats: {
+      wins: 2,
+      losses: 3,
+      draws: 0,
+      percentage: 105.4,
+      points: 8
+    }
+  },
+  {
+    name: "Adelaide Crows",
+    logo: "/teams/Adelaide-Crows.png",
+    stats: {
+      wins: 2,
+      losses: 3,
+      draws: 0,
+      percentage: 102.8,
+      points: 8
+    }
+  },
+  {
+    name: "Essendon",
+    logo: "/teams/Essendon.png",
+    stats: {
+      wins: 2,
+      losses: 3,
+      draws: 0,
+      percentage: 98.5,
+      points: 8
+    }
+  },
+  {
+    name: "Fremantle",
+    logo: "/teams/Fremantle.png",
+    stats: {
+      wins: 2,
+      losses: 3,
+      draws: 0,
+      percentage: 95.2,
+      points: 8
+    }
+  },
+  {
+    name: "GWS Giants",
+    logo: "/teams/GWS_Giants.png",
+    stats: {
+      wins: 2,
+      losses: 3,
+      draws: 0,
+      percentage: 92.7,
+      points: 8
+    }
+  },
+  {
+    name: "Gold Coast Suns",
+    logo: "/teams/Gold_Coast_Suns.svg",
+    stats: {
+      wins: 1,
+      losses: 4,
+      draws: 0,
+      percentage: 88.4,
+      points: 4
+    }
+  },
+  {
+    name: "Hawthorn",
+    logo: "/teams/Hawthorn.png",
+    stats: {
+      wins: 1,
+      losses: 4,
+      draws: 0,
+      percentage: 85.9,
+      points: 4
+    }
+  },
+  {
+    name: "Richmond Tigers",
+    logo: "/teams/Richmond_Tigers.png",
+    stats: {
+      wins: 1,
+      losses: 4,
+      draws: 0,
+      percentage: 82.3,
+      points: 4
+    }
+  },
+  {
+    name: "St Kilda",
+    logo: "/teams/St_Kilda.png",
+    stats: {
+      wins: 1,
+      losses: 4,
+      draws: 0,
+      percentage: 78.6,
+      points: 4
+    }
+  },
+  {
+    name: "North Melbourne",
+    logo: "/teams/North_Melbourne_FC.png",
+    stats: {
+      wins: 0,
+      losses: 5,
+      draws: 0,
+      percentage: 75.2,
+      points: 0
+    }
+  },
+  {
+    name: "West Coast Eagles",
+    logo: "/teams/West_Coast_Eagles.png",
+    stats: {
+      wins: 0,
+      losses: 5,
+      draws: 0,
+      percentage: 72.8,
+      points: 0
     }
   }
 ];
