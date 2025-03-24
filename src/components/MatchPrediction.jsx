@@ -165,22 +165,54 @@ export function MatchPrediction() {
                     </div>
                   </div>
                   
-                  {/* Winner Display */}
+                  {/* Winner/Draw Display */}
                   {selectedTeams.team1 && selectedTeams.team2 && (
                     <div className="flex flex-col items-center">
-                      <div className="relative w-20 h-20">
-                        <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-24 h-24 bg-gray-200 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-105 hover:shadow-xl">
-                          <Image
-                            src={(prediction.team1Score > prediction.team2Score ? selectedTeams.team1 : selectedTeams.team2).logo}
-                            alt="Winner"
-                            width={72}
-                            height={72}
-                            className="rounded-full animate-fade-in-team"
-                          />
+                      {prediction.team1Score === prediction.team2Score ? (
+                        // Draw Display
+                        <div className="flex gap-4 items-center">
+                          <div className="relative w-16 h-16">
+                            <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-20 h-20 bg-gray-200 rounded-full shadow-lg flex items-center justify-center">
+                              <Image
+                                src={selectedTeams.team1.logo}
+                                alt="Team 1"
+                                width={60}
+                                height={60}
+                                className="rounded-full animate-fade-in-team"
+                              />
+                            </div>
+                          </div>
+                          <div className="relative w-16 h-16">
+                            <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-20 h-20 bg-gray-200 rounded-full shadow-lg flex items-center justify-center">
+                              <Image
+                                src={selectedTeams.team2.logo}
+                                alt="Team 2"
+                                width={60}
+                                height={60}
+                                className="rounded-full animate-fade-in-team"
+                              />
+                            </div>
+                          </div>
                         </div>
-                      </div>
+                      ) : (
+                        // Winner Display
+                        <div className="relative w-20 h-20">
+                          <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-24 h-24 bg-gray-200 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-105 hover:shadow-xl">
+                            <Image
+                              src={(prediction.team1Score > prediction.team2Score ? selectedTeams.team1 : selectedTeams.team2).logo}
+                              alt="Winner"
+                              width={72}
+                              height={72}
+                              className="rounded-full animate-fade-in-team"
+                            />
+                          </div>
+                        </div>
+                      )}
                       <span className="text-lg font-bold text-green-600 mt-6 transition-all duration-300 hover:text-green-500">
-                        {prediction.team1Score > prediction.team2Score ? selectedTeams.team1.name : selectedTeams.team2.name}
+                        {prediction.team1Score === prediction.team2Score 
+                          ? "Draw" 
+                          : (prediction.team1Score > prediction.team2Score ? selectedTeams.team1.name : selectedTeams.team2.name)
+                        }
                       </span>
                     </div>
                   )}
