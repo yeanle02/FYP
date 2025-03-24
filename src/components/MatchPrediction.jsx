@@ -1,5 +1,3 @@
-{/* Team 1 */}
-<div className="text-center relative"></div>
 import Image from 'next/image';
 import { useTeams } from '@/app/context/TeamContext';
 import { useState } from 'react';
@@ -16,7 +14,7 @@ const mockMatches = [
     time: '4:45 PM'
   },
   {
-    team1: { name: 'Sydney', logo: '/teams/Sydney_Swans.png' },
+    team1: { name: 'Sydney Swans', logo: '/teams/Sydney_Swans.png' },
     team2: { name: 'Western Bulldogs', logo: '/teams/Western_Bulldogs.png' },
     time: '7:15 PM'
   },
@@ -32,7 +30,7 @@ const mockMatches = [
   },
   {
     team1: { name: 'Melbourne', logo: '/teams/Melbournefc.png' },
-    team2: { name: 'Sydney', logo: '/teams/Sydney_Swans.png' },
+    team2: { name: 'Sydney Swans', logo: '/teams/Sydney_Swans.png' },
     time: '5:15 PM'
   }
 ];

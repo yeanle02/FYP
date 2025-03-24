@@ -29,7 +29,7 @@ const mockMatches = [
     time: '4:45 PM'
   },
   {
-    team1: { name: 'Sydney', logo: '/teams/Sydney_Swans.png' },
+    team1: { name: 'Sydney Swans', logo: '/teams/Sydney_Swans.png' },
     team2: { name: 'Western Bulldogs', logo: '/teams/Western_Bulldogs.png' },
     time: '7:15 PM'
   },
@@ -45,7 +45,7 @@ const mockMatches = [
   },
   {
     team1: { name: 'Melbourne', logo: '/teams/Melbournefc.png' },
-    team2: { name: 'Sydney', logo: '/teams/Sydney_Swans.png' },
+    team2: { name: 'Sydney Swans', logo: '/teams/Sydney_Swans.png' },
     time: '5:15 PM'
   }
 ];
@@ -61,8 +61,15 @@ export function Navbar() {
     const team1 = teams.find(t => t.name === match.team1.name);
     const team2 = teams.find(t => t.name === match.team2.name);
     
-    if (team1) selectTeam(team1, 'team1');
-    if (team2) selectTeam(team2, 'team2');
+    // Select team1 first, then team2 after a small delay
+    if (team1) {
+      selectTeam(team1, 'team1');
+      // Small delay to ensure team1 is set before team2
+      setTimeout(() => {
+        if (team2) selectTeam(team2, 'team2');
+      }, 100);
+    }
+    
     setShowDropdown(false);
     setSearchTerm('');
   };
