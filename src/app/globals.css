@@ -1,26 +1,230 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  .logo-scroll-container {
+    position: relative;
+    overflow: hidden;
+    background: rgba(30, 58, 138, 0.1);
+    border-radius: 0.5rem;
+    padding: 0.5rem 0;
+    height: 2.5rem;
+    mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      black 10%,
+      black 90%,
+      transparent 100%
+    );
+  }
+
+  .logos-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .logos-slide {
+    position: relative;
+    display: inline-flex;
+    white-space: nowrap;
+    animation: marquee 25s linear infinite;
+    will-change: transform;
+    align-items: center;
+  }
+
+  .logos-slide > * {
+    margin-right: 2rem;
+  }
+
+  .logos-wrapper:hover .logos-slide {
+    animation-play-state: paused;
+  }
+
+  /* Utility classes */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    @apply bg-gray-800 rounded;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    @apply bg-gray-600 rounded hover:bg-gray-500 transition-colors;
+  }
+
+  .animate-fly-up {
+    animation: flyBoxUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+
+  .animate-box-appear {
+    animation: boxAppear 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+
+  .animate-fade-in-team {
+    animation: fadeInTeam 0.3s ease-out forwards;
+  }
+
+  .animate-glow {
+    animation: glowPulse 2s ease-in-out infinite;
+  }
+
+  .animate-winner-glow {
+    animation: winnerGlow 2s ease-in-out infinite;
+  }
+
+  .match-box-3d {
+    transform-style: preserve-3d;
+    perspective: 1500px;
+    transition: all 0.3s ease;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .match-box-3d:hover {
+    transform: perspective(1500px) 
+      rotateX(var(--rotateX)) 
+      rotateY(var(--rotateY))
+      translateZ(20px);
+    box-shadow: 
+      0 15px 30px rgba(0,0,0,0.4),
+      0 5px 15px rgba(0,0,0,0.3);
+  }
+}
+
+/* Animations */
+@keyframes flyBoxUp {
+  0% {
+    transform: translateY(0) rotateX(0) scale(1);
+    opacity: 1;
+  }
+  40% {
+    transform: translateY(-200px) rotateX(-15deg) scale(0.9);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-400px) rotateX(-30deg) scale(0.8);
+    opacity: 0;
+  }
+}
+
+@keyframes boxAppear {
+  0% {
+    transform: translateY(20px) scale(0.95);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInTeam {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    box-shadow: 
+      0 0 15px rgba(255, 255, 255, 0.2),
+      0 0 30px rgba(96, 165, 250, 0.2);
+  }
+  50% {
+    box-shadow: 
+      0 0 25px rgba(255, 255, 255, 0.3),
+      0 0 50px rgba(96, 165, 250, 0.3);
+  }
+}
+
+@keyframes winnerGlow {
+  0%, 100% {
+    box-shadow: 
+      0 0 20px rgba(255, 255, 255, 0.3),
+      0 0 40px rgba(34, 197, 94, 0.3);
+  }
+  50% {
+    box-shadow: 
+      0 0 30px rgba(255, 255, 255, 0.4),
+      0 0 60px rgba(34, 197, 94, 0.4);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+ 
+  body {
+    @apply bg-gray-950 text-foreground min-h-screen;
+  }
+}
+
+:root {
+  --background: 0 0% 100%;
+  --foreground: 0 0% 3.9%;
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 3.9%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 0 0% 3.9%;
+  --primary: 0 0% 9%;
+  --primary-foreground: 0 0% 98%;
+  --secondary: 0 0% 96.1%;
+  --secondary-foreground: 0 0% 9%;
+  --muted: 0 0% 96.1%;
+  --muted-foreground: 0 0% 45.1%;
+  --accent: 0 0% 96.1%;
+  --accent-foreground: 0 0% 9%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 214.3 31.8% 91.4%;
+  --input: 214.3 31.8% 91.4%;
+  --ring: 222.2 84% 4.9%;
+  --radius: 0.5rem;
+}
+
+.dark {
+  --background: 0 0% 3.9%;
+  --foreground: 0 0% 98%;
+  --card: 0 0% 3.9%;
+  --card-foreground: 0 0% 98%;
+  --popover: 0 0% 3.9%;
+  --popover-foreground: 0 0% 98%;
+  --primary: 0 0% 98%;
+  --primary-foreground: 0 0% 9%;
+  --secondary: 0 0% 14.9%;
+  --secondary-foreground: 0 0% 98%;
+  --muted: 0 0% 14.9%;
+  --muted-foreground: 0 0% 63.9%;
+  --accent: 0 0% 14.9%;
+  --accent-foreground: 0 0% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 217.2 32.6% 17.5%;
+  --input: 217.2 32.6% 17.5%;
+  --ring: 212.7 26.8% 83.9%;
 }
