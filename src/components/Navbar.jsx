@@ -19,7 +19,8 @@ export function Navbar() {
   const { teams, selectTeam } = useTeams();
   const pathname = usePathname();
   return (
-    <nav className="bg-blue-950 px-4 py-2 flex items-center justify-between shadow-lg">
+    <nav className="bg-blue-950 py-2 shadow-lg">
+      <div className="container mx-auto px-4 flex items-center justify-between">
       {/* AFL Logo */}
       <div className="flex-shrink-0">
         <Image src="/afl_logo.png" alt="AFL Logo" width={90} height={90} className="h-12 w-30" />
@@ -95,6 +96,7 @@ export function Navbar() {
             </Button>
           </Link>
         </div>
+      </div>
       </div>
     </nav>
   );
