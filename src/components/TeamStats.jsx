@@ -17,8 +17,8 @@ export function TeamStats() {
       <div className="p-4 bg-gradient-to-br from-gray-200 to-gray-100 rounded-lg shadow-xl ring-1 ring-gray-300/50 mb-6">
         <h2 className="text-2xl font-bold mb-4 text-gray-700 text-center">Current Round</h2>
         <div className="flex justify-between items-center">
-          <div className="text-lg font-semibold text-gray-600">Week 6</div>
-          <div className="text-gray-600">17th April 2024</div>
+          <div className="text-lg font-semibold text-gray-600">Round 23</div>
+          <div className="text-gray-600">20th August 2022</div>
         </div>
       </div>
       <div className="p-4 bg-gradient-to-br from-gray-200 to-gray-100 rounded-lg shadow-xl ring-1 ring-gray-300/50">
