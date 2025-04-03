@@ -160,6 +160,16 @@ export function Navbar() {
                   Teams
                 </Button>
               </Link>
+              <Link href="/test">
+                <Button 
+                  variant={pathname === "/test" ? "default" : "secondary"} 
+                  size="sm" 
+                  className="flex items-center gap-2"
+                >
+                  <LineChart className="h-4 w-4" />
+                  test
+                </Button>
+              </Link>
             </div>
             
             {/* Search Bar */}
