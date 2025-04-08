@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function TeamHeader({ teamName = "Sydney Swans", homeVenue = "SCG" }) {
   return (
-    <div className="bg-red-300 shadow-lg w-full h-[280px] flex items-center justify-center">
+    <div className="bg-gray-900 shadow-lg w-full h-[280px] flex items-center justify-center">
       <div className="flex items-center gap-20 w-[1300px] h-[220px]  ml-36 ">
         <Image
           src="/teams/Sydney_Swans.png" 
