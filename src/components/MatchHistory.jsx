@@ -113,49 +113,23 @@ export default function MatchHistory() {
           {mockMatches.map((match, index) => (
             <div
               key={index}
-              className="bg-white rounded-xl shadow hover:shadow-lg transition duration-300 p-5 flex justify-between items-center h-[220px]"
+              className="bg-white rounded-xl shadow hover:shadow-lg transition duration-300 p-5 flex flex-col justify-between h-[220px]"
             >
-              <div className="flex flex-col gap-6 w-4/5">
-                <div className="flex items-center gap-5">
-                  <Image
-                    src={match.homeLogo}
-                    alt={match.homeTeam}
-                    width={55}
-                    height={55}
-                  />
-                  <span className="text-[22px] text-gray-800 font-semibold flex-1 text-left">
-                    {match.homeTeam}
-                  </span>
-                  <span className="text-[20px] text-gray-900 font-bold w-1/2 text-right">
-                    {match.homeScore}
-                  </span>
-                </div>
-
-                <div className="flex items-center gap-5">
-                  <Image
-                    src={match.awayLogo}
-                    alt={match.awayTeam}
-                    width={55}
-                    height={55}
-                  />
-                  <span className="text-[22px] text-gray-800 font-semibold flex-1 text-left">
-                    {match.awayTeam}
-                  </span>
-                  <span className="text-[20px] text-gray-700 font-bold w-1/2 text-right">
-                    {match.awayScore}
-                  </span>
-                </div>
+              
+              <div className="text-[26px] text-gray-800 font-semibold">
+                {match.homeTeam}
               </div>
 
-              <div className="flex flex-col items-center justify-center h-[190px] pl-5 border-l border-gray-200 w-1/5">
-                <div className="flex flex-col justify-center items-center h-1/2">
-                  <p className="text-18px text-gray-700 font-medium text-center mb-2">
-                    {match.status}
-                  </p>
-                  <p className="text-18px text-gray-500 text-center mt-2">
-                    {match.date}
-                  </p>
-                </div>
+              <div className="flex justify-around text-[20px] text-gray-600">
+                <span>Forward</span>
+                <span>|</span>
+                <span>26</span>
+                <span>|</span>
+                <span>197 cm</span>
+              </div>
+       
+              <div className="text-right text-[16px] text-gray-700 font-bold">
+                History Matches Played
               </div>
             </div>
           ))}
