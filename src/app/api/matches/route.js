@@ -1,68 +1,5 @@
-// import connect from "@/lib/mongodb";
 
-// // Function to get team members based on the team name
-// export async function getTeamMembers(teamName) {
-//   const { client, db } = await connect();
-//   const playersCollection = db.collection("team_player");
-//   const players = await playersCollection.find({ team: teamName }).toArray();
-//   return players;
-// }
-
-// // Function to get historical matches for a team
-// export async function getHistoricalMatches(teamName) {
-//   const { client, db } = await connect();
-//   const matchesCollection = db.collection("match");
-//   const matches = await matchesCollection
-//     .find({ $or: [{ team1: teamName }, { team2: teamName }] })
-//     .toArray();
-//   return matches;
-// }
-
-// // Function to get team status (compare two teams)
-// export async function getTeamStatus(team1, team2) {
-//   const { client, db } = await connect();
-//   const statusCollection = db.collection("team_status");
-//   const team1Status = await statusCollection.findOne({ team: team1 });
-//   const team2Status = await statusCollection.findOne({ team: team2 });
-
-//   if (!team1Status || !team2Status) {
-//     throw new Error("One or both teams not found");
-//   }
-
-//   return { team1Status, team2Status };
-// }
-
-// // API handler function
-// export default async function handler(req, res) {
-//   if (req.method === "GET") {
-//     const { action, teamName, team1, team2 } = req.query;
-
-//     try {
-//       if (action === "get_team_member" && teamName) {
-//         const teamMembers = await getTeamMembers(teamName);
-//         return res.status(200).json(teamMembers);
-//       }
-
-//       if (action === "get_historical_match" && teamName) {
-//         const historicalMatches = await getHistoricalMatches(teamName);
-//         return res.status(200).json(historicalMatches);
-//       }
-
-//       if (action === "get_team_status" && team1 && team2) {
-//         const teamStatus = await getTeamStatus(team1, team2);
-//         return res.status(200).json(teamStatus);
-//       }
-
-//       return res.status(400).json({ error: "Invalid request or missing parameters" });
-//     } catch (error) {
-//       console.error("Error:", error);
-//       return res.status(500).json({ error: error.message });
-//     }
-//   } else {
-//     return res.status(405).json({ error: "Method Not Allowed" });
-//   }
-// }
-
+//app/api/matches/route.js
 import { connectToDatabase } from '@/lib/mongodb';
 import { NextResponse } from 'next/server';
 
@@ -79,12 +16,6 @@ async function getTeamMembers(teamName) {
   try {
 
     const connection = await connectToDatabase();
-    // if (!connection) {
-    //   throw new Error("Failed to establish MongoDB connection or get database reference");
-    // }else{
-    //     console.log("MongoDB connection established inside function");
-    //     console.log(connection.db)
-    // }
 
     const { client, db } = await connectToDatabase();
     debugLog("getTeamMembers", "MongoDB connection established");

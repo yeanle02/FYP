@@ -1,0 +1,72 @@
+import { useState } from "react";
+
+export default function usePredictionHandler() {
+    const [home_team,setHomeTeam] = useState("Richmond");
+    const [away_team,setAwayTeam] = useState("Melbourne");
+
+    const [loading, setLoading] = useState(false);
+    const [errors, setErrors] = useState(null);
+    const [results, setResults] = useState([]);
+
+    const predictPageHandler = async () => {
+        setLoading(true);
+        setErrors(null);
+        console.log("Frontend  prediction ");
+        
+        try {
+        
+          const requestData = {
+            home_team: home_team,
+            away_team: away_team,
+            round:"R1", 
+            venue:"M.C.G.",
+            year:2024, 
+            maxtemp:28.7, 
+            mintemp:14
+          };
+          
+          console.log("Frontend payload:", requestData);
+          
+          const res = await fetch("/api/predict", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(requestData)
+          });
+      
+    
+          const result = await res.json();
+          
+          console.log("Frontend result");
+          console.log(result);
+          
+       
+          if (result.error) {
+            console.error(" Frontend error:", result.error);
+            if (result.stderr) {
+              console.error("   Python stderr output:", result.stderr);
+            }
+          } else {
+            console.log("Front: values:", {
+              homeTeamPredictedScore: result.home_score,
+              awayTeamPredictedScore: result.away_score,
+              winningTeam: result.winning_team
+            });
+          }
+          
+          return result;
+        } catch (error) {
+          console.error("Frontend: Error ", error);
+          return null;
+        }
+      };
+      return{
+        loading,
+        errors,
+        results,
+        setHomeTeam,
+        setAwayTeam,
+        predictPageHandler
+      };
+    
+
+}

@@ -1,6 +1,10 @@
 "use client";
 import { Navbar } from "@/components/Navbar";
 import { useState } from "react";
+import useTeamMemberHandler from "../hooks/apiHandlers/useTeamMemberHandler";
+import useTeamStatusHandler from "../hooks/apiHandlers/useTeamStatusHandler";
+import usePredictionHandler from "../hooks/apiHandlers/usePredictionHandler";
+
 
 export default function TestMongoFunctions() {
   const [teamName, setTeamName] = useState("Melbourne Demons");
@@ -15,27 +19,10 @@ export default function TestMongoFunctions() {
   });
   const [errors, setErrors] = useState({});
 
-  const handleGetTeamMembers = async () => {
-    setLoading(prev => ({ ...prev, teamMembers: true }));
-    setErrors(prev => ({ ...prev, teamMembers: null }));
-    try {
-      console.log(`Fetching team members for: ${teamName}`);
-      const res = await fetch(`/api/matches?action=get_team_member&teamName=${encodeURIComponent(teamName)}`);
-      const data = await res.json();
-      console.log("Team Members Response:", data);
-      
-      if (res.ok) {
-        setResults(prev => ({ ...prev, teamMembers: data }));
-      } else {
-        throw new Error(data.error || "Failed to get team members");
-      }
-    } catch (error) {
-      console.error("Team Members Error:", error);
-      setErrors(prev => ({ ...prev, teamMembers: error.message }));
-    } finally {
-      setLoading(prev => ({ ...prev, teamMembers: false }));
-    }
-  };
+  const { loading: tmLoading, errors: tmErrors, results: tmResults, handleGetTeamMembers } = useTeamMemberHandler();
+  const { loading: tsLoading, errors: tsErrors, results: tsResults, handleGetTeamStatus } = useTeamStatusHandler();
+  const { loading:ppLoading, errors: ppErrors, results: ppResults, predictPageHandler } = usePredictionHandler();
+  
 
   const handleGetHistoricalMatches = async () => {
     setLoading(prev => ({ ...prev, historicalMatches: true }));
@@ -59,27 +46,56 @@ export default function TestMongoFunctions() {
     }
   };
 
-  const handleGetTeamStatus = async () => {
-    setLoading(prev => ({ ...prev, teamStatus: true }));
-    setErrors(prev => ({ ...prev, teamStatus: null }));
-    try {
-      console.log(`Fetching team status for: ${team1} vs ${team2}`);
-      const res = await fetch(`/api/matches?action=get_team_status&team1=${encodeURIComponent(team1)}&team2=${encodeURIComponent(team2)}`);
-      const data = await res.json();
-      console.log("Team Status Response:", data);
+
+  // const TestPredictPage = async () => {
+  //   console.log("Frontend  prediction ");
+    
+  //   try {
+    
+  //     const requestData = {
+  //       home_team: "Richmond",
+  //       away_team: "Adelaide",
+  //       round:"R1", 
+  //       venue:"M.C.G.",
+  //       year:2024, 
+  //       maxtemp:28.7, 
+  //       mintemp:14
+  //     };
       
-      if (res.ok) {
-        setResults(prev => ({ ...prev, teamStatus: data }));
-      } else {
-        throw new Error(data.error || "Failed to get team status");
-      }
-    } catch (error) {
-      console.error("Team Status Error:", error);
-      setErrors(prev => ({ ...prev, teamStatus: error.message }));
-    } finally {
-      setLoading(prev => ({ ...prev, teamStatus: false }));
-    }
-  };
+  //     console.log("Frontend payload:", requestData);
+      
+  //     const res = await fetch("/api/predict", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify(requestData)
+  //     });
+  
+
+  //     const result = await res.json();
+      
+  //     console.log("Frontend result");
+  //     console.log(result);
+      
+   
+  //     if (result.error) {
+  //       console.error(" Frontend error:", result.error);
+  //       if (result.stderr) {
+  //         console.error("   Python stderr output:", result.stderr);
+  //       }
+  //     } else {
+  //       console.log("Front: values:", {
+  //         homeTeamPredictedScore: result.home_score,
+  //         awayTeamPredictedScore: result.away_score,
+  //         winningTeam: result.winning_team
+  //       });
+  //     }
+      
+  //     return result;
+  //   } catch (error) {
+  //     console.error("Frontend: Error ", error);
+  //     return null;
+  //   }
+  // };
 
   const renderResults = (key) => {
     if (errors[key]) {
@@ -147,16 +163,16 @@ export default function TestMongoFunctions() {
               <h2 className="text-lg font-medium">Team Members</h2>
               <button
                 onClick={handleGetTeamMembers}
-                disabled={loading.teamMembers}
+                disabled={tmLoading}
                 className="px-4 py-2 bg-blue-600 text-white rounded shadow hover:bg-blue-700 transition disabled:bg-blue-300"
               >
-                {loading.teamMembers ? "Loading..." : "Get Team Members"}
+                {tmLoading ? "Loading..." : "Get Team Members"}
               </button>
             </div>
-            {renderResults("teamMembers")}
+            {renderResults(tmResults)}
           </div>
           
-          <div className="p-4 border border-gray-200 rounded-md">
+          {/* <div className="p-4 border border-gray-200 rounded-md">
             <div className="flex justify-between items-center mb-3">
               <h2 className="text-lg font-medium">Historical Matches</h2>
               <button
@@ -169,20 +185,28 @@ export default function TestMongoFunctions() {
             </div>
             {renderResults("historicalMatches")}
           </div>
-          
+           */}
           <div className="p-4 border border-gray-200 rounded-md">
             <div className="flex justify-between items-center mb-3">
               <h2 className="text-lg font-medium">Team Status Comparison</h2>
               <button
                 onClick={handleGetTeamStatus}
-                disabled={loading.teamStatus}
+                disabled={tsLoading}
                 className="px-4 py-2 bg-purple-600 text-white rounded shadow hover:bg-purple-700 transition disabled:bg-purple-300"
               >
-                {loading.teamStatus ? "Loading..." : "Get Team Status"}
+                {tsLoading ? "Loading..." : "Get Team Status"}
               </button>
             </div>
-            {renderResults("teamStatus")}
+            {renderResults(tsResults)}
           </div>
+
+          <button
+            onClick={predictPageHandler}
+            className="px-6 py-3 bg-blue-600 text-white rounded hover:bg-blue-700"
+          >
+            Test Get Prediction
+          </button>
+          {renderResults(ppResults)}
         </div>
       </div>
     </div>
