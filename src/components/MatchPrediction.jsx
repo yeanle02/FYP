@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import { useTeams } from '@/app/context/TeamContext';
 import { useState } from 'react';
+import usePredictionHandler from '@/app/hooks/apiHandlers/usePredictionHandler';
+
 
 const mockMatches = [
   {
@@ -40,6 +42,15 @@ export function MatchPrediction() {
   const [selectedMatch, setSelectedMatch] = useState(null);
   const [animatingLogos, setAnimatingLogos] = useState(false);
 
+  const {
+    loading,
+    errors,
+    results,
+    setHomeTeam,
+    setAwayTeam,
+    predictPageHandler
+  } = usePredictionHandler();
+
   const handleMatchSelect = async (match) => {
     if (animatingLogos) return;
     setSelectedMatch(match);
@@ -48,9 +59,21 @@ export function MatchPrediction() {
     const team1 = teams.find(t => t.name === match.team1.name);
     const team2 = teams.find(t => t.name === match.team2.name);
 
+    setHomeTeam(team1.name);
+    setAwayTeam(team2.name);
+
     setTimeout(() => {
       if (team1) selectTeam(team1, 'team1');
       if (team2) selectTeam(team2, 'team2');
+
+      predictPageHandler()
+        .then(results => {
+          console.log("Prediction result:", results);
+          
+        })
+        .catch(errors => {
+          console.error("Error making prediction:", errors);
+        });
       setTimeout(() => {
         setSelectedMatch(null);
         setAnimatingLogos(false);

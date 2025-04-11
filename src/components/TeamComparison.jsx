@@ -14,6 +14,7 @@ import {
 } from 'chart.js';
 import { ArrowUp, ArrowDown } from 'lucide-react';
 import useTeamStatusHandler from '@/app/hooks/apiHandlers/useTeamStatusHandler';
+import usePredictionHandler from '@/app/hooks/apiHandlers/usePredictionHandler';
 
 ChartJS.register(
   RadialLinearScale,
@@ -85,16 +86,33 @@ export function TeamComparison() {
   const [prediction, setPrediction] = useState({ team1Score: null, team2Score: null });
   
   const { loading, errors, results, handleGetTeamStatus } = useTeamStatusHandler();
+
+  const { loading:prLoading, errors:prErrors, results:prResults, setHomeTeam, setAwayTeam, predictPageHandler } = usePredictionHandler();
   
   const selectMatch = (match) => {
     setSelectedMatch(match);
-    // Get team data from API
+
     handleGetTeamStatus(match.team1.name, match.team2.name);
     
-    // Generate prediction
-    const team1Score = Math.floor(Math.random() * 100);
-    const team2Score = Math.floor(Math.random() * 100);
-    setPrediction({ team1Score, team2Score });
+    setHomeTeam(match.team1.name);
+    setAwayTeam(match.team2.name);
+
+    try {
+      const result = predictPageHandler();
+      if (result && !result.error) {
+        // Update prediction with real data from the API
+        setPrediction({
+          team1Score: result.home_score, 
+          team2Score: result.away_score,
+          winningTeam: result.winning_team
+        });
+        console.log("Prediction successful:", result);
+      } else {
+        console.error("Prediction error:", result?.error || "Unknown error");
+      }
+    } catch (error) {
+      console.error("Error during prediction:", error);
+    }
   };
 
 
