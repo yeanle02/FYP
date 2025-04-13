@@ -67,8 +67,13 @@ export function MatchPrediction() {
       if (team2) selectTeam(team2, 'team2');
 
       predictPageHandler()
-        .then(results => {
-          console.log("Prediction result:", results);
+      .then(({ home_score, away_score, winning_team }) => {
+        console.log("Home Score:", home_score);
+        console.log("Away Score:", away_score);
+        console.log("Winning Team:", winning_team);
+
+        // .then(results => {
+        //   console.log("Prediction result:", results);
           
         })
         .catch(errors => {
