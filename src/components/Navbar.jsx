@@ -133,38 +133,46 @@ export function Navbar() {
               <Link href="/">
                 <Button 
                   variant={pathname === "/" ? "default" : "secondary"} 
-                  size="sm" 
-                  className="flex items-center gap-2"
+                  size="default"
+                  className={`flex items-center gap-3 px-6 py-2.5 text-base font-medium transition-all duration-300 ${
+                    pathname === "/" ? "shadow-lg shadow-blue-500/50 hover:shadow-blue-500/75" : "hover:shadow-lg hover:shadow-gray-500/50"
+                  }`}
                 >
-                  <Home className="h-4 w-4" />
+                  <Home className="h-5 w-5" />
                   Home
                 </Button>
               </Link>
               <Link href="/prediction">
                 <Button 
                   variant={pathname === "/prediction" ? "default" : "secondary"} 
-                  size="sm" 
-                  className="flex items-center gap-2"
+                  size="default"
+                  className={`flex items-center gap-3 px-6 py-2.5 text-base font-medium transition-all duration-300 ${
+                    pathname === "/prediction" ? "shadow-lg shadow-blue-500/50 hover:shadow-blue-500/75" : "hover:shadow-lg hover:shadow-gray-500/50"
+                  }`}
                 >
-                  <LineChart className="h-4 w-4" />
+                  <LineChart className="h-5 w-5" />
                   Prediction
                 </Button>
               </Link>
               <Link href="/teams">
                 <Button 
                   variant={pathname === "/teams" ? "default" : "secondary"} 
-                  size="sm" 
-                  className="flex items-center gap-2"
+                  size="default"
+                  className={`flex items-center gap-3 px-6 py-2.5 text-base font-medium transition-all duration-300 ${
+                    pathname === "/teams" ? "shadow-lg shadow-blue-500/50 hover:shadow-blue-500/75" : "hover:shadow-lg hover:shadow-gray-500/50"
+                  }`}
                 >
-                  <Users className="h-4 w-4" />
+                  <Users className="h-5 w-5" />
                   Teams
                 </Button>
               </Link>
               <Link href="/test">
                 <Button 
                   variant={pathname === "/test" ? "default" : "secondary"} 
-                  size="sm" 
-                  className="flex items-center gap-2"
+                  size="default"
+                  className={`flex items-center gap-3 px-4 py-2 text-sm font-medium transition-all duration-300 ${
+                    pathname === "/test" ? "shadow-lg shadow-blue-500/50 hover:shadow-blue-500/75" : "hover:shadow-lg hover:shadow-gray-500/50"
+                  }`}
                 >
                   <LineChart className="h-4 w-4" />
                   test
