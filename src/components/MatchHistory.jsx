@@ -120,26 +120,26 @@ export default function MatchHistory() {
               </div>
 
               <div className="mt-auto mb-2">
-    <div className="grid grid-cols-5 text-sm text-gray-400">
-      <span className="text-center">Position</span> 
-      <span className="text-center"></span>        
-      <span className="text-center">Age</span>
-      <span className="text-center"></span> 
-      <span className="text-center">Games</span>
-    </div>
+                <div className="grid grid-cols-5 text-sm text-gray-400">
+                  <span className="text-center">Position</span>
+                  <span className="text-center"></span>
+                  <span className="text-center">Age</span>
+                  <span className="text-center"></span>
+                  <span className="text-center">Games</span>
+                </div>
 
-    {/* 给这两个部分之间设定很小的间距，比如 mt-1 */}
-    <div className="grid grid-cols-5 text-[20px] text-gray-600 mt-1">
-      <span className="text-center">Forward</span>
-      <span className="text-center">|</span>
-      <span className="text-center">26</span>
-      <span className="text-center">|</span>
-      <span className="text-center">197 cm</span>
-    </div>
-  </div>
-</div>
-            
-          
+                {/* 给这两个部分之间设定很小的间距，比如 mt-1 */}
+                <div className="grid grid-cols-5 text-[20px] text-gray-600 mt-1">
+                  <span className="text-center">Forward</span>
+                  <span className="text-center">|</span>
+                  <span className="text-center">26</span>
+                  <span className="text-center">|</span>
+                  <span className="text-center">197 cm</span>
+                </div>
+              </div>
+            </div>
+
+
           ))}
         </div>
       </div>
