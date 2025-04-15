@@ -113,25 +113,33 @@ export default function MatchHistory() {
           {mockMatches.map((match, index) => (
             <div
               key={index}
-              className="bg-white rounded-xl shadow hover:shadow-lg transition duration-300 p-5 flex flex-col justify-between h-[220px]"
+              className="bg-white rounded-xl shadow hover:shadow-lg transition duration-300 p-5 flex flex-col justify-between h-[180px]"
             >
-              
               <div className="text-[26px] text-gray-800 font-semibold">
                 {match.homeTeam}
               </div>
 
-              <div className="flex justify-around text-[20px] text-gray-600">
-                <span>Forward</span>
-                <span>|</span>
-                <span>26</span>
-                <span>|</span>
-                <span>197 cm</span>
-              </div>
-       
-              <div className="text-right text-[16px] text-gray-700 font-bold">
-                History Matches Played
-              </div>
-            </div>
+              <div className="mt-auto mb-2">
+    <div className="grid grid-cols-5 text-sm text-gray-400">
+      <span className="text-center">Position</span> 
+      <span className="text-center"></span>        
+      <span className="text-center">Age</span>
+      <span className="text-center"></span> 
+      <span className="text-center">Games</span>
+    </div>
+
+    {/* 给这两个部分之间设定很小的间距，比如 mt-1 */}
+    <div className="grid grid-cols-5 text-[20px] text-gray-600 mt-1">
+      <span className="text-center">Forward</span>
+      <span className="text-center">|</span>
+      <span className="text-center">26</span>
+      <span className="text-center">|</span>
+      <span className="text-center">197 cm</span>
+    </div>
+  </div>
+</div>
+            
+          
           ))}
         </div>
       </div>
