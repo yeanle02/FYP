@@ -171,7 +171,7 @@ export function MatchPrediction() {
             <div className="bg-gray-200 p-6 rounded-lg shadow-xl flex flex-col items-center border border-gray-300/50 backdrop-blur-sm relative transition-all duration-300 hover:shadow-2xl hover:border-gray-400/50 hover:bg-gray-100">
               <button
                 onClick={resetPrediction}
-                className="absolute top-2 right-2 px-3 py-1 text-sm bg-gray-700 text-gray-200 rounded-md hover:bg-gray-600 transition-colors duration-200"
+                className="absolute top-2 right-2 px-3 py-1 text-sm bg-red-600 text-gray-200 rounded-md hover:bg-red-700 transition-colors duration-200"
               >
                 Reset
               </button>
