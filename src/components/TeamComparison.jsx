@@ -178,10 +178,10 @@ export function TeamComparison() {
       <div className="container mx-auto px-4 py-4">
         <div className="flex flex-col xl:flex-row gap-6 overflow-hidden">
           {/* Leaderboard */}
-          <div className="bg-gray-900 p-4 rounded-lg shadow-md w-full xl:w-72 h-fit">
+          <div className="bg-gradient-to-br from-gray-800 to-gray-700 p-4 rounded-lg shadow-xl ring-1 ring-gray-600/50 w-full xl:w-72 h-fit">
             <h3 className="text-xl font-semibold text-white mb-4 text-center">Leaderboard</h3>
             {placeholderTeams.sort((a, b) => a.rank - b.rank).map((team) => (
-              <div key={team.name} className="flex justify-between items-center py-2 px-3 bg-gray-800 rounded mb-2">
+              <div key={team.name} className="flex justify-between items-center py-2 px-3 bg-gray-700/50 hover:bg-gray-700 transition-colors duration-200 rounded mb-2">
                 <div className="flex items-center gap-2">
                   <span className="text-white font-bold">#{team.rank}</span>
                   <Image src={team.logo} alt={team.name} width={24} height={24} />
