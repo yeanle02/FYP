@@ -198,14 +198,17 @@ export function TeamComparison() {
           {/* Main Section - Match List + Prediction */}
           <div className="flex-1 w-full">
             {/* Match Scrollable List */}
-            <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-lg shadow-xl p-6 ring-1 ring-gray-600/50">
-              <div ref={matchesContainerRef} className="max-h-[calc(100vh-620px)] min-h-[250px] overflow-y-auto space-y-2 p-2 custom-scrollbar scroll-smooth">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-lg shadow-xl p-4 ring-1 ring-gray-600/50">
+              <h2 className="text-2xl font-bold text-white mb-4 text-center">
+                Select A Match
+              </h2>
+              <div ref={matchesContainerRef} className="max-h-[calc(100vh-620px)] min-h-[180px] overflow-y-auto px-2 pb-4 custom-scrollbar scroll-smooth">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                   {placeholderMatches.map((match, idx) => (
                     <div
                       key={idx}
                       onClick={() => selectMatch(match)}
-                      className="group bg-gradient-to-br from-gray-700 to-gray-600 p-4 rounded-lg cursor-pointer border-t-2 border-gray-500
+                      className="group bg-gradient-to-br from-gray-700 to-gray-600 p-3 rounded-lg cursor-pointer border-t-2 border-gray-500
                     shadow-[0_10px_20px_rgba(0,0,0,0.3)] hover:from-gray-600 hover:to-gray-500 transition-all duration-300 
                     hover:border-gray-400 hover:shadow-[0_20px_30px_rgba(0,0,0,0.4)]"
                     >
@@ -227,9 +230,9 @@ export function TeamComparison() {
                 </div>
               </div>
               {isScrollable && (
-                <div className="relative">
-                  <div className="absolute -top-24 left-0 right-0 h-24 bg-gradient-to-t from-gray-800 via-gray-800/50 to-transparent pointer-events-none"></div>
-                  <div className="text-center mt-2">
+                <div className="relative mt-6 pb-2">
+                  <div className="absolute -top-6 left-0 right-0 h-6 bg-gradient-to-t from-gray-800 to-transparent pointer-events-none"></div>
+                  <div className="text-center bg-gradient-to-t from-gray-800/10 to-transparent pt-2 pb-1 px-4 rounded-lg">
                     <span className="text-gray-400 text-sm animate-bounce block cursor-default select-none hover:text-gray-300 transition-colors">
                       Scroll for more matches ↓
                     </span>
