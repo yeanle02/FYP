@@ -159,9 +159,9 @@ export function TeamComparison() {
   };
 
   return (
-    <main className="min-h-screen bg-gray-100">
+    <main className="min-h-screen">
       <div className="container mx-auto px-4 py-4">
-        <div className="flex flex-col xl:flex-row gap-6">
+        <div className="flex flex-col xl:flex-row gap-6 overflow-hidden">
           {/* Leaderboard */}
           <div className="bg-gray-900 p-4 rounded-lg shadow-md w-full xl:w-72 h-fit">
             <h3 className="text-xl font-semibold text-white mb-4 text-center">Leaderboard</h3>
@@ -183,13 +183,13 @@ export function TeamComparison() {
           {/* Main Section - Match List + Prediction */}
           <div className="flex-1 w-full">
             {/* Match Scrollable List */}
-            <div className="overflow-x-auto bg-gray-900 py-6 px-4 rounded-lg">
-              <div className="flex gap-4 min-w-full">
+            <div className="bg-gray-900 py-6 rounded-lg overflow-x-auto">
+              <div className="flex gap-4 px-6">
                 {placeholderMatches.map((match, idx) => (
                   <div
                     key={idx}
                     onClick={() => selectMatch(match)}
-                    className="min-w-[300px] bg-gray-800 hover:bg-gray-700 p-4 rounded-lg cursor-pointer shadow-md"
+                    className="min-w-[280px] bg-gray-800 hover:bg-gray-700 p-4 rounded-lg cursor-pointer shadow-md flex-shrink-0"
                   >
                     <div className="flex flex-col items-center">
                       <Image src={match.team1.logo} width={40} height={40} alt={match.team1.name} />
@@ -213,7 +213,7 @@ export function TeamComparison() {
                 {selectedMatch ? (
                   <div className="flex flex-col lg:flex-row justify-center items-start gap-8 mb-6">
                     {[selectedMatch.team1, selectedMatch.team2].map((team, index) => (
-                      <div key={team.name} className="text-center flex flex-col items-center w-full lg:w-[300px]">
+                      <div key={team.name} className="text-center flex flex-col items-center w-full lg:w-[280px]">
                         <div className="w-[100px] h-[100px] flex items-center justify-center mb-2">
                           <Image src={team.logo} alt={team.name} width={80} height={80} className="object-contain" />
                         </div>
