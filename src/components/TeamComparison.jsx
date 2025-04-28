@@ -244,9 +244,35 @@ export function TeamComparison() {
             {/* Prediction Panel */}
             <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-lg shadow-xl p-6 ring-1 ring-gray-600/50 mt-6">
               <div className="max-w-4xl mx-auto">
-                <h2 className="text-2xl font-bold text-white mb-6 text-center">
-                  Team Comparison & Prediction
-                </h2>
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-2xl font-bold text-white text-center flex-1">
+                    Team Comparison & Prediction
+                  </h2>
+                  {selectedMatch && (
+                    <button
+                      onClick={() => {
+                        setSelectedMatch(null);
+                        setPrediction({ team1Score: null, team2Score: null });
+                      }}
+                      className="px-4 py-2 bg-gray-700 text-gray-200 rounded-lg hover:bg-gray-600 transition-colors duration-200 flex items-center gap-2 group"
+                    >
+                      <span>Reset</span>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        className="w-4 h-4 transform rotate-0 group-hover:rotate-180 transition-transform duration-300"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+                        <path d="M3 3v5h5" />
+                      </svg>
+                    </button>
+                  )}
+                </div>
 
                 {selectedMatch ? (
                   <div className="flex flex-col lg:flex-row justify-center items-start gap-8 mb-6">
