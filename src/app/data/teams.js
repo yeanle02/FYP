@@ -11,7 +11,7 @@ export const teams = [
     }
   },
   {
-    name: "Carlton",
+    name: "Carlton Bules",
     logo: "/teams/Carlton.svg",
     stats: {
       wins: 4,
@@ -22,7 +22,7 @@ export const teams = [
     }
   },
   {
-    name: "Melbourne",
+    name: "Melbourne Demons",
     logo: "/teams/Melbournefc.png",
     stats: {
       wins: 4,

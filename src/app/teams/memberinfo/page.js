@@ -20,9 +20,10 @@ export default function MemberInfoPage() {
 
   // 页面加载或队伍名称改变时自动调用 API 获取队伍成员数据
   useEffect(() => {
-    setTeamName(teamName);
-    handleGetTeamMembers();
+    // setTeamName(teamName);
+    handleGetTeamMembers(teamName);
   }, [teamName]);
+
 
   // 从本地 teams 数据中获取队伍信息（logo、名称等）
   const teamInfo =
