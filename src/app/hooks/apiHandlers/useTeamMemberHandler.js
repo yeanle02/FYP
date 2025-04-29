@@ -1,17 +1,17 @@
 import { useState } from "react";
 
 export default function useTeamMemberHandler() {
-    const [teamName, setTeamName] = useState("Melbourne Demons");
+    // const [teamName, setTeamName] = useState("Melbourne Demons");
     const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState(null);
     const [results, setResults] = useState([]);
 
-    const handleGetTeamMembers = async () => {
+    const handleGetTeamMembers = async (teamNameParam) => {
         setLoading(true);
         setErrors(null);
         try {
         //   console.log(`Fetching team members for: ${teamName}`);
-          const res = await fetch(`/api/matches?action=get_team_member&teamName=${encodeURIComponent(teamName)}`);
+          const res = await fetch(`/api/matches?action=get_team_member&teamName=${encodeURIComponent(teamNameParam)}`);
           const data = await res.json();
           console.log("Team Members Response:", data);
           
@@ -32,7 +32,6 @@ export default function useTeamMemberHandler() {
         loading,
         errors,
         results,
-        setTeamName,
         handleGetTeamMembers
     };
 }
