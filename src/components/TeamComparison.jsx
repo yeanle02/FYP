@@ -1,7 +1,7 @@
 "use client";
 
 import Image from 'next/image';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Radar } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -84,6 +84,21 @@ const placeholderMatches = [
 export function TeamComparison() {
   const [selectedMatch, setSelectedMatch] = useState(null);
   const [prediction, setPrediction] = useState({ team1Score: null, team2Score: null });
+  const [isScrollable, setIsScrollable] = useState(false);
+  const matchesContainerRef = useRef(null);
+
+  useEffect(() => {
+    const checkScrollable = () => {
+      if (matchesContainerRef.current) {
+        const { scrollHeight, clientHeight } = matchesContainerRef.current;
+        setIsScrollable(scrollHeight > clientHeight);
+      }
+    };
+
+    checkScrollable();
+    window.addEventListener('resize', checkScrollable);
+    return () => window.removeEventListener('resize', checkScrollable);
+  }, []);
   
   const { loading, errors, results, handleGetTeamStatus } = useTeamStatusHandler();
 
@@ -159,14 +174,14 @@ export function TeamComparison() {
   };
 
   return (
-    <main className="min-h-screen bg-gray-100">
+    <main className="min-h-screen">
       <div className="container mx-auto px-4 py-4">
-        <div className="flex flex-col xl:flex-row gap-6">
+        <div className="flex flex-col xl:flex-row gap-6 overflow-hidden">
           {/* Leaderboard */}
-          <div className="bg-gray-900 p-4 rounded-lg shadow-md w-full xl:w-72 h-fit">
+          <div className="bg-gradient-to-br from-gray-800 to-gray-700 p-4 rounded-lg shadow-xl ring-1 ring-gray-600/50 w-full xl:w-72 h-fit">
             <h3 className="text-xl font-semibold text-white mb-4 text-center">Leaderboard</h3>
             {placeholderTeams.sort((a, b) => a.rank - b.rank).map((team) => (
-              <div key={team.name} className="flex justify-between items-center py-2 px-3 bg-gray-800 rounded mb-2">
+              <div key={team.name} className="flex justify-between items-center py-2 px-3 bg-gray-700/50 hover:bg-gray-700 transition-colors duration-200 rounded mb-2">
                 <div className="flex items-center gap-2">
                   <span className="text-white font-bold">#{team.rank}</span>
                   <Image src={team.logo} alt={team.name} width={24} height={24} />
@@ -183,37 +198,86 @@ export function TeamComparison() {
           {/* Main Section - Match List + Prediction */}
           <div className="flex-1 w-full">
             {/* Match Scrollable List */}
-            <div className="overflow-x-auto bg-gray-900 py-6 px-4 rounded-lg">
-              <div className="flex gap-4 min-w-full">
-                {placeholderMatches.map((match, idx) => (
-                  <div
-                    key={idx}
-                    onClick={() => selectMatch(match)}
-                    className="min-w-[300px] bg-gray-800 hover:bg-gray-700 p-4 rounded-lg cursor-pointer shadow-md"
-                  >
-                    <div className="flex flex-col items-center">
-                      <Image src={match.team1.logo} width={40} height={40} alt={match.team1.name} />
-                      <span className="text-white text-sm mt-1">{match.team1.name}</span>
-                      <span className="text-white font-bold my-2">VS</span>
-                      <Image src={match.team2.logo} width={40} height={40} alt={match.team2.name} />
-                      <span className="text-white text-sm mt-1">{match.team2.name}</span>
+            <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-lg shadow-xl p-4 ring-1 ring-gray-600/50">
+              <h2 className="text-2xl font-bold text-white mb-4 text-center">
+                Select A Match
+              </h2>
+              <div ref={matchesContainerRef} className="max-h-[calc(100vh-620px)] min-h-[180px] overflow-y-auto px-2 pb-4 custom-scrollbar scroll-smooth">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                  {placeholderMatches.map((match, idx) => (
+                    <div
+                      key={idx}
+                      onClick={() => selectMatch(match)}
+                      className="group bg-gradient-to-br from-gray-700 to-gray-600 p-3 rounded-lg cursor-pointer border-t-2 border-gray-500
+                    shadow-[0_10px_20px_rgba(0,0,0,0.3)] hover:from-gray-600 hover:to-gray-500 transition-all duration-300 
+                    hover:border-gray-400 hover:shadow-[0_20px_30px_rgba(0,0,0,0.4)]"
+                    >
+                      <div className="flex flex-col items-center">
+                        <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mb-2 shadow-lg group-hover:bg-white transition-all duration-300 mx-auto">
+                          <Image src={match.team1.logo} width={50} height={50} alt={match.team1.name} 
+                            className="rounded-full transform transition-transform group-hover:scale-110 duration-300" />
+                        </div>
+                        <span className="text-gray-200 text-sm font-semibold group-hover:text-white transition-colors duration-300 text-center block">{match.team1.name}</span>
+                        <span className="text-gray-200 font-bold text-lg group-hover:text-white transition-colors duration-300 text-center block my-2">VS</span>
+                        <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mb-2 shadow-lg group-hover:bg-white transition-all duration-300 mx-auto">
+                          <Image src={match.team2.logo} width={50} height={50} alt={match.team2.name} 
+                            className="rounded-full transform transition-transform group-hover:scale-110 duration-300" />
+                        </div>
+                        <span className="text-gray-200 text-sm font-semibold group-hover:text-white transition-colors duration-300 text-center block">{match.team2.name}</span>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
+              {isScrollable && (
+                <div className="relative mt-6 pb-2">
+                  <div className="absolute -top-6 left-0 right-0 h-6 bg-gradient-to-t from-gray-800 to-transparent pointer-events-none"></div>
+                  <div className="text-center bg-gradient-to-t from-gray-800/10 to-transparent pt-2 pb-1 px-4 rounded-lg">
+                    <span className="text-gray-400 text-sm animate-bounce block cursor-default select-none hover:text-gray-300 transition-colors">
+                      Scroll for more matches ↓
+                    </span>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Prediction Panel */}
-            <div className="bg-gray-800 rounded-lg shadow-lg overflow-hidden mt-6">
-              <div className="p-6">
-                <h2 className="text-2xl font-bold text-white mb-6 text-center">
-                  Team Comparison & Prediction
-                </h2>
+            <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-lg shadow-xl p-6 ring-1 ring-gray-600/50 mt-6">
+              <div className="max-w-4xl mx-auto">
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-2xl font-bold text-white text-center flex-1">
+                    Team Comparison & Prediction
+                  </h2>
+                  {selectedMatch && (
+                    <button
+                      onClick={() => {
+                        setSelectedMatch(null);
+                        setPrediction({ team1Score: null, team2Score: null });
+                      }}
+                      className="px-4 py-2 bg-gray-700 text-gray-200 rounded-lg hover:bg-gray-600 transition-colors duration-200 flex items-center gap-2 group"
+                    >
+                      <span>Reset</span>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        className="w-4 h-4 transform rotate-0 group-hover:rotate-180 transition-transform duration-300"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+                        <path d="M3 3v5h5" />
+                      </svg>
+                    </button>
+                  )}
+                </div>
 
                 {selectedMatch ? (
                   <div className="flex flex-col lg:flex-row justify-center items-start gap-8 mb-6">
                     {[selectedMatch.team1, selectedMatch.team2].map((team, index) => (
-                      <div key={team.name} className="text-center flex flex-col items-center w-full lg:w-[300px]">
+                      <div key={team.name} className="text-center flex flex-col items-center w-full lg:w-[280px]">
                         <div className="w-[100px] h-[100px] flex items-center justify-center mb-2">
                           <Image src={team.logo} alt={team.name} width={80} height={80} className="object-contain" />
                         </div>
@@ -287,30 +351,30 @@ export function TeamComparison() {
                 )}
 
                 {selectedMatch && prediction.team1Score !== null && (
-                  <div className="bg-gray-700 p-4 rounded-lg shadow flex flex-col items-center">
-                    <h3 className="text-xl font-semibold text-white mb-4">Predicted Score</h3>
+                  <div className="bg-gray-200 p-6 rounded-lg shadow-xl flex flex-col items-center border border-gray-300/50 backdrop-blur-sm relative transition-all duration-300 hover:shadow-2xl hover:border-gray-400/50 hover:bg-gray-100">
+                    <h3 className="text-xl font-semibold text-gray-800 mb-4">Predicted Score</h3>
                     <div className="flex items-center gap-8 mb-6">
-                      <div className={`text-3xl font-bold ${prediction.team1Score > prediction.team2Score ? 'text-green-400' : 'text-gray-300'}`}>
+                      <div className={`text-3xl font-bold ${prediction.team1Score > prediction.team2Score ? 'text-green-600' : 'text-gray-700'}`}>
                         {prediction.team1Score}
                       </div>
-                      <div className="text-2xl text-gray-400">-</div>
-                      <div className={`text-3xl font-bold ${prediction.team2Score > prediction.team1Score ? 'text-green-400' : 'text-gray-300'}`}>
+                      <div className="text-2xl text-gray-500">-</div>
+                      <div className={`text-3xl font-bold ${prediction.team2Score > prediction.team1Score ? 'text-green-600' : 'text-gray-700'}`}>
                         {prediction.team2Score}
                       </div>
                     </div>
                     <div className="flex flex-col items-center">
                       <div className="relative w-20 h-20">
-                        <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-24 h-24 bg-gray-900 rounded-full shadow-lg flex items-center justify-center">
+                        <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-24 h-24 bg-gray-200 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-105 hover:shadow-xl">
                           <Image
                             src={(prediction.team1Score > prediction.team2Score ? selectedMatch.team1 : selectedMatch.team2).logo}
                             alt="Winner"
                             width={72}
                             height={72}
-                            className="rounded-full"
+                            className="rounded-full animate-fade-in-team"
                           />
                         </div>
                       </div>
-                      <span className="text-lg font-bold text-green-400 mt-6">
+                      <span className="text-lg font-bold text-green-600 mt-6 transition-all duration-300 hover:text-green-500">
                         {prediction.team1Score > prediction.team2Score
                           ? selectedMatch.team1.name
                           : selectedMatch.team2.name}
