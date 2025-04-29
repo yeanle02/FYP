@@ -1,7 +1,10 @@
+// src/app/data/teams.js
 export const teams = [
   {
-    name: "Collingwood",
+    name: "Collingwood Magpies",
     logo: "/teams/Collingwood.png",
+    captain: "Scott Pendlebury",
+    coach:   "Craig McRae",
     stats: {
       wins: 4,
       losses: 1,
@@ -11,8 +14,11 @@ export const teams = [
     }
   },
   {
+    // ✏️ 拼写从 Bules → Blues
     name: "Carlton Bules",
     logo: "/teams/Carlton.svg",
+    captain: "Patrick Cripps",
+    coach:   "Michael Voss",
     stats: {
       wins: 4,
       losses: 1,
@@ -24,6 +30,8 @@ export const teams = [
   {
     name: "Melbourne Demons",
     logo: "/teams/Melbournefc.png",
+    captain: "Max Gawn",
+    coach:   "Simon Goodwin",
     stats: {
       wins: 4,
       losses: 1,
@@ -35,6 +43,8 @@ export const teams = [
   {
     name: "Brisbane Lions",
     logo: "/teams/Brisbane_Lions.png",
+    captain: "Dayne Zorko",
+    coach:   "Chris Fagan",
     stats: {
       wins: 3,
       losses: 2,
@@ -46,6 +56,8 @@ export const teams = [
   {
     name: "Sydney Swans",
     logo: "/teams/Sydney_Swans.png",
+    captain: "Luke Parker",
+    coach:   "John Longmire",
     stats: {
       wins: 3,
       losses: 2,
@@ -57,6 +69,8 @@ export const teams = [
   {
     name: "Western Bulldogs",
     logo: "/teams/Western_Bulldogs.png",
+    captain: "Marcus Bontempelli",
+    coach:   "Luke Beveridge",
     stats: {
       wins: 3,
       losses: 2,
@@ -66,8 +80,10 @@ export const teams = [
     }
   },
   {
-    name: "Port Adelaide",
+    name: "Port Adelaide Power",
     logo: "/teams/Port_Adelaide.png",
+    captain: "Connor Rozee",
+    coach:   "Ken Hinkley",
     stats: {
       wins: 3,
       losses: 2,
@@ -79,6 +95,8 @@ export const teams = [
   {
     name: "Geelong Cats",
     logo: "/teams/Geelong_Cats.png",
+    captain: "Joel Selwood",
+    coach:   "Chris Scott",
     stats: {
       wins: 2,
       losses: 3,
@@ -90,6 +108,8 @@ export const teams = [
   {
     name: "Adelaide Crows",
     logo: "/teams/Adelaide-Crows.png",
+    captain: "Jordan Dawson",
+    coach:   "Matthew Nicks",
     stats: {
       wins: 2,
       losses: 3,
@@ -99,8 +119,10 @@ export const teams = [
     }
   },
   {
-    name: "Essendon",
+    name: "Essendon Bombers",
     logo: "/teams/Essendon.png",
+    captain: "Zach Merrett",
+    coach:   "Brad Scott",
     stats: {
       wins: 2,
       losses: 3,
@@ -110,8 +132,10 @@ export const teams = [
     }
   },
   {
-    name: "Fremantle",
+    name: "Fremantle Dockers",
     logo: "/teams/Fremantle.png",
+    captain: "Nat Fyfe",
+    coach:   "Justin Longmuir",
     stats: {
       wins: 2,
       losses: 3,
@@ -123,6 +147,8 @@ export const teams = [
   {
     name: "GWS Giants",
     logo: "/teams/GWS_Giants.png",
+    captain: "Toby Greene",
+    coach:   "Adam Kingsley",
     stats: {
       wins: 2,
       losses: 3,
@@ -134,6 +160,8 @@ export const teams = [
   {
     name: "Gold Coast Suns",
     logo: "/teams/Gold_Coast_Suns.svg",
+    captain: "David Swallow",
+    coach:   "Damien Hardwick",
     stats: {
       wins: 1,
       losses: 4,
@@ -143,8 +171,10 @@ export const teams = [
     }
   },
   {
-    name: "Hawthorn",
+    name: "Hawthorn Hawks",
     logo: "/teams/Hawthorn.png",
+    captain: "James Sicily",
+    coach:   "Sam Mitchell",
     stats: {
       wins: 1,
       losses: 4,
@@ -156,6 +186,8 @@ export const teams = [
   {
     name: "Richmond Tigers",
     logo: "/teams/Richmond_Tigers.png",
+    captain: "Dustin Martin",
+    coach:   "Adem Yze",
     stats: {
       wins: 1,
       losses: 4,
@@ -165,8 +197,10 @@ export const teams = [
     }
   },
   {
-    name: "St Kilda",
+    name: "St Kilda Saints",
     logo: "/teams/St_Kilda.png",
+    captain: "Jack Steele",
+    coach:   "Ross Lyon",
     stats: {
       wins: 1,
       losses: 4,
@@ -176,8 +210,10 @@ export const teams = [
     }
   },
   {
-    name: "North Melbourne",
+    name: "North Melbourne Kangaroos",
     logo: "/teams/North_Melbourne_FC.png",
+    captain: "Jack Ziebell",
+    coach:   "Alastair Clarkson",
     stats: {
       wins: 0,
       losses: 5,
@@ -189,6 +225,8 @@ export const teams = [
   {
     name: "West Coast Eagles",
     logo: "/teams/West_Coast_Eagles.png",
+    captain: "Nic Naitanui",
+    coach:   "Adam Simpson",
     stats: {
       wins: 0,
       losses: 5,
