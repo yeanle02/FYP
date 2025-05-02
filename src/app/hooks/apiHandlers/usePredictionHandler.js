@@ -1,14 +1,15 @@
 import { useState } from "react";
 
 export default function usePredictionHandler() {
-    const [home_team,setHomeTeam] = useState("Richmond");
-    const [away_team,setAwayTeam] = useState("Melbourne");
+    const [home_team,setHomeTeam] = useState("");
+    const [away_team,setAwayTeam] = useState("");
+ 
 
     const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState(null);
     const [results, setResults] = useState([]);
 
-    const predictPageHandler = async () => {
+    const predictPageHandler = async (homeTeam, awayTeam) => {
         setLoading(true);
         setErrors(null);
         console.log("Frontend  prediction ");
@@ -16,8 +17,8 @@ export default function usePredictionHandler() {
         try {
         
           const requestData = {
-            home_team: home_team,
-            away_team: away_team,
+            home_team: homeTeam,
+            away_team: awayTeam,
             round:"R1", 
             venue:"M.C.G.",
             year:2024, 

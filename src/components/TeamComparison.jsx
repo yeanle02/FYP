@@ -111,9 +111,10 @@ export function TeamComparison() {
     
     setHomeTeam(match.team1.name);
     setAwayTeam(match.team2.name);
+    console.log("Selected match:", match.team1.name, "vs", match.team2.name);
 
     try {
-      const result = predictPageHandler();
+      const result = predictPageHandler(match.team1.name, match.team2.name);
       if (result && !result.error) {
         // Update prediction with real data from the API
         setPrediction({
