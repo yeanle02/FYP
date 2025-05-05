@@ -244,11 +244,11 @@ export function HomeTeamComparison() {
       </div>
 
       {/* Match Scrollable List */}
-      <div className="mt-6 bg-gradient-to-br from-gray-800 to-gray-700 rounded-lg shadow-xl p-4 ring-1 ring-gray-600/50">
+      <div className="mt-6 bg-gradient-to-br from-gray-800 to-gray-700 rounded-lg shadow-xl p-4 ring-1 ring-gray-600/50 flex flex-col h-[calc(100vh-36rem)]">
         <h2 className="text-2xl font-bold text-white mb-4 text-center">
           Today's Matches
         </h2>
-        <div ref={matchesContainerRef} className="max-h-[40vh] min-h-[120px] overflow-y-auto px-2 pb-4 custom-scrollbar scroll-smooth">
+        <div ref={matchesContainerRef} className="flex-1 overflow-y-auto px-2 pb-4 custom-scrollbar scroll-smooth">
           <div className="flex flex-col gap-2">
             {placeholderMatches.map((match, idx) => (
               <div
