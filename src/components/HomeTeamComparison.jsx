@@ -116,10 +116,10 @@ export function HomeTeamComparison() {
   return (
     <div className="flex-1 w-full">
       {/* Prediction Panel */}
-      <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-lg shadow-xl p-6 ring-1 ring-gray-600/50">
+      <div className="bg-gray-50 rounded-lg shadow-xl p-6 ring-1 ring-gray-200">
         <div className="max-w-4xl mx-auto">
           <div className="relative mb-6">
-            <h2 className="text-2xl font-bold text-white text-center">
+            <h2 className="text-2xl font-bold text-gray-800 text-center">
               Team Comparison & Prediction
             </h2>
             {selectedMatch && (
@@ -149,11 +149,11 @@ export function HomeTeamComparison() {
           </div>
 
           {!selectedMatch && (
-            <p className="text-center text-white">Select a match to view prediction.</p>
+            <p className="text-center text-gray-600">Select a match to view prediction.</p>
           )}
 
           {selectedMatch && prediction.isLoading ? (
-            <div className="bg-gray-200 p-8 rounded-lg shadow-xl flex flex-col items-center border border-gray-300/50 backdrop-blur-sm relative transition-all duration-300 hover:shadow-2xl hover:border-gray-400/50 hover:bg-gray-100 w-full max-w-2xl mx-auto min-h-[400px] justify-center">
+            <div className="bg-white p-8 rounded-lg shadow-xl flex flex-col items-center border border-gray-200/50 backdrop-blur-sm relative transition-all duration-300 hover:shadow-2xl hover:border-gray-300/50 hover:bg-gray-50 w-full max-w-2xl mx-auto min-h-[400px] justify-center">
               <div className="animate-pulse flex flex-col items-center">
                 <div className="w-24 h-24 bg-gray-300 rounded-full mb-8"></div>
                 <div className="h-4 w-32 bg-gray-300 rounded mb-8"></div>
@@ -175,11 +175,11 @@ export function HomeTeamComparison() {
               </div>
             </div>
           ) : prediction.team1Score !== null ? (
-            <div className="bg-gray-200 p-8 rounded-lg shadow-xl flex flex-col items-center border border-gray-300/50 backdrop-blur-sm relative transition-all duration-300 hover:shadow-2xl hover:border-gray-400/50 hover:bg-gray-100 w-full max-w-2xl mx-auto">
+            <div className="bg-white p-8 rounded-lg shadow-xl flex flex-col items-center border border-gray-200/50 backdrop-blur-sm relative transition-all duration-300 hover:shadow-2xl hover:border-gray-300/50 hover:bg-gray-50 w-full max-w-2xl mx-auto">
               <h3 className="text-xl font-semibold text-gray-800 mb-8 text-center">Predicted Score</h3>
-              <div className="grid grid-cols-2 gap-8 place-items-center mb-8 w-full max-w-md mx-auto">
+              <div className="grid grid-cols-2 gap-8 place-items-center mb-12 w-full max-w-md mx-auto">
                 {[selectedMatch.team1, selectedMatch.team2].map((team, index) => (
-                  <div key={team.name} className="flex flex-col items-center justify-center text-center">
+                  <div key={team.name} className="flex flex-col items-center justify-center text-center bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
                     <div className="w-[80px] h-[80px] flex items-center justify-center mb-4">
                       <Image src={team.logo} alt={team.name} width={60} height={60} 
                         className="object-contain transform transition-transform hover:scale-110 duration-300" />
@@ -191,9 +191,10 @@ export function HomeTeamComparison() {
                   </div>
                 ))}
               </div>
-              <div className="flex flex-col items-center w-full">
+              <h3 className="text-xl font-semibold text-gray-800 mb-6 text-center">Winner</h3>
+              <div className="flex flex-col items-center w-full bg-white p-6 rounded-lg shadow-md">
                 <div className="relative w-20 h-20">
-                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-24 h-24 bg-gray-200 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-105 hover:shadow-xl">
+                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-24 h-24 bg-gray-50 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-105 hover:shadow-xl">
                     <Image
                       src={(selectedMatch.team1.name === prediction.winningTeam ? selectedMatch.team1 : selectedMatch.team2).logo}
                       alt="Winner"
