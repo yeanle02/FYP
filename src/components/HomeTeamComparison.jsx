@@ -62,7 +62,7 @@ const placeholderMatches = [
 
 export function HomeTeamComparison() {
   const [selectedMatch, setSelectedMatch] = useState(null);
-  const [prediction, setPrediction] = useState({ team1Score: null, team2Score: null, winningTeam: null });
+  const [prediction, setPrediction] = useState({ team1Score: null, team2Score: null, winningTeam: null, isLoading: false });
   const [isScrollable, setIsScrollable] = useState(false);
   const matchesContainerRef = useRef(null);
 
@@ -85,18 +85,31 @@ export function HomeTeamComparison() {
     setSelectedMatch(match);
     setHomeTeam(match.team1.name);
     setAwayTeam(match.team2.name);
+    setPrediction(prev => ({ ...prev, isLoading: true }));
+    
+    const startTime = Date.now();
     
     try {
       const result = await predictPageHandler(match.team1.name, match.team2.name);
-      if (result && !result.error) {
-        setPrediction({
-          team1Score: result.home_score,
-          team2Score: result.away_score,
-          winningTeam: result.winning_team
-        });
-      }
+      
+      // Ensure loading shows for at least 2 seconds
+      const elapsedTime = Date.now() - startTime;
+      const remainingTime = Math.max(0, 2000 - elapsedTime);
+      
+      setTimeout(() => {
+        if (result && !result.error) {
+          setPrediction({
+            team1Score: result.home_score,
+            team2Score: result.away_score,
+            winningTeam: result.winning_team,
+            isLoading: false
+          });
+        }
+      }, remainingTime);
+      
     } catch (error) {
       console.error("Error during prediction:", error);
+      setPrediction(prev => ({ ...prev, isLoading: false }));
     }
   };
 
@@ -115,7 +128,7 @@ export function HomeTeamComparison() {
                   setSelectedMatch(null);
                   setPrediction({ team1Score: null, team2Score: null, winningTeam: null });
                 }}
-                className="absolute right-0 top-1/2 -translate-y-1/2 px-4 py-2 bg-gray-700 text-gray-200 rounded-lg hover:bg-gray-600 transition-colors duration-200 flex items-center gap-2 group"
+                className="absolute right-0 top-1/2 -translate-y-1/2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors duration-200 flex items-center gap-2 group"
               >
                 <span>Reset</span>
                 <svg
@@ -139,7 +152,29 @@ export function HomeTeamComparison() {
             <p className="text-center text-white">Select a match to view prediction.</p>
           )}
 
-          {selectedMatch && prediction.team1Score !== null && (
+          {selectedMatch && prediction.isLoading ? (
+            <div className="bg-gray-200 p-8 rounded-lg shadow-xl flex flex-col items-center border border-gray-300/50 backdrop-blur-sm relative transition-all duration-300 hover:shadow-2xl hover:border-gray-400/50 hover:bg-gray-100 w-full max-w-2xl mx-auto min-h-[400px] justify-center">
+              <div className="animate-pulse flex flex-col items-center">
+                <div className="w-24 h-24 bg-gray-300 rounded-full mb-8"></div>
+                <div className="h-4 w-32 bg-gray-300 rounded mb-8"></div>
+                <div className="flex gap-16 items-center mb-8">
+                  <div className="flex flex-col items-center gap-4">
+                    <div className="w-16 h-16 bg-gray-300 rounded-full"></div>
+                    <div className="h-3 w-24 bg-gray-300 rounded"></div>
+                    <div className="h-6 w-12 bg-gray-300 rounded"></div>
+                  </div>
+                  <div className="flex flex-col items-center gap-4">
+                    <div className="w-16 h-16 bg-gray-300 rounded-full"></div>
+                    <div className="h-3 w-24 bg-gray-300 rounded"></div>
+                    <div className="h-6 w-12 bg-gray-300 rounded"></div>
+                  </div>
+                </div>
+                <div className="text-gray-500 font-medium animate-bounce">
+                  Calculating prediction...
+                </div>
+              </div>
+            </div>
+          ) : prediction.team1Score !== null ? (
             <div className="bg-gray-200 p-8 rounded-lg shadow-xl flex flex-col items-center border border-gray-300/50 backdrop-blur-sm relative transition-all duration-300 hover:shadow-2xl hover:border-gray-400/50 hover:bg-gray-100 w-full max-w-2xl mx-auto">
               <h3 className="text-xl font-semibold text-gray-800 mb-8 text-center">Predicted Score</h3>
               <div className="grid grid-cols-2 gap-8 place-items-center mb-8 w-full max-w-md mx-auto">
@@ -173,7 +208,7 @@ export function HomeTeamComparison() {
                 </span>
               </div>
             </div>
-          )}
+          ) : null}
         </div>
       </div>
 
