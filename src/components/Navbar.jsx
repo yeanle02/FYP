@@ -169,11 +169,11 @@ export function Navbar() {
                 <Button 
                   variant={pathname === "/test" ? "default" : "secondary"} 
                   size="default"
-                  className={`flex items-center gap-3 px-4 py-2 text-sm font-medium transition-all duration-300 ${
+                  className={`flex items-center gap-3 px-6 py-2.5 text-base font-medium transition-all duration-300 ${
                     pathname === "/test" ? "shadow-lg shadow-blue-500/50 hover:shadow-blue-500/75" : "hover:shadow-lg hover:shadow-gray-500/50"
                   }`}
                 >
-                  <LineChart className="h-4 w-4" />
+                  <LineChart className="h-5 w-5" />
                   test
                 </Button>
               </Link>
