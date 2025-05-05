@@ -2,7 +2,7 @@
 
 import { Navbar } from "@/components/Navbar";
 import { TeamStats } from "@/components/TeamStats";
-import { MatchPrediction } from "@/components/MatchPrediction";
+import { HomeTeamComparison } from "@/components/HomeTeamComparison";
 import { TestButton } from "@/components/InsertButton";
 import { ReadButton } from "@/components/ReadButton";
 
@@ -19,9 +19,9 @@ export default function Home() {
             <TeamStats />
           </div>
 
-          {/* Main Section - Match Prediction */}
+          {/* Main Section - Today's Matches */}
           <div className="lg:col-span-2">
-            <MatchPrediction />
+            <HomeTeamComparison />
           </div>
         </div>
       </div>

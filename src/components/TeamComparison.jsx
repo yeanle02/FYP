@@ -201,7 +201,7 @@ export function TeamComparison() {
             {/* Match Scrollable List */}
             <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-lg shadow-xl p-4 ring-1 ring-gray-600/50">
               <h2 className="text-2xl font-bold text-white mb-4 text-center">
-                Select A Match
+                Today's Matches
               </h2>
               <div ref={matchesContainerRef} className="max-h-[calc(100vh-620px)] min-h-[180px] overflow-y-auto px-2 pb-4 custom-scrollbar scroll-smooth">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
