@@ -245,8 +245,8 @@ export function TeamComparison() {
             {/* Prediction Panel */}
             <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-lg shadow-xl p-6 ring-1 ring-gray-600/50 mt-6">
               <div className="max-w-4xl mx-auto">
-                <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-2xl font-bold text-white text-center flex-1">
+                <div className="relative mb-6">
+                  <h2 className="text-2xl font-bold text-white text-center">
                     Team Comparison & Prediction
                   </h2>
                   {selectedMatch && (
@@ -255,7 +255,7 @@ export function TeamComparison() {
                         setSelectedMatch(null);
                         setPrediction({ team1Score: null, team2Score: null, winningTeam: null });
                       }}
-                      className="px-4 py-2 bg-gray-700 text-gray-200 rounded-lg hover:bg-gray-600 transition-colors duration-200 flex items-center gap-2 group"
+                      className="absolute right-0 top-1/2 -translate-y-1/2 px-4 py-2 bg-gray-700 text-gray-200 rounded-lg hover:bg-gray-600 transition-colors duration-200 flex items-center gap-2 group"
                     >
                       <span>Reset</span>
                       <svg
@@ -354,13 +354,19 @@ export function TeamComparison() {
                 {selectedMatch && prediction.team1Score !== null && (
                   <div className="bg-gray-200 p-6 rounded-lg shadow-xl flex flex-col items-center border border-gray-300/50 backdrop-blur-sm relative transition-all duration-300 hover:shadow-2xl hover:border-gray-400/50 hover:bg-gray-100">
                     <h3 className="text-xl font-semibold text-gray-800 mb-4">Predicted Score</h3>
-                    <div className="flex items-center gap-8 mb-6">
-                      <div className={`text-3xl font-bold ${prediction.winningTeam === selectedMatch.team1.name ? 'text-green-600' : 'text-gray-700'}`}>
-                        {prediction.team1Score}
+                    <div className="flex items-center gap-12 mb-6">
+                      <div className="flex flex-col items-center">
+                        <span className="text-gray-600 font-medium mb-2 whitespace-nowrap">{selectedMatch.team1.name}</span>
+                        <div className={`text-3xl font-bold ${prediction.winningTeam === selectedMatch.team1.name ? 'text-green-600' : 'text-gray-700'}`}>
+                          {prediction.team1Score}
+                        </div>
                       </div>
                       <div className="text-2xl text-gray-500">-</div>
-                      <div className={`text-3xl font-bold ${prediction.winningTeam === selectedMatch.team2.name ? 'text-green-600' : 'text-gray-700'}`}>
-                        {prediction.team2Score}
+                      <div className="flex flex-col items-center">
+                        <span className="text-gray-600 font-medium mb-2 whitespace-nowrap">{selectedMatch.team2.name}</span>
+                        <div className={`text-3xl font-bold ${prediction.winningTeam === selectedMatch.team2.name ? 'text-green-600' : 'text-gray-700'}`}>
+                          {prediction.team2Score}
+                        </div>
                       </div>
                     </div>
                     <div className="flex flex-col items-center">
