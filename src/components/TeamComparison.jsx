@@ -83,7 +83,7 @@ const placeholderMatches = [
 
 export function TeamComparison() {
   const [selectedMatch, setSelectedMatch] = useState(null);
-  const [prediction, setPrediction] = useState({ team1Score: null, team2Score: null });
+  const [prediction, setPrediction] = useState({ team1Score: null, team2Score: null, winningTeam: null });
   const [isScrollable, setIsScrollable] = useState(false);
   const matchesContainerRef = useRef(null);
 
@@ -104,7 +104,7 @@ export function TeamComparison() {
 
   const { loading:prLoading, errors:prErrors, results:prResults, setHomeTeam, setAwayTeam, predictPageHandler } = usePredictionHandler();
   
-  const selectMatch = (match) => {
+  const selectMatch = async (match) => {
     setSelectedMatch(match);
 
     handleGetTeamStatus(match.team1.name, match.team2.name);
@@ -114,7 +114,7 @@ export function TeamComparison() {
     console.log("Selected match:", match.team1.name, "vs", match.team2.name);
 
     try {
-      const result = predictPageHandler(match.team1.name, match.team2.name);
+      const result = await predictPageHandler(match.team1.name, match.team2.name);
       if (result && !result.error) {
         // Update prediction with real data from the API
         setPrediction({
@@ -208,7 +208,7 @@ export function TeamComparison() {
                   {placeholderMatches.map((match, idx) => (
                     <div
                       key={idx}
-                      onClick={() => selectMatch(match)}
+                      onClick={async () => await selectMatch(match)}
                       className="group bg-gradient-to-br from-gray-700 to-gray-600 p-3 rounded-lg cursor-pointer border-t-2 border-gray-500
                     shadow-[0_10px_20px_rgba(0,0,0,0.3)] hover:from-gray-600 hover:to-gray-500 transition-all duration-300 
                     hover:border-gray-400 hover:shadow-[0_20px_30px_rgba(0,0,0,0.4)]"
@@ -253,7 +253,7 @@ export function TeamComparison() {
                     <button
                       onClick={() => {
                         setSelectedMatch(null);
-                        setPrediction({ team1Score: null, team2Score: null });
+                        setPrediction({ team1Score: null, team2Score: null, winningTeam: null });
                       }}
                       className="px-4 py-2 bg-gray-700 text-gray-200 rounded-lg hover:bg-gray-600 transition-colors duration-200 flex items-center gap-2 group"
                     >
@@ -355,11 +355,11 @@ export function TeamComparison() {
                   <div className="bg-gray-200 p-6 rounded-lg shadow-xl flex flex-col items-center border border-gray-300/50 backdrop-blur-sm relative transition-all duration-300 hover:shadow-2xl hover:border-gray-400/50 hover:bg-gray-100">
                     <h3 className="text-xl font-semibold text-gray-800 mb-4">Predicted Score</h3>
                     <div className="flex items-center gap-8 mb-6">
-                      <div className={`text-3xl font-bold ${prediction.team1Score > prediction.team2Score ? 'text-green-600' : 'text-gray-700'}`}>
+                      <div className={`text-3xl font-bold ${prediction.winningTeam === selectedMatch.team1.name ? 'text-green-600' : 'text-gray-700'}`}>
                         {prediction.team1Score}
                       </div>
                       <div className="text-2xl text-gray-500">-</div>
-                      <div className={`text-3xl font-bold ${prediction.team2Score > prediction.team1Score ? 'text-green-600' : 'text-gray-700'}`}>
+                      <div className={`text-3xl font-bold ${prediction.winningTeam === selectedMatch.team2.name ? 'text-green-600' : 'text-gray-700'}`}>
                         {prediction.team2Score}
                       </div>
                     </div>
@@ -367,7 +367,7 @@ export function TeamComparison() {
                       <div className="relative w-20 h-20">
                         <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-24 h-24 bg-gray-200 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-105 hover:shadow-xl">
                           <Image
-                            src={(prediction.team1Score > prediction.team2Score ? selectedMatch.team1 : selectedMatch.team2).logo}
+                            src={(selectedMatch.team1.name === prediction.winningTeam ? selectedMatch.team1 : selectedMatch.team2).logo}
                             alt="Winner"
                             width={72}
                             height={72}
@@ -376,9 +376,7 @@ export function TeamComparison() {
                         </div>
                       </div>
                       <span className="text-lg font-bold text-green-600 mt-6 transition-all duration-300 hover:text-green-500">
-                        {prediction.team1Score > prediction.team2Score
-                          ? selectedMatch.team1.name
-                          : selectedMatch.team2.name}
+                    {prediction.winningTeam}
                       </span>
                     </div>
                   </div>
