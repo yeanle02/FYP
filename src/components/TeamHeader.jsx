@@ -11,8 +11,8 @@ export default function TeamHeader({ teamName = "Sydney Swans",  teamLogo = "/te
           width={220}
           height={220}
         />
-        <div className="flex flex-col items-start w-[1100px] h-full relative">
-          <h1 className="text-[90px] font-extrabold text-white ml-20">
+        <div className="flex flex-col items-start justify-center w-[1100px] h-full relative">
+          <h1 className="text-[80px] font-extrabold text-white ml-20 truncate max-w-[900px]">
             {teamName}
           </h1>
     
