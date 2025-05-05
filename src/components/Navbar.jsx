@@ -109,8 +109,7 @@ export function Navbar() {
                 {[...teams, ...teams].map((team, index) => (
                   <div
                     key={`${team.name}-${index}`}
-                    className="flex-shrink-0 cursor-pointer hover:opacity-80 transition-opacity px-3"
-                    onClick={() => selectTeam(team, 'team1')}
+                    className="flex-shrink-0 px-3"
                     title={team.name}
                   >
                     <Image
