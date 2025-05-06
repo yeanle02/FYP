@@ -14,14 +14,14 @@ import { teams } from "@/app/data/teams";
 export function TeamStats() {
   return (
     <div>
-      <div className="p-4 bg-gradient-to-br from-gray-200 to-gray-100 rounded-lg shadow-xl ring-1 ring-gray-300/50 mb-6">
+      <div className="p-4 bg-gradient-to-br from-gray-200 to-gray-100 rounded-lg shadow-xl border border-gray-500 mb-6">
         <h2 className="text-2xl font-bold mb-4 text-gray-700 text-center">Current Round</h2>
         <div className="flex justify-between items-center">
           <div className="text-lg font-semibold text-gray-600">Round 23</div>
           <div className="text-gray-600">20th August 2022</div>
         </div>
       </div>
-      <div className="p-4 bg-gradient-to-br from-gray-200 to-gray-100 rounded-lg shadow-xl ring-1 ring-gray-300/50">
+      <div className="p-4 bg-gradient-to-br from-gray-200 to-gray-100 rounded-lg shadow-xl border border-gray-500">
         <h2 className="text-2xl font-bold mb-4 text-gray-700 text-center">Team Rankings</h2>
         <div className="relative">
           <div className="overflow-y-auto max-h-[500px] min-h-[500px] p-2 custom-scrollbar scroll-smooth">

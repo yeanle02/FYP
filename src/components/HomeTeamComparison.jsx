@@ -218,7 +218,7 @@ export function HomeTeamComparison() {
           </div>
         </div>
 
-        <div className="bg-white rounded-lg p-4 relative">
+        <div className="bg-gray-200 rounded-lg p-4 relative">
           {prediction.isLoading ? (
             <div className="flex flex-col items-center justify-center space-y-4">
               <div className="relative w-12 h-12">
