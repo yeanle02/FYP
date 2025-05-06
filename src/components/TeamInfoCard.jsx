@@ -5,7 +5,7 @@ import { ExternalLink } from "lucide-react";
 export default function TeamInfoCard({ role, name, imageSrc, link = "#" }) {
   return (
     
-    <div className="bg-gray-800 rounded-xl shadow-md hover:shadow-xl transition duration-300 px-4 py-6 flex items-center gap-4 h-[180px] w-full mb-6 border-none">
+    <div className="bg-gray-800 rounded-xl shadow-md hover:shadow-xl transition duration-300 px-4 py-6 flex items-center gap-4 h-[180px] w-[370px] border-none">
       
       {/* logo and name */}
       <div className="flex flex-col items-center w-[120px]">

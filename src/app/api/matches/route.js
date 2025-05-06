@@ -103,9 +103,9 @@ async function getLeaderBoard() {
 
     // remap each record:
     return docs.map(
-      ({ Team, total_points, wins, losses, rank }) => ({
+      ({ Team, points, wins, losses, rank }) => ({
         name: Team,
-        historyPoints: total_points ,
+        historyPoints: points ,
         wins,
         losses,
         rank,
