@@ -90,12 +90,11 @@ export function TeamComparison() {
   const { loading, errors, results, handleGetTeamStatus } = useTeamStatusHandler();
 
   const { loading:prLoading, errors:prErrors, results:prResults, setHomeTeam, setAwayTeam, predictPageHandler } = usePredictionHandler();
-  
- const {
-     loading: lbLoading,
-     error:   lbError,
-      results: lbResults
-   } = useStatusListHandler();
+  const { results:leaderBoardResults, handleGetLeaderBoards } = useStatusListHandler();
+ 
+  useEffect(() => {
+    handleGetLeaderBoards();
+  }, []);
 
   const selectMatch = (match) => {
     setSelectedMatch(match);
@@ -173,7 +172,7 @@ export function TeamComparison() {
           {/* Leaderboard */}
           <div className="bg-gray-900 p-4 rounded-lg shadow-md w-full xl:w-72 h-fit">
             <h3 className="text-xl font-semibold text-white mb-4 text-center">Leaderboard</h3>
-            {placeholderTeams.sort((a, b) => a.rank - b.rank).map((team) => (
+            {leaderBoardResults.sort((a, b) => a.rank - b.rank).slice(0, 8).map((team) => (
               <div key={team.name} className="flex justify-between items-center py-2 px-3 bg-gray-800 rounded mb-2">
                 <div className="flex items-center gap-2">
                   <span className="text-white font-bold">#{team.rank}</span>
@@ -181,7 +180,7 @@ export function TeamComparison() {
                   <span className="text-gray-200 text-sm">{team.name}</span>
                 </div>
                 <div className="flex items-center gap-1">
-                  {team.movedUp ? <ArrowUp size={16} className="text-green-400" /> : <ArrowDown size={16} className="text-red-400" />}
+                  {/* {team.movedUp ? <ArrowUp size={16} className="text-green-400" /> : <ArrowDown size={16} className="text-red-400" />} */}
                   <span className="text-gray-300 text-sm">{team.historyPoints}</span>
                 </div>
               </div>
@@ -189,7 +188,7 @@ export function TeamComparison() {
           </div>
 
 
-{/* Leaderboard —— 用后端数据替代硬编码 */}
+{/* Leaderboard —— 用后端数据替代硬编码
           <div className="bg-gray-900 p-4 rounded-lg shadow-md w-full xl:w-72 h-fit">
             <h3 className="text-xl font-semibold text-white mb-4 text-center">
               Leaderboard
@@ -230,7 +229,7 @@ export function TeamComparison() {
                 );
               })
             )}
-          </div>
+          </div> */}
 
 
 
