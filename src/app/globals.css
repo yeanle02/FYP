@@ -55,7 +55,7 @@
   /* Utility classes */
   .custom-scrollbar {
     scrollbar-width: thin;
-    scrollbar-color: rgb(75 85 99) rgb(31 41 55);
+    scrollbar-color: rgba(255, 255, 255, 0.6) rgba(255, 255, 255, 0.1);
   }
 
   .custom-scrollbar::-webkit-scrollbar {
@@ -63,11 +63,11 @@
   }
 
   .custom-scrollbar::-webkit-scrollbar-track {
-    @apply bg-gray-800 rounded;
+    @apply bg-white/10 rounded;
   }
 
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    @apply bg-gray-600 rounded hover:bg-gray-500 transition-colors duration-200;
+    @apply bg-white/60 rounded hover:bg-white/80 transition-colors duration-200;
   }
 
   .scroll-smooth {

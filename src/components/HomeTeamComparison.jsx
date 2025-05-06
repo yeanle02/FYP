@@ -115,16 +115,67 @@ export function HomeTeamComparison() {
 
   return (
     <div className="flex-1 w-full">
-      <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-lg shadow-xl p-6 ring-1 ring-gray-600/50">
+      {/* Match Scrollable List */}
+      <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-lg shadow-xl p-4 ring-1 ring-gray-600/50 flex flex-col h-[calc(100vh-36rem)]">
+        <h2 className="text-2xl font-bold text-white mb-4 text-center">
+          Today's Matches
+        </h2>
+        <div ref={matchesContainerRef} className="flex-1 overflow-y-auto px-2 pb-4 custom-scrollbar scroll-smooth">
+          <div className="flex flex-col gap-2">
+            {placeholderMatches.map((match, idx) => (
+              <div
+                key={idx}
+                onClick={async () => await selectMatch(match)}
+                className="group h-28 bg-gradient-to-br from-gray-700 to-gray-600 p-4 rounded-lg cursor-pointer border-t-2 border-gray-500
+                shadow-[0_10px_20px_rgba(0,0,0,0.3)] hover:from-gray-600 hover:to-gray-500 transition-all duration-300 
+                hover:border-gray-400 hover:shadow-[0_20px_30px_rgba(0,0,0,0.4)] flex items-center w-full"
+              >
+                <div className="flex items-center justify-center w-full gap-24">
+                  <div className="flex flex-col items-center w-40">
+                    <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mb-3 shadow-lg group-hover:bg-white transition-all duration-300">
+                      <Image src={match.team1.logo} width={55} height={55} alt={match.team1.name} 
+                        className="rounded-full transform transition-transform group-hover:scale-110 duration-300" />
+                    </div>
+                    <span className="text-gray-200 text-sm font-semibold group-hover:text-white transition-colors duration-300 text-center">{match.team1.name}</span>
+                  </div>
+                  
+                  <span className="text-gray-200 font-bold text-2xl group-hover:text-white transition-colors duration-300 w-16 text-center">VS</span>
+                  
+                  <div className="flex flex-col items-center w-40">
+                    <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mb-3 shadow-lg group-hover:bg-white transition-all duration-300">
+                      <Image src={match.team2.logo} width={55} height={55} alt={match.team2.name} 
+                        className="rounded-full transform transition-transform group-hover:scale-110 duration-300" />
+                    </div>
+                    <span className="text-gray-200 text-sm font-semibold group-hover:text-white transition-colors duration-300 text-center">{match.team2.name}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        {isScrollable && (
+          <div className="relative mt-6 pb-2">
+            <div className="absolute -top-6 left-0 right-0 h-6 bg-gradient-to-t from-gray-800 to-transparent pointer-events-none"></div>
+            <div className="text-center bg-gradient-to-t from-gray-800/10 to-transparent pt-2 pb-1 px-4 rounded-lg">
+              <span className="text-gray-400 text-sm animate-bounce block cursor-default select-none hover:text-gray-300 transition-colors">
+                Scroll for more matches ↓
+              </span>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Match Prediction */}
+      <div className="mt-6 bg-gradient-to-br from-gray-800 to-gray-700 rounded-lg shadow-xl p-6 ring-1 ring-gray-600/50">
         <h2 className="text-2xl font-bold text-white mb-8 text-center">Match Prediction</h2>
         <div className="flex justify-center items-center gap-32 mb-12">
-          <div className="flex flex-col items-center">
-            <div className={`w-40 h-40 bg-gray-700 rounded-full flex items-center justify-center border-2 
+          <div className="flex flex-col items-center group">
+            <div className={`w-40 h-40 bg-gray-200 rounded-full flex items-center justify-center border-2 
               ${selectedMatch && prediction.winningTeam ? (
                 selectedMatch.team1.name === prediction.winningTeam
                   ? 'border-green-400 shadow-[0_0_20px_rgba(74,222,128,0.5)]'
                   : 'border-red-400 shadow-[0_0_20px_rgba(248,113,113,0.5)]'
-              ) : 'border-gray-600 hover:border-gray-500'} transition-all`}>
+              ) : 'border-gray-600 hover:border-gray-500'} transition-all group-hover:bg-white`}>
               {selectedMatch ? (
                 <Image 
                   src={selectedMatch.team1.logo} 
@@ -143,13 +194,13 @@ export function HomeTeamComparison() {
 
           <span className="text-white text-2xl font-bold mt-[-40px]">VS</span>
 
-          <div className="flex flex-col items-center">
-            <div className={`w-40 h-40 bg-gray-700 rounded-full flex items-center justify-center border-2 
+          <div className="flex flex-col items-center group">
+            <div className={`w-40 h-40 bg-gray-200 rounded-full flex items-center justify-center border-2 
               ${selectedMatch && prediction.winningTeam ? (
                 selectedMatch.team2.name === prediction.winningTeam
                   ? 'border-green-400 shadow-[0_0_20px_rgba(74,222,128,0.5)]'
                   : 'border-red-400 shadow-[0_0_20px_rgba(248,113,113,0.5)]'
-              ) : 'border-gray-600 hover:border-gray-500'} transition-all`}>
+              ) : 'border-gray-600 hover:border-gray-500'} transition-all group-hover:bg-white`}>
               {selectedMatch ? (
                 <Image 
                   src={selectedMatch.team2.logo} 
@@ -241,56 +292,6 @@ export function HomeTeamComparison() {
             </div>
           )}
         </div>
-      </div>
-
-      {/* Match Scrollable List */}
-      <div className="mt-6 bg-gradient-to-br from-gray-800 to-gray-700 rounded-lg shadow-xl p-4 ring-1 ring-gray-600/50 flex flex-col h-[calc(100vh-36rem)]">
-        <h2 className="text-2xl font-bold text-white mb-4 text-center">
-          Today's Matches
-        </h2>
-        <div ref={matchesContainerRef} className="flex-1 overflow-y-auto px-2 pb-4 custom-scrollbar scroll-smooth">
-          <div className="flex flex-col gap-2">
-            {placeholderMatches.map((match, idx) => (
-              <div
-                key={idx}
-                onClick={async () => await selectMatch(match)}
-                className="group h-28 bg-gradient-to-br from-gray-700 to-gray-600 p-4 rounded-lg cursor-pointer border-t-2 border-gray-500
-                shadow-[0_10px_20px_rgba(0,0,0,0.3)] hover:from-gray-600 hover:to-gray-500 transition-all duration-300 
-                hover:border-gray-400 hover:shadow-[0_20px_30px_rgba(0,0,0,0.4)] flex items-center w-full"
-              >
-                <div className="flex items-center justify-center w-full gap-24">
-                  <div className="flex flex-col items-center w-40">
-                    <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mb-3 shadow-lg group-hover:bg-white transition-all duration-300">
-                      <Image src={match.team1.logo} width={55} height={55} alt={match.team1.name} 
-                        className="rounded-full transform transition-transform group-hover:scale-110 duration-300" />
-                    </div>
-                    <span className="text-gray-200 text-sm font-semibold group-hover:text-white transition-colors duration-300 text-center">{match.team1.name}</span>
-                  </div>
-                  
-                  <span className="text-gray-200 font-bold text-2xl group-hover:text-white transition-colors duration-300 w-16 text-center">VS</span>
-                  
-                  <div className="flex flex-col items-center w-40">
-                    <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mb-3 shadow-lg group-hover:bg-white transition-all duration-300">
-                      <Image src={match.team2.logo} width={55} height={55} alt={match.team2.name} 
-                        className="rounded-full transform transition-transform group-hover:scale-110 duration-300" />
-                    </div>
-                    <span className="text-gray-200 text-sm font-semibold group-hover:text-white transition-colors duration-300 text-center">{match.team2.name}</span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-        {isScrollable && (
-          <div className="relative mt-6 pb-2">
-            <div className="absolute -top-6 left-0 right-0 h-6 bg-gradient-to-t from-gray-800 to-transparent pointer-events-none"></div>
-            <div className="text-center bg-gradient-to-t from-gray-800/10 to-transparent pt-2 pb-1 px-4 rounded-lg">
-              <span className="text-gray-400 text-sm animate-bounce block cursor-default select-none hover:text-gray-300 transition-colors">
-                Scroll for more matches ↓
-              </span>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );

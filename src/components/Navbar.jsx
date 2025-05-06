@@ -1,17 +1,9 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import Image from "next/image";
 import Link from "next/link";
-import { Search, Home, LineChart, Users } from "lucide-react";
+import { Home, LineChart, Users } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useTeams } from "@/app/context/TeamContext";
 import { useState, useEffect } from 'react';
@@ -51,55 +43,19 @@ const mockMatches = [
 ];
 
 export function Navbar() {
-  const { teams, selectTeam } = useTeams();
+  const { teams } = useTeams();
   const pathname = usePathname();
-  const [searchTerm, setSearchTerm] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
-  const [showDropdown, setShowDropdown] = useState(false);
-  
-  const handleMatchSelect = async (match) => {
-    const team1 = teams.find(t => t.name === match.team1.name);
-    const team2 = teams.find(t => t.name === match.team2.name);
-    
-    // Select team1 first, then team2 after a small delay
-    if (team1) {
-      selectTeam(team1, 'team1');
-      // Small delay to ensure team1 is set before team2
-      setTimeout(() => {
-        if (team2) selectTeam(team2, 'team2');
-      }, 100);
-    }
-    
-    setShowDropdown(false);
-    setSearchTerm('');
-  };
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (searchTerm) {
-        const term = searchTerm.toLowerCase();
-        const matches = mockMatches.filter(match => 
-          match.team1.name.toLowerCase().includes(term) ||
-          match.team2.name.toLowerCase().includes(term)
-        );
-        setSearchResults(matches);
-        setShowDropdown(matches.length > 0);
-      } else {
-        setSearchResults([]);
-        setShowDropdown(false);
-      }
-    }, 300);
-
-    return () => clearTimeout(timer);
-  }, [searchTerm]);
 
   return (
     <nav className="bg-blue-950 shadow-lg py-2">
       <div className="container mx-auto px-4">
         <div className="flex h-14 items-center">
-          {/* AFL Logo */}
-          <div className="flex-shrink-0">
+          {/* AFL Logo and Title */}
+          <div className="flex items-center gap-4">
             <Image src="/afl_logo.png" alt="AFL Logo" width={90} height={90} className="h-12 w-auto" />
+            <h1 className="text-3xl font-extrabold tracking-wider bg-gradient-to-r from-blue-200 to-white bg-clip-text text-transparent drop-shadow-[0_2px_2px_rgba(0,0,0,0.3)] hover:scale-105 hover:from-blue-300 hover:to-blue-100 transition-all duration-300">
+              No Gambling Pls
+            </h1>
           </div>
 
           {/* Sliding Team Logos */}
@@ -177,56 +133,6 @@ export function Navbar() {
                   test
                 </Button>
               </Link>
-            </div>
-            
-            {/* Search Bar */}
-            <div className="w-72 ml-8">
-              <div className="relative">
-                <Input
-                  type="text"
-                  placeholder="Search for a team..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10"
-                />
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-500" />
-                
-                {/* Search Results Dropdown */}
-                {showDropdown && (
-                  <div className="absolute mt-1 w-full bg-white rounded-md shadow-lg max-h-60 overflow-auto z-50">
-                    {searchResults.map((match, index) => (
-                      <div
-                        key={index}
-                        className="flex items-center p-3 hover:bg-gray-100 cursor-pointer border-b last:border-b-0"
-                        onClick={() => handleMatchSelect(match)}
-                      >
-                        <div className="flex items-center gap-2">
-                          <Image
-                            src={match.team1.logo}
-                            alt={match.team1.name}
-                            width={24}
-                            height={24}
-                            className="w-6 h-6"
-                          />
-                          <span>{match.team1.name}</span>
-                        </div>
-                        <span className="mx-2">vs</span>
-                        <div className="flex items-center gap-2">
-                          <Image
-                            src={match.team2.logo}
-                            alt={match.team2.name}
-                            width={24}
-                            height={24}
-                            className="w-6 h-6"
-                          />
-                          <span>{match.team2.name}</span>
-                        </div>
-                        <span className="ml-auto text-sm text-gray-500">{match.time}</span>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
             </div>
           </div>
         </div>
