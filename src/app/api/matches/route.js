@@ -1,29 +1,24 @@
-
-//app/api/matches/route.js
+// app/api/matches/route.js
 import { connectToDatabase } from '@/lib/mongodb';
 import { NextResponse } from 'next/server';
 
-// Debug  function
+// Debug function
 const debugLog = (stage, data, isError = false) => {
   const prefix = isError ? "🚨 ERROR" : "🔍 DEBUG";
   console.log(`${prefix} ${stage}:`, data);
-  return data; 
+  return data;
 };
-
 
 async function getTeamMembers(teamName) {
   debugLog("getTeamMembers", `Starting query for team: ${teamName}`);
   try {
-
-    const connection = await connectToDatabase();
-
     const { client, db } = await connectToDatabase();
     debugLog("getTeamMembers", "MongoDB connection established");
-    
+
     const playersCollection = db.collection('team_player');
     const query = { Team: teamName };
     debugLog("getTeamMembers", `Executing query: ${JSON.stringify(query)}`);
-    
+
     const players = await playersCollection.find(query).toArray();
     debugLog("getTeamMembers", `Found ${players.length} players for team: ${teamName}`);
     return players;
@@ -37,11 +32,11 @@ async function getHistoricalMatches(teamName) {
   try {
     const { client, db } = await connectToDatabase();
     debugLog("getHistoricalMatches", "MongoDB connection established");
-    
+
     const matchesCollection = db.collection("match");
     const query = { $or: [{ team1: teamName }, { team2: teamName }] };
     debugLog("getHistoricalMatches", `Executing query: ${JSON.stringify(query)}`);
-    
+
     const matches = await matchesCollection.find(query).toArray();
     debugLog("getHistoricalMatches", `Found ${matches.length} matches for team: ${teamName}`);
     return matches;
@@ -50,19 +45,18 @@ async function getHistoricalMatches(teamName) {
   }
 }
 
-
 async function getTeamStatus(team1, team2) {
   debugLog("getTeamStatus", `Starting query for teams: ${team1} vs ${team2}`);
   try {
     const { client, db } = await connectToDatabase();
     debugLog("getTeamStatus", "MongoDB connection established");
-    
+
     const statusCollection = db.collection("team_status");
-    
+
     debugLog("getTeamStatus", `Looking up team1: ${team1}`);
     const team1Status = await statusCollection.findOne({ Team: team1 });
     debugLog("getTeamStatus", team1Status ? `Found team1 status` : `Team1 status not found!`);
-    
+
     debugLog("getTeamStatus", `Looking up team2: ${team2}`);
     const team2Status = await statusCollection.findOne({ Team: team2 });
     debugLog("getTeamStatus", team2Status ? `Found team2 status` : `Team2 status not found!`);
@@ -77,15 +71,36 @@ async function getTeamStatus(team1, team2) {
   }
 }
 
+async function getCaptainCoach(teamName) {
+  debugLog("getCaptainCoach", `Starting query for team: ${teamName}`);
+  try {
+    const { client, db } = await connectToDatabase();
+    debugLog("getCaptainCoach", "MongoDB connection established");
+
+    const statusCollection = db.collection("team_status");
+    const projection = { projection: { _id: 0, Captain: 1, Coach: 1 } };
+    debugLog("getCaptainCoach", `Executing query with projection: ${JSON.stringify(projection)}`);
+
+    const doc = await statusCollection.findOne({ Team: teamName }, projection);
+    if (!doc) {
+      throw new Error(`Team not found: ${teamName}`);
+    }
+    debugLog("getCaptainCoach", `Found Captain & Coach for ${teamName}`, false);
+    return doc;
+  } catch (error) {
+    return debugLog("getCaptainCoach", error, true);
+  }
+}
+
 // GET handler
 export async function GET(request) {
   const startTime = Date.now();
   const url = new URL(request.url);
   const searchParams = url.searchParams;
-  
+
   debugLog("API", `Request received: GET ${url.pathname}`);
   debugLog("API", `Query params: ${JSON.stringify(Object.fromEntries(searchParams))}`);
-  
+
   const action = searchParams.get('action');
   const teamName = searchParams.get('teamName');
   const team1 = searchParams.get('team1');
@@ -93,7 +108,7 @@ export async function GET(request) {
 
   try {
     let result;
-    
+
     if (action === "get_team_member" && teamName) {
       debugLog("API", `Processing get_team_member for ${teamName}`);
       result = await getTeamMembers(teamName);
@@ -115,8 +130,18 @@ export async function GET(request) {
       return NextResponse.json(result);
     }
 
+    if (action === "get_captain_coach" && teamName) {
+      debugLog("API", `Processing get_captain_coach for ${teamName}`);
+      result = await getCaptainCoach(teamName);
+      debugLog("API", `Completed get_captain_coach in ${Date.now() - startTime}ms`);
+      return NextResponse.json(result);
+    }
+
     debugLog("API", "Invalid request or missing parameters", true);
-    return NextResponse.json({ error: "Invalid request or missing parameters" }, { status: 400 });
+    return NextResponse.json(
+      { error: "Invalid request or missing parameters" },
+      { status: 400 }
+    );
   } catch (error) {
     debugLog("API", `Error: ${error.message}`, true);
     return NextResponse.json({ error: error.message }, { status: 500 });

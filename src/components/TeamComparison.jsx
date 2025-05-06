@@ -15,6 +15,8 @@ import {
 import { ArrowUp, ArrowDown } from 'lucide-react';
 import useTeamStatusHandler from '@/app/hooks/apiHandlers/useTeamStatusHandler';
 import usePredictionHandler from '@/app/hooks/apiHandlers/usePredictionHandler';
+import useStatusListHandler from '@/app/hooks/apiHandlers/useStatusListHandler';
+
 
 ChartJS.register(
   RadialLinearScale,
@@ -89,6 +91,12 @@ export function TeamComparison() {
 
   const { loading:prLoading, errors:prErrors, results:prResults, setHomeTeam, setAwayTeam, predictPageHandler } = usePredictionHandler();
   
+ const {
+     loading: lbLoading,
+     error:   lbError,
+      results: lbResults
+   } = useStatusListHandler();
+
   const selectMatch = (match) => {
     setSelectedMatch(match);
 
@@ -179,6 +187,52 @@ export function TeamComparison() {
               </div>
             ))}
           </div>
+
+
+{/* Leaderboard —— 用后端数据替代硬编码 */}
+          <div className="bg-gray-900 p-4 rounded-lg shadow-md w-full xl:w-72 h-fit">
+            <h3 className="text-xl font-semibold text-white mb-4 text-center">
+              Leaderboard
+            </h3>
+            {lbLoading && (
+              <p className="text-center text-white">Loading leaderboard…</p>
+            )}
+            {lbError && (
+              <p className="text-center text-red-400">Error: {lbError}</p>
+            )}
+            {!lbLoading && !lbError && (
+              // lbResults 已经是 total_points 排序好的前十条
+              lbResults.map((doc, idx) => {
+                const rank = idx + 1;
+                const name = doc.Team;
+                const pts  = doc.total_points;
+                // 如果你没有 logo 字段，这里先硬编码一个默认图
+                const logo = `/teams/${name.replace(/\s+/g, '_')}.png`;
+                // movedUp 你可以后面再自己实现
+                const movedUp = false;
+                return (
+                  <div
+                    key={name}
+                    className="flex justify-between items-center py-2 px-3 bg-gray-800 rounded mb-2"
+                  >
+                    <div className="flex items-center gap-2">
+                      <span className="text-white font-bold">#{rank}</span>
+                      <Image src={logo} alt={name} width={24} height={24} />
+                      <span className="text-gray-200 text-sm">{name}</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      {movedUp 
+                        ? <ArrowUp   size={16} className="text-green-400" /> 
+                        : <ArrowDown size={16} className="text-red-400"   />}
+                      <span className="text-gray-300 text-sm">{pts}</span>
+                    </div>
+                  </div>
+                );
+              })
+            )}
+          </div>
+
+
 
           {/* Main Section - Match List + Prediction */}
           <div className="flex-1 w-full">
