@@ -156,7 +156,7 @@ export function TeamComparison() {
 
   return (
     <main className="min-h-screen">
-      <div className="container mx-auto px-4 py-4">
+      <div className="container mx-auto px-4 py-2">
         <div className="flex flex-col xl:flex-row gap-6 overflow-hidden">
           {/* Leaderboard */}
           <div className="bg-gradient-to-br from-gray-800 to-gray-700 p-4 rounded-lg shadow-xl ring-1 ring-gray-600/50 w-full xl:w-72 h-fit">
@@ -223,7 +223,7 @@ export function TeamComparison() {
             </div>
 
             {/* Prediction Panel */}
-            <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-lg shadow-xl p-6 ring-1 ring-gray-600/50 mt-6">
+            <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-lg shadow-xl p-4 ring-1 ring-gray-600/50 mt-3">
               <div className="max-w-4xl mx-auto">
                 <div className="relative mb-6">
                   <h2 className="text-2xl font-bold text-white text-center">
@@ -256,7 +256,7 @@ export function TeamComparison() {
                 </div>
 
                 {selectedMatch ? (
-                  <div className="flex flex-col lg:flex-row justify-center items-start gap-8 mb-6">
+                  <div className="flex flex-col lg:flex-row justify-center items-start gap-6 mb-4">
                     {[selectedMatch.team1, selectedMatch.team2].map((team, index) => (
                       <div key={team.name} className="text-center flex flex-col items-center w-full lg:w-[280px]">
                         <div className="w-[100px] h-[100px] flex items-center justify-center mb-2">

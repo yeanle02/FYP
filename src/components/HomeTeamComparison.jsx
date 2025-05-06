@@ -116,19 +116,19 @@ export function HomeTeamComparison() {
   return (
     <div className="flex-1 w-full">
       {/* Match Scrollable List */}
-      <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-lg shadow-xl p-4 ring-1 ring-gray-600/50 flex flex-col h-[calc(100vh-36rem)]">
-        <h2 className="text-2xl font-bold text-white mb-4 text-center">
+      <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-lg shadow-xl p-2 ring-1 ring-gray-600/50 flex flex-col min-h-[420px] h-[calc(100vh-36rem)]">
+        <h2 className="text-2xl font-bold text-white mb-2 text-center">
           Today's Matches
         </h2>
-        <div ref={matchesContainerRef} className="flex-1 overflow-y-auto px-2 pb-4 custom-scrollbar scroll-smooth">
+        <div ref={matchesContainerRef} className="flex-1 overflow-y-auto px-1 pb-2 custom-scrollbar scroll-smooth">
           <div className="flex flex-col gap-2">
             {placeholderMatches.map((match, idx) => (
               <div
                 key={idx}
                 onClick={async () => await selectMatch(match)}
-                className="group h-28 bg-gradient-to-br from-gray-700 to-gray-600 p-4 rounded-lg cursor-pointer border-t-2 border-gray-500
-                shadow-[0_10px_20px_rgba(0,0,0,0.3)] hover:from-gray-600 hover:to-gray-500 transition-all duration-300 
-                hover:border-gray-400 hover:shadow-[0_20px_30px_rgba(0,0,0,0.4)] flex items-center w-full"
+                className="group h-28 bg-gradient-to-br from-gray-700 to-gray-600 p-3 rounded-lg cursor-pointer border border-gray-500
+                shadow-[0_8px_16px_rgba(0,0,0,0.2)] hover:from-gray-600 hover:to-gray-500 transition-all duration-300 
+                hover:border-gray-400 hover:shadow-[0_12px_20px_rgba(0,0,0,0.3)] flex items-center w-full"
               >
                 <div className="flex items-center justify-center w-full gap-24">
                   <div className="flex flex-col items-center w-40">
@@ -154,9 +154,9 @@ export function HomeTeamComparison() {
           </div>
         </div>
         {isScrollable && (
-          <div className="relative mt-6 pb-2">
-            <div className="absolute -top-6 left-0 right-0 h-6 bg-gradient-to-t from-gray-800 to-transparent pointer-events-none"></div>
-            <div className="text-center bg-gradient-to-t from-gray-800/10 to-transparent pt-2 pb-1 px-4 rounded-lg">
+          <div className="relative mt-3 pb-1">
+            <div className="absolute -top-4 left-0 right-0 h-4 bg-gradient-to-t from-gray-800 to-transparent pointer-events-none"></div>
+            <div className="text-center bg-gradient-to-t from-gray-800/10 to-transparent pt-1 pb-0.5 px-2 rounded-lg">
               <span className="text-gray-400 text-sm animate-bounce block cursor-default select-none hover:text-gray-300 transition-colors">
                 Scroll for more matches ↓
               </span>
@@ -166,11 +166,11 @@ export function HomeTeamComparison() {
       </div>
 
       {/* Match Prediction */}
-      <div className="mt-6 bg-gradient-to-br from-gray-800 to-gray-700 rounded-lg shadow-xl p-6 ring-1 ring-gray-600/50">
-        <h2 className="text-2xl font-bold text-white mb-8 text-center">Match Prediction</h2>
-        <div className="flex justify-center items-center gap-32 mb-12">
+      <div className="mt-4 bg-gradient-to-br from-gray-800 to-gray-700 rounded-lg shadow-xl p-4 ring-1 ring-gray-600/50">
+        <h2 className="text-2xl font-bold text-white mb-4 text-center">Match Prediction</h2>
+        <div className="flex justify-center items-center gap-24 mb-6">
           <div className="flex flex-col items-center group">
-            <div className={`w-40 h-40 bg-gray-200 rounded-full flex items-center justify-center border-2 
+            <div className={`w-32 h-32 bg-gray-200 rounded-full flex items-center justify-center border-2 
               ${selectedMatch && prediction.winningTeam ? (
                 selectedMatch.team1.name === prediction.winningTeam
                   ? 'border-green-400 shadow-[0_0_20px_rgba(74,222,128,0.5)]'
@@ -192,10 +192,10 @@ export function HomeTeamComparison() {
             )}
           </div>
 
-          <span className="text-white text-2xl font-bold mt-[-40px]">VS</span>
+          <span className="text-white text-xl font-bold mt-[-20px]">VS</span>
 
           <div className="flex flex-col items-center group">
-            <div className={`w-40 h-40 bg-gray-200 rounded-full flex items-center justify-center border-2 
+            <div className={`w-32 h-32 bg-gray-200 rounded-full flex items-center justify-center border-2 
               ${selectedMatch && prediction.winningTeam ? (
                 selectedMatch.team2.name === prediction.winningTeam
                   ? 'border-green-400 shadow-[0_0_20px_rgba(74,222,128,0.5)]'
@@ -218,7 +218,7 @@ export function HomeTeamComparison() {
           </div>
         </div>
 
-        <div className="bg-white rounded-lg p-6 relative">
+        <div className="bg-white rounded-lg p-4 relative">
           {prediction.isLoading ? (
             <div className="flex flex-col items-center justify-center space-y-4">
               <div className="relative w-12 h-12">
@@ -277,7 +277,7 @@ export function HomeTeamComparison() {
           )}
 
           {prediction.team1Score === null && !prediction.isLoading && (
-            <div className="text-center mt-4">
+            <div className="text-center mt-2">
               <span className="text-gray-500">
                 Select both teams to see prediction
               </span>
@@ -285,7 +285,7 @@ export function HomeTeamComparison() {
           )}
 
           {prediction.team1Score !== null && !prediction.isLoading && (
-            <div className="text-center mt-6">
+            <div className="text-center mt-3">
               <span className="text-lg font-semibold text-green-600">
                 Winner: {prediction.winningTeam}
               </span>

@@ -47,7 +47,7 @@ export function Navbar() {
   const pathname = usePathname();
 
   return (
-    <nav className="bg-blue-950 shadow-lg py-2">
+    <nav className="bg-blue-950 shadow-lg py-1">
       <div className="container mx-auto px-4">
         <div className="flex h-14 items-center">
           {/* AFL Logo and Title */}
@@ -119,18 +119,6 @@ export function Navbar() {
                 >
                   <Users className="h-5 w-5" />
                   Teams
-                </Button>
-              </Link>
-              <Link href="/test">
-                <Button 
-                  variant={pathname === "/test" ? "default" : "secondary"} 
-                  size="default"
-                  className={`flex items-center gap-3 px-6 py-2.5 text-base font-medium transition-all duration-300 ${
-                    pathname === "/test" ? "shadow-lg shadow-blue-500/50 hover:shadow-blue-500/75" : "hover:shadow-lg hover:shadow-gray-500/50"
-                  }`}
-                >
-                  <LineChart className="h-5 w-5" />
-                  test
                 </Button>
               </Link>
             </div>

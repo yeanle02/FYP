@@ -7,7 +7,7 @@ export default function PredictionPage() {
   return (
     <main className="min-h-screen bg-gray-100">
       <Navbar />
-      <div className="container mx-auto py-6">
+      <div className="container mx-auto py-3 px-4">
         <div className="max-w-7xl mx-auto">
           <TeamComparison />
         </div>
