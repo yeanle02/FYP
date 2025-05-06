@@ -29,46 +29,26 @@ const placeholderTeams = [
   {
     name: "Melbourne Demons",
     logo: "/teams/Melbournefc.png",
-    historyPoints: 1200,
-    wins: 10,
-    losses: 5,
-    rank: 1,
     movedUp: true
   },
   {
     name: "Richmond Tigers",
     logo: "/teams/Richmond_Tigers.png",
-    historyPoints: 1250,
-    wins: 12,
-    losses: 4,
-    rank: 2,
     movedUp: false
   },
   {
     name: "Carlton Blues",
     logo: "/teams/Carlton.svg",
-    historyPoints: 1100,
-    wins: 8,
-    losses: 7,
-    rank: 3,
     movedUp: true
   },
   {
     name: "Sydney Swans",
     logo: "/teams/Sydney_Swans.png",
-    historyPoints: 1150,
-    wins: 9,
-    losses: 6,
-    rank: 4,
     movedUp: false
   },
   {
     name: "Brisbane Lions",
     logo: "/teams/Brisbane_Lions.png",
-    historyPoints: 1220,
-    wins: 11,
-    losses: 5,
-    rank: 5,
     movedUp: false
   }
 ];
@@ -328,10 +308,6 @@ export function TeamComparison() {
                         )}
                         
                         <div className="mt-4 text-white text-sm">
-                          <p>History Points: {team.historyPoints}</p>
-                          <p>Wins: {team.wins}</p>
-                          <p>Losses: {team.losses}</p>
-                          
                           {/* Show normalized stats*/}
                           {results && !loading && (
                             <div className="mt-2 p-2 bg-gray-700 rounded">
@@ -341,6 +317,8 @@ export function TeamComparison() {
                               <p>Speed: {index === 0 ? results.team1Status.speed_norm : results.team2Status.speed_norm}</p>
                               <p>Teamwork: {index === 0 ? results.team1Status.teamwork_norm : results.team2Status.teamwork_norm}</p>
                               <p>Hustle: {index === 0 ? results.team1Status.hustle_norm : results.team2Status.hustle_norm}</p>
+                              <p>Rank: {index === 0 ? results.team1Status.rank : results.team2Status.rank}</p>
+                              <p>Win: {index === 0? results.team1Status.wins :results.team2Status.wins}</p>
                             </div>
                           )}
                         </div>
