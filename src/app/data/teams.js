@@ -15,7 +15,7 @@ export const teams = [
   },
   {
     // ✏️ 拼写从 Bules → Blues
-    name: "Carlton Bules",
+    name: "Carlton Blues",
     logo: "/teams/Carlton.svg",
     captain: "Patrick Cripps",
     coach:   "Michael Voss",

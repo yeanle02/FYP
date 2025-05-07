@@ -5,7 +5,9 @@ import { Navbar } from "@/components/Navbar";
 import TeamHeader from "@/components/TeamHeader";
 import TeamInfoCard from "@/components/TeamInfoCard";
 import useTeamMemberHandler from "../../hooks/apiHandlers/useTeamMemberHandler";
+import useTeamLeadersHandler from "../../hooks/apiHandlers/useTeamLeadersHandler";
 import { teams } from "@/app/data/teams";
+<<<<<<< HEAD
 import { motion, AnimatePresence } from "framer-motion";
 
 const containerVariants = {
@@ -33,19 +35,31 @@ const cardVariants = {
     }
   }
 };
+=======
+>>>>>>> teampage
 
 export default function MemberInfoPage() {
   const searchParams = useSearchParams();
   const teamName = searchParams.get("teamName") || "Unknown Team";
   const { loading: tmLoading, errors: tmErrors, results: tmResults, handleGetTeamMembers } = useTeamMemberHandler();
 
+<<<<<<< HEAD
+=======
+
+  const { loading: tmLoading, errors: tmErrors, results: tmResults, setTeamName, handleGetTeamMembers } = useTeamMemberHandler();
+  const { results:leaderResults, handleGetTeamLeaders } = useTeamLeadersHandler();
+
+ 
+>>>>>>> teampage
   useEffect(() => {
     handleGetTeamMembers(teamName);
+    handleGetTeamLeaders(teamName);
   }, [teamName]);
 
   const teamInfo = teams.find((t) => t.name === teamName) || { name: teamName, logo: "/default-logo.png" };
 
   return (
+<<<<<<< HEAD
     <motion.main 
       className="min-h-screen bg-gray-100 page-enter"
       initial={{ opacity: 0 }}
@@ -83,6 +97,32 @@ export default function MemberInfoPage() {
               link="#"
             />
           </motion.div>
+=======
+    <>
+      <main className="min-h-screen bg-gray-100 page-enter">
+        <Navbar />
+        <div className="w-full">
+          <TeamHeader teamName={teamInfo.name} homeVenue="SCG" teamLogo={teamInfo.logo} />
+        </div>
+
+        <div className="container mx-auto px-4 py-4">
+          <div className="max-w-8xl mx-auto flex gap-10">
+        
+            <div className="w-[360px] flex flex-col gap-6">
+              <TeamInfoCard
+                role="Captain"
+                name={leaderResults.Captain}
+                imageSrc={teamInfo.logo}
+                link="#"
+              />
+              <TeamInfoCard
+                role="Coach"
+                name={leaderResults.Coach}
+                imageSrc={teamInfo.logo}
+                link="#"
+              />
+            </div>
+>>>>>>> teampage
           
           <motion.div 
             className="flex-1 pr-1"
