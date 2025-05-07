@@ -44,9 +44,9 @@ export function TeamStats() {
           <h2 className="text-2xl font-bold text-gray-700 w-full text-center">
             Team Rankings
           </h2>
-          <div className="absolute right-0 group/tooltip">
+          <div className="absolute right-0 group">
             <button
-              className="w-8 h-8 flex items-center justify-center transition-transform duration-200 hover:scale-110"
+              className="w-8 h-8 flex items-center justify-center transition-transform duration-200 hover:scale-110 p-1"
               aria-label="View abbreviation meanings"
             >
               <svg 
@@ -64,20 +64,39 @@ export function TeamStats() {
                 />
               </svg>
             </button>
-            <div className="absolute right-0 mt-2 w-72 p-4 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover/tooltip:opacity-100 group-hover/tooltip:visible transition-all duration-200 z-10">
-              <div className="text-sm text-gray-600 space-y-3">
-                <p className="font-medium border-b border-gray-200 pb-2">
-                  This table displays key performance statistics for each team, showing their effectiveness in different aspects of the game.
-                </p>
-                <p><span className="font-semibold">K:</span> Kicks - Number of times a player kicks the ball</p>
-                <p><span className="font-semibold">G:</span> Goals - Number of goals scored</p>
-                <p><span className="font-semibold">FF:</span> Free Kicks For - Free kicks awarded to the team</p>
-                <p><span className="font-semibold">FA:</span> Free Kicks Against - Free kicks awarded against the team</p>
-                <p><span className="font-semibold">CL:</span> Clearances - Number of times the team clears the ball from defense</p>
-                <p><span className="font-semibold">CG:</span> Center Goal - Goals scored from the center of the field</p>
-              </div>
-              <div className="absolute right-0 top-0 transform -translate-y-2 translate-x-1/2">
-                <div className="w-3 h-3 bg-white transform rotate-45"></div>
+            
+            <div 
+              className="absolute right-0 mt-2 w-80 bg-gradient-to-br from-white to-gray-50 rounded-lg shadow-xl z-10 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200"
+            >
+              <div>
+                <div className="absolute right-0 top-0 transform -translate-y-2 translate-x-1/2">
+                  <div className="w-3 h-3 bg-gradient-to-br from-white to-gray-50 transform rotate-45 shadow-lg pointer-events-none"></div>
+                </div>
+                <div className="p-4">
+                  <div className="text-sm text-gray-600">
+                    <h3 className="font-bold text-gray-800 mb-3 pb-2 border-b border-gray-200">
+                      Performance Statistics Guide
+                    </h3>
+                    <div className="grid gap-3">
+                      {[
+                        { key: 'K', label: 'Kicks', desc: 'Number of times a player kicks the ball' },
+                        { key: 'G', label: 'Goals', desc: 'Number of goals scored' },
+                        { key: 'FF', label: 'Free Kicks For', desc: 'Free kicks awarded to the team' },
+                        { key: 'FA', label: 'Free Kicks Against', desc: 'Free kicks awarded against the team' },
+                        { key: 'CL', label: 'Clearances', desc: 'Number of times the team clears the ball from defense' },
+                        { key: 'CG', label: 'Center Goal', desc: 'Goals scored from the center of the field' }
+                      ].map(({ key, label, desc }) => (
+                        <div key={key} className="flex items-start">
+                          <span className="font-mono font-bold text-gray-800 w-8">{key}:</span>
+                          <div className="flex-1">
+                            <span className="font-medium text-gray-700">{label}</span>
+                            <span className="text-gray-500 text-xs block">{desc}</span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -91,7 +110,7 @@ export function TeamStats() {
           )}
 
           {!loading && !errors && (
-            <div className="overflow-y-auto max-h-[460px] min-h-[460px] p-2 custom-scrollbar scroll-smooth transition-[filter] duration-300 group-hover/tooltip:blur-md filter-none">
+            <div className="overflow-y-auto max-h-[460px] min-h-[460px] p-2 custom-scrollbar scroll-smooth transition-[filter] duration-300">
               <Table>
                 <TableHeader>
                   <TableRow className="bg-gradient-to-r from-gray-300 to-gray-200 border-b border-gray-300/20">
