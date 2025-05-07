@@ -230,13 +230,13 @@ export function TeamComparison() {
   transition={{ duration: 0.5 }}
 >
   <h3 className="text-xl font-semibold text-white mb-4 text-center">Leaderboard</h3>
-  {leaderBoardResults.sort((a, b) => a.rank - b.rank).slice(0, 8).map((team) => {
+  {leaderBoardResults.sort((a, b) => b.historyPoints - a.historyPoints).slice(0, 8).map((team, index) => {
     const logoPath = `/teams/${team.name.replace(/\s+/g, '_')}.png`;
 
     return(
       <div key={team.name} className="flex justify-between items-center py-2 px-3 bg-gray-800 rounded mb-2">
         <div className="flex items-center gap-2">
-          <span className="text-white font-bold">#{team.rank}</span>
+          <span className="text-white font-bold">{index + 1}</span>
           <Image src={logoPath}
             alt={team.name}
             width={24}
