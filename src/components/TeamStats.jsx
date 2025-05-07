@@ -46,7 +46,7 @@ export function TeamStats() {
           </h2>
           <div className="absolute right-0 group/tooltip">
             <button
-              className="w-8 h-8 rounded-lg bg-gray-600 hover:bg-gray-700 flex items-center justify-center transition-colors duration-200 ring-1 ring-gray-400/50"
+              className="w-8 h-8 flex items-center justify-center transition-transform duration-200 hover:scale-110"
               aria-label="View abbreviation meanings"
             >
               <svg 
@@ -55,7 +55,7 @@ export function TeamStats() {
                 viewBox="0 0 24 24" 
                 strokeWidth={2} 
                 stroke="currentColor" 
-                className="w-5 h-5 text-white"
+                className="w-6 h-6 text-black"
               >
                 <path 
                   strokeLinecap="round" 
