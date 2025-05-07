@@ -231,7 +231,14 @@ export function TeamComparison() {
 >
   <h3 className="text-xl font-semibold text-white mb-4 text-center">Leaderboard</h3>
   {leaderBoardResults.sort((a, b) => b.historyPoints - a.historyPoints).slice(0, 8).map((team, index) => {
-    const logoPath = `/teams/${team.name.replace(/\s+/g, '_')}.png`;
+    let logoPath = `/teams/${team.name.replace(/\s+/g, '_')}.png`;
+    
+    // Handle special cases
+    if (team.name === "Melbourne Demons") {
+      logoPath = "/teams/Melbournefc.png";
+    } else if (team.name === "Gold Coast Suns") {
+      logoPath = "/teams/Gold_Coast_Suns.svg";
+    }
 
     return(
       <div key={team.name} className="flex justify-between items-center py-2 px-3 bg-gray-800 rounded mb-2">
