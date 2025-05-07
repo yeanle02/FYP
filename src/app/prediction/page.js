@@ -5,7 +5,7 @@ import { TeamComparison } from "@/components/TeamComparison";
 
 export default function PredictionPage() {
   return (
-    <main className="min-h-screen bg-gray-100">
+    <main className="min-h-screen metallic-background">
       <Navbar />
       <div className="container mx-auto py-3 px-4">
         <div className="max-w-7xl mx-auto">

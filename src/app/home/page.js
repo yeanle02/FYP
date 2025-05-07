@@ -7,7 +7,7 @@ import { ReadButton } from "@/components/ReadButton";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-gray-100 relative">
+    <main className="min-h-screen metallic-background relative">
       <div className="transition-all duration-500">
         <Navbar />
         <ReadButton />

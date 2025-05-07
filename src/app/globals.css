@@ -12,6 +12,17 @@
 }
 
 @layer utilities {
+  .metallic-background {
+    background: linear-gradient(135deg,
+      #d4d4d4 0%,
+      #e8e8e8 25%,
+      #ffffff 50%,
+      #e8e8e8 75%,
+      #d4d4d4 100%
+    );
+    position: relative;
+  }
+
   .logo-scroll-container {
     position: relative;
     overflow: hidden;

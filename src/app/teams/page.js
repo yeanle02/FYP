@@ -7,7 +7,7 @@ import TeamsList from "@/components/TeamsList";
 export default function TeamsPage() {
   return (
     <>
-      <main className="min-h-screen bg-gray-100 page-enter">
+      <main className="min-h-screen metallic-background page-enter">
         <Navbar />
         <div className="w-full">
           <TeamHeader title="Select Teams" />
