@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Radar } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -24,6 +25,8 @@ ChartJS.register(
   Tooltip,
   Legend
 );
+
+// Your existing placeholderTeams array
 
 const placeholderTeams = [
   {
@@ -62,6 +65,7 @@ const placeholderMatches = [
 ];
 
 export function TeamComparison() {
+  // Your existing state and hooks
   const [selectedMatch, setSelectedMatch] = useState(null);
   const [prediction, setPrediction] = useState({ team1Score: null, team2Score: null, winningTeam: null });
   const [isScrollable, setIsScrollable] = useState(false);
@@ -81,167 +85,236 @@ export function TeamComparison() {
   }, []);
   
   const { loading, errors, results, handleGetTeamStatus } = useTeamStatusHandler();
+  const { loading: prLoading, errors: prErrors, results: prResults, setHomeTeam, setAwayTeam, predictPageHandler } = usePredictionHandler();
 
-  const { loading:prLoading, errors:prErrors, results:prResults, setHomeTeam, setAwayTeam, predictPageHandler } = usePredictionHandler();
-  
+  // Your existing selectMatch and getRadarData functions
   const selectMatch = async (match) => {
     setSelectedMatch(match);
-
     handleGetTeamStatus(match.team1.name, match.team2.name);
-    
     setHomeTeam(match.team1.name);
     setAwayTeam(match.team2.name);
-    console.log("Selected match:", match.team1.name, "vs", match.team2.name);
 
     try {
       const result = await predictPageHandler(match.team1.name, match.team2.name);
       if (result && !result.error) {
-        // Update prediction with real data from the API
         setPrediction({
           team1Score: result.home_score, 
           team2Score: result.away_score,
           winningTeam: result.winning_team
         });
-        console.log("Prediction successful:", result);
-      } else {
-        console.error("Prediction error:", result?.error || "Unknown error");
       }
     } catch (error) {
       console.error("Error during prediction:", error);
     }
   };
 
-
   const getRadarData = (team, index = null) => {
-    // If we have results from database and match is selected
     if (results && selectedMatch && index !== null) {
       const teamData = index === 0 ? results.team1Status : results.team2Status;
       
       return {
         labels: ['Attack', 'Defense', 'Speed', 'Teamwork', 'Hustle'],
-        datasets: [
-          {
-            label: teamData.Team || team?.name || 'No Team Selected',
-            data: [
-              teamData.attack_norm || 0, 
-              teamData.defend_norm || 0, 
-              teamData.speed_norm || 0, 
-              teamData.teamwork_norm || 0, 
-              teamData.hustle_norm || 0
-            ],
-            backgroundColor: index === 0 ? 'rgba(99, 102, 241, 0.3)' : 'rgba(239, 68, 68, 0.3)',
-            borderColor: index === 0 ? 'rgba(99, 102, 241, 1)' : 'rgba(239, 68, 68, 1)',
-            borderWidth: 2,
-            pointBackgroundColor: index === 0 ? 'rgba(99, 102, 241, 1)' : 'rgba(239, 68, 68, 1)'
-          }
-        ]
+        datasets: [{
+          label: teamData.Team || team?.name || 'No Team Selected',
+          data: [
+            teamData.attack_norm || 0, 
+            teamData.defend_norm || 0, 
+            teamData.speed_norm || 0, 
+            teamData.teamwork_norm || 0, 
+            teamData.hustle_norm || 0
+          ],
+          backgroundColor: index === 0 ? 'rgba(99, 102, 241, 0.3)' : 'rgba(239, 68, 68, 0.3)',
+          borderColor: index === 0 ? 'rgba(99, 102, 241, 1)' : 'rgba(239, 68, 68, 1)',
+          borderWidth: 2,
+          pointBackgroundColor: index === 0 ? 'rgba(99, 102, 241, 1)' : 'rgba(239, 68, 68, 1)'
+        }]
       };
-    } 
+    }
     
-    // Fallback to placeholders if no data available
     return {
       labels: ['Attack', 'Defense', 'Speed', 'Teamwork', 'Hustle'],
-      datasets: [
-        {
-          label: team?.name || 'No Team Selected',
-          data: [0, 0, 0, 0, 0],
-          backgroundColor: 'rgba(99, 102, 241, 0.3)',
-          borderColor: 'rgba(99, 102, 241, 1)',
-          borderWidth: 2,
-          pointBackgroundColor: 'rgba(99, 102, 241, 1)'
-        }
-      ]
+      datasets: [{
+        label: team?.name || 'No Team Selected',
+        data: [0, 0, 0, 0, 0],
+        backgroundColor: 'rgba(99, 102, 241, 0.3)',
+        borderColor: 'rgba(99, 102, 241, 1)',
+        borderWidth: 2,
+        pointBackgroundColor: 'rgba(99, 102, 241, 1)'
+      }]
     };
   };
 
+  const renderMatchCard = (match, idx) => (
+    <motion.div
+      key={idx}
+      onClick={async () => await selectMatch(match)}
+      className="group h-28 bg-gradient-to-br from-gray-700 to-gray-600 p-3 rounded-lg cursor-pointer border border-gray-500
+        shadow-[0_8px_16px_rgba(0,0,0,0.2)] hover:from-gray-600 hover:to-gray-500 transition-all duration-300 
+        hover:border-gray-400 hover:shadow-[0_12px_20px_rgba(0,0,0,0.3)] flex items-center w-full"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3, delay: idx * 0.1 }}
+      whileHover={{ scale: 1.01, y: -2 }}
+      whileTap={{ scale: 0.99 }}
+    >
+      <div className="flex items-center justify-center w-full gap-24">
+        {/* Team 1 */}
+        <div className="flex flex-col items-center w-40">
+          <motion.div 
+            className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mb-3 shadow-lg group-hover:bg-white transition-all duration-300"
+            whileHover={{ scale: 1.05 }}
+            transition={{ type: "spring", stiffness: 300, damping: 15 }}
+          >
+            <Image 
+              src={match.team1.logo} 
+              width={55} 
+              height={55} 
+              alt={match.team1.name} 
+              className="rounded-full transform transition-transform group-hover:scale-110 duration-300" 
+            />
+          </motion.div>
+          <span className="text-gray-200 text-sm font-semibold group-hover:text-white transition-colors duration-300 text-center">
+            {match.team1.name}
+          </span>
+        </div>
+
+        {/* VS */}
+        <span className="text-gray-200 font-bold text-2xl group-hover:text-white transition-colors duration-300 w-16 text-center">
+          VS
+        </span>
+
+        {/* Team 2 */}
+        <div className="flex flex-col items-center w-40">
+          <motion.div 
+            className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mb-3 shadow-lg group-hover:bg-white transition-all duration-300"
+            whileHover={{ scale: 1.05 }}
+            transition={{ type: "spring", stiffness: 300, damping: 15 }}
+          >
+            <Image 
+              src={match.team2.logo} 
+              width={55} 
+              height={55} 
+              alt={match.team2.name} 
+              className="rounded-full transform transition-transform group-hover:scale-110 duration-300" 
+            />
+          </motion.div>
+          <span className="text-gray-200 text-sm font-semibold group-hover:text-white transition-colors duration-300 text-center">
+            {match.team2.name}
+          </span>
+        </div>
+      </div>
+    </motion.div>
+  );
+
   return (
-    <main className="min-h-screen">
+    <motion.div
+      className="min-h-screen"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
       <div className="container mx-auto px-4 py-2">
         <div className="flex flex-col xl:flex-row gap-6 overflow-hidden">
           {/* Leaderboard */}
-          <div className="bg-gradient-to-br from-gray-800 to-gray-700 p-4 rounded-lg shadow-xl ring-1 ring-gray-600/50 w-full xl:w-72 h-fit">
+          <motion.div
+            className="bg-gradient-to-br from-gray-800 to-gray-700 p-4 rounded-lg shadow-xl ring-1 ring-gray-600/50 w-full xl:w-72 h-fit"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+          >
             <h3 className="text-xl font-semibold text-white mb-4 text-center">Leaderboard</h3>
             {placeholderTeams.sort((a, b) => a.rank - b.rank).map((team) => (
-              <div key={team.name} className="flex justify-between items-center py-2 px-3 bg-gray-700/50 hover:bg-gray-700 transition-colors duration-200 rounded mb-2">
+              <motion.div
+                key={team.name}
+                className="flex justify-between items-center py-2 px-3 bg-gray-700/50 hover:bg-gray-700 transition-colors duration-200 rounded mb-2"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.3 }}
+              >
                 <div className="flex items-center gap-2">
                   <span className="text-white font-bold">#{team.rank}</span>
                   <Image src={team.logo} alt={team.name} width={24} height={24} />
                   <span className="text-gray-200 text-sm">{team.name}</span>
                 </div>
                 <div className="flex items-center gap-1">
-                  {team.movedUp ? <ArrowUp size={16} className="text-green-400" /> : <ArrowDown size={16} className="text-red-400" />}
+                  {team.movedUp ? (
+                    <ArrowUp size={16} className="text-green-400" />
+                  ) : (
+                    <ArrowDown size={16} className="text-red-400" />
+                  )}
                   <span className="text-gray-300 text-sm">{team.historyPoints}</span>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
 
-          {/* Main Section - Match List + Prediction */}
+          {/* Main Section */}
           <div className="flex-1 w-full">
-            {/* Match Scrollable List */}
-            <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-lg shadow-xl p-2 ring-1 ring-gray-600/50 flex flex-col min-h-[420px] h-[calc(100vh-36rem)]">
-              <h2 className="text-2xl font-bold text-white mb-2 text-center">
+            {/* Match List */}
+            <motion.div
+              className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-lg shadow-xl p-2 ring-1 ring-gray-600/50 flex flex-col min-h-[420px] h-[calc(100vh-36rem)]"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <motion.h2
+                className="text-2xl font-bold text-white mb-2 text-center"
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+              >
                 Today's Matches
-              </h2>
+              </motion.h2>
+
               <div ref={matchesContainerRef} className="flex-1 overflow-y-auto px-1 pb-2 custom-scrollbar scroll-smooth">
                 <div className="flex flex-col gap-2">
-                  {placeholderMatches.map((match, idx) => (
-                    <div
-                      key={idx}
-                      onClick={async () => await selectMatch(match)}
-                      className="group h-28 bg-gradient-to-br from-gray-700 to-gray-600 p-3 rounded-lg cursor-pointer border border-gray-500
-                      shadow-[0_8px_16px_rgba(0,0,0,0.2)] hover:from-gray-600 hover:to-gray-500 transition-all duration-300 
-                      hover:border-gray-400 hover:shadow-[0_12px_20px_rgba(0,0,0,0.3)] flex items-center w-full"
-                    >
-                      <div className="flex items-center justify-center w-full gap-24">
-                        <div className="flex flex-col items-center w-40">
-                          <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mb-3 shadow-lg group-hover:bg-white transition-all duration-300">
-                            <Image src={match.team1.logo} width={55} height={55} alt={match.team1.name} 
-                              className="rounded-full transform transition-transform group-hover:scale-110 duration-300" />
-                          </div>
-                          <span className="text-gray-200 text-sm font-semibold group-hover:text-white transition-colors duration-300 text-center">{match.team1.name}</span>
-                        </div>
-                        
-                        <span className="text-gray-200 font-bold text-2xl group-hover:text-white transition-colors duration-300 w-16 text-center">VS</span>
-                        
-                        <div className="flex flex-col items-center w-40">
-                          <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mb-3 shadow-lg group-hover:bg-white transition-all duration-300">
-                            <Image src={match.team2.logo} width={55} height={55} alt={match.team2.name} 
-                              className="rounded-full transform transition-transform group-hover:scale-110 duration-300" />
-                          </div>
-                          <span className="text-gray-200 text-sm font-semibold group-hover:text-white transition-colors duration-300 text-center">{match.team2.name}</span>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
+                  {placeholderMatches.map((match, idx) => renderMatchCard(match, idx))}
                 </div>
               </div>
+
               {isScrollable && (
                 <div className="relative mt-6 pb-2">
-                  <div className="absolute -top-6 left-0 right-0 h-6 bg-gradient-to-t from-gray-800 to-transparent pointer-events-none"></div>
-                  <div className="text-center bg-gradient-to-t from-gray-800/10 to-transparent pt-2 pb-1 px-4 rounded-lg">
+                  <div className="absolute -top-6 left-0 right-0 h-6 bg-gradient-to-t from-gray-800 to-transparent pointer-events-none" />
+                  <motion.div
+                    className="text-center bg-gradient-to-t from-gray-800/10 to-transparent pt-2 pb-1 px-4 rounded-lg"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.8 }}
+                  >
                     <span className="text-gray-400 text-sm animate-bounce block cursor-default select-none hover:text-gray-300 transition-colors">
                       Scroll for more matches ↓
                     </span>
-                  </div>
+                  </motion.div>
                 </div>
               )}
-            </div>
+            </motion.div>
 
             {/* Prediction Panel */}
-            <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-lg shadow-xl p-4 ring-1 ring-gray-600/50 mt-3">
+            <motion.div
+              className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-lg shadow-xl p-4 ring-1 ring-gray-600/50 mt-3"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+            >
               <div className="max-w-4xl mx-auto">
-                <div className="relative mb-6">
+                <motion.div
+                  className="relative mb-6"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.4 }}
+                >
                   <h2 className="text-2xl font-bold text-white text-center">
                     Team Comparison & Prediction
                   </h2>
                   {selectedMatch && (
-                    <button
+                    <motion.button
                       onClick={() => {
                         setSelectedMatch(null);
                         setPrediction({ team1Score: null, team2Score: null, winningTeam: null });
                       }}
                       className="absolute right-0 top-1/2 -translate-y-1/2 px-4 py-2 bg-gray-700 text-gray-200 rounded-lg hover:bg-gray-600 transition-colors duration-200 flex items-center gap-2 group"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
                     >
                       <span>Reset</span>
                       <svg
@@ -257,144 +330,199 @@ export function TeamComparison() {
                         <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
                         <path d="M3 3v5h5" />
                       </svg>
-                    </button>
+                    </motion.button>
                   )}
-                </div>
+                </motion.div>
 
-                {selectedMatch ? (
-                  <div className="flex flex-col space-y-6">
-                    <div className="flex flex-col lg:flex-row justify-center items-start gap-6">
-                      {[selectedMatch.team1, selectedMatch.team2].map((team, index) => (
-                        <div key={team.name} className="text-center flex flex-col items-center">
-                          <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mb-3 shadow-lg group-hover:bg-white transition-all duration-300">
-                            <Image src={team.logo} width={55} height={55} alt={team.name} 
-                              className="rounded-full transform transition-transform group-hover:scale-110 duration-300" />
-                          </div>
-                          <span className="text-white font-semibold">{team.name}</span>
-                        
-                        {/* Status loading indicator */}
-                        {loading && (
-                          <div className="bg-gray-900 rounded-lg shadow mt-4 p-4 w-full h-[300px] flex items-center justify-center">
-                            <p className="text-white">Loading team stats...</p>
-                          </div>
-                        )}
-                        
-                        {/* Error message */}
-                        {errors && (
-                          <div className="bg-gray-900 rounded-lg shadow mt-4 p-4 w-full h-[300px] flex items-center justify-center">
-                            <p className="text-red-400">Error: {errors}</p>
-                          </div>
-                        )}
-                        
-                        {/* Radar chart with data */}
-                        <div className="mt-4">
-                          {!loading && !errors && (
-                            <div key={`radar-${team.name}`} className="bg-gray-900 rounded-lg shadow p-4 w-full h-[300px] relative">
-                            <div className="absolute top-2 right-2 group">
-                              <div className="w-6 h-6 bg-gray-700 rounded-full flex items-center justify-center cursor-help transition-colors hover:bg-gray-600">
-                                <span className="text-gray-300 text-sm">?</span>
-                              </div>
-                              <div className="absolute hidden group-hover:block right-0 w-64 p-3 mt-2 bg-gray-800 text-gray-200 text-sm rounded-lg shadow-xl z-10">
-                                <p>This radar chart shows the team's performance metrics on a scale of 1-10:</p>
-                                <ul className="mt-2 list-disc list-inside">
-                                  <li>Attack: Scoring ability</li>
-                                  <li>Defense: Defensive strength</li>
-                                  <li>Speed: Team's pace and agility</li>
-                                  <li>Teamwork: Passing and coordination</li>
-                                  <li>Hustle: Work rate and intensity</li>
-                                </ul>
-                              </div>
-                            </div>
-                            <Radar
-                              data={getRadarData(team, index)}
-                              options={{
-                                maintainAspectRatio: false,
-                                scales: {
-                                  r: {
-                                    angleLines: { color: '#444' },
-                                    grid: { color: '#333' },
-                                    pointLabels: { color: '#ccc' },
-                                    ticks: { 
-                                      backdropColor: 'transparent', 
-                                      color: '#999',
-                                      max: 10,
-                                      min: 0,
-                                      stepSize: 2
-                                    }
-                                  }
-                                },
-                                plugins: {
-                                  legend: { labels: { color: '#ddd' } }
-                                }
-                              }}
-                            />
-                            </div>
-                          )}
-                        </div>
-                        
-                        <div className="mt-4 text-white text-sm">
-                          {/* Show normalized stats*/}
-                          {results && !loading && (
-                            <div className="mt-2 p-2 bg-gray-700 rounded">
-                              <p className="font-bold">Performance Stats (1-10):</p>
-                              <p>Attack: {index === 0 ? results.team1Status.attack_norm : results.team2Status.attack_norm}</p>
-                              <p>Defense: {index === 0 ? results.team1Status.defend_norm : results.team2Status.defend_norm}</p>
-                              <p>Speed: {index === 0 ? results.team1Status.speed_norm : results.team2Status.speed_norm}</p>
-                              <p>Teamwork: {index === 0 ? results.team1Status.teamwork_norm : results.team2Status.teamwork_norm}</p>
-                              <p>Hustle: {index === 0 ? results.team1Status.hustle_norm : results.team2Status.hustle_norm}</p>
-                              <p>Rank: {index === 0 ? results.team1Status.rank : results.team2Status.rank}</p>
-                              <p>Win: {index === 0? results.team1Status.wins :results.team2Status.wins}</p>
-                            </div>
-                          )}
-                        </div>
-                        </div>
-                      ))}
-                    </div>
-                    {prediction.team1Score !== null && (
-                      <div className="bg-gray-200 p-6 rounded-lg shadow-xl flex flex-col items-center border border-gray-300/50 backdrop-blur-sm relative transition-all duration-300 hover:shadow-2xl hover:border-gray-400/50 hover:bg-gray-100">
-                        <h3 className="text-xl font-semibold text-gray-800 mb-4">Predicted Score</h3>
-                        <div className="flex items-center gap-12 mb-6">
-                          <div className="flex flex-col items-center">
-                            <span className="text-gray-600 font-medium mb-2 whitespace-nowrap">{selectedMatch.team1.name}</span>
-                            <div className={`text-3xl font-bold ${prediction.winningTeam === selectedMatch.team1.name ? 'text-green-600' : 'text-gray-700'}`}>
-                              {prediction.team1Score}
-                            </div>
-                          </div>
-                          <div className="text-2xl text-gray-500">-</div>
-                          <div className="flex flex-col items-center">
-                            <span className="text-gray-600 font-medium mb-2 whitespace-nowrap">{selectedMatch.team2.name}</span>
-                            <div className={`text-3xl font-bold ${prediction.winningTeam === selectedMatch.team2.name ? 'text-green-600' : 'text-gray-700'}`}>
-                              {prediction.team2Score}
-                            </div>
-                          </div>
-                        </div>
-                        <div className="flex flex-col items-center">
-                          <div className="relative w-20 h-20">
-                            <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-24 h-24 bg-gray-200 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-105 hover:shadow-xl">
-                              <Image
-                                src={(selectedMatch.team1.name === prediction.winningTeam ? selectedMatch.team1 : selectedMatch.team2).logo}
-                                alt="Winner"
-                                width={72}
-                                height={72}
-                                className="rounded-full animate-fade-in-team"
+                <AnimatePresence mode="wait">
+                  {selectedMatch ? (
+                    <motion.div
+                      key="comparison"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
+                      transition={{ duration: 0.5 }}
+                      className="flex flex-col space-y-6"
+                    >
+                      <div className="flex flex-col lg:flex-row justify-center items-start gap-6">
+                        {[selectedMatch.team1, selectedMatch.team2].map((team, index) => (
+                          <motion.div 
+                            key={team.name} 
+                            className="text-center flex flex-col items-center"
+                            initial={{ opacity: 0, x: index === 0 ? -20 : 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.5, delay: 0.2 }}
+                          >
+                            <motion.div 
+                              className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mb-3 shadow-lg group-hover:bg-white transition-all duration-300"
+                              whileHover={{ scale: 1.05 }}
+                              transition={{ type: "spring", stiffness: 300, damping: 15 }}
+                            >
+                              <Image 
+                                src={team.logo} 
+                                width={55} 
+                                height={55} 
+                                alt={team.name} 
+                                className="rounded-full transform transition-transform group-hover:scale-110 duration-300" 
                               />
-                            </div>
-                          </div>
-                          <span className="text-lg font-bold text-green-600 mt-6 transition-all duration-300 hover:text-green-500">
-                            {prediction.winningTeam}
-                          </span>
-                        </div>
+                            </motion.div>
+                            <span className="text-white font-semibold">{team.name}</span>
+                          
+                            {/* Status loading indicator */}
+                            {loading && (
+                              <motion.div 
+                                className="bg-gray-900 rounded-lg shadow mt-4 p-4 w-full h-[300px] flex items-center justify-center"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                              >
+                                <p className="text-white">Loading team stats...</p>
+                              </motion.div>
+                            )}
+                            
+                            {/* Error message */}
+                            {errors && (
+                              <motion.div 
+                                className="bg-gray-900 rounded-lg shadow mt-4 p-4 w-full h-[300px] flex items-center justify-center"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                              >
+                                <p className="text-red-400">Error: {errors}</p>
+                              </motion.div>
+                            )}
+                            
+                            {/* Radar chart with data */}
+                            {!loading && !errors && (
+                              <motion.div 
+                                className="mt-4"
+                                initial={{ opacity: 0, scale: 0.95 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={{ duration: 0.5, delay: 0.3 }}
+                              >
+                                <div key={`radar-${team.name}`} className="bg-gray-900 rounded-lg shadow p-4 w-full h-[300px] relative">
+                                  <Radar
+                                    data={getRadarData(team, index)}
+                                    options={{
+                                      maintainAspectRatio: false,
+                                      scales: {
+                                        r: {
+                                          angleLines: { color: '#444' },
+                                          grid: { color: '#333' },
+                                          pointLabels: { color: '#ccc' },
+                                          ticks: { 
+                                            backdropColor: 'transparent', 
+                                            color: '#999',
+                                            max: 10,
+                                            min: 0,
+                                            stepSize: 2
+                                          }
+                                        }
+                                      },
+                                      plugins: {
+                                        legend: { labels: { color: '#ddd' } }
+                                      }
+                                    }}
+                                  />
+                                </div>
+                              </motion.div>
+                            )}
+                            
+                            {/* Stats Display */}
+                            {results && !loading && (
+                              <motion.div 
+                                className="mt-4 text-white text-sm"
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.5, delay: 0.4 }}
+                              >
+                                <div className="mt-2 p-2 bg-gray-700 rounded">
+                                  <p className="font-bold">Performance Stats (1-10):</p>
+                                  <p>Attack: {index === 0 ? results.team1Status.attack_norm : results.team2Status.attack_norm}</p>
+                                  <p>Defense: {index === 0 ? results.team1Status.defend_norm : results.team2Status.defend_norm}</p>
+                                  <p>Speed: {index === 0 ? results.team1Status.speed_norm : results.team2Status.speed_norm}</p>
+                                  <p>Teamwork: {index === 0 ? results.team1Status.teamwork_norm : results.team2Status.teamwork_norm}</p>
+                                  <p>Hustle: {index === 0 ? results.team1Status.hustle_norm : results.team2Status.hustle_norm}</p>
+                                  <p>Rank: {index === 0 ? results.team1Status.rank : results.team2Status.rank}</p>
+                                  <p>Win: {index === 0 ? results.team1Status.wins : results.team2Status.wins}</p>
+                                </div>
+                              </motion.div>
+                            )}
+                          </motion.div>
+                        ))}
                       </div>
-                    )}
-                  </div>
-                ) : (
-                  <p className="text-center text-white">Select a match to view comparison and prediction.</p>
-                )}
+                      
+                      {/* Prediction Display */}
+                      {prediction.team1Score !== null && (
+                        <motion.div
+                          className="bg-gray-200 p-6 rounded-lg shadow-xl flex flex-col items-center border border-gray-300/50 backdrop-blur-sm relative transition-all duration-300 hover:shadow-2xl hover:border-gray-400/50 hover:bg-gray-100"
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.5, delay: 0.5 }}
+                        >
+                          <h3 className="text-xl font-semibold text-gray-800 mb-4">Predicted Score</h3>
+                          <div className="flex items-center gap-12 mb-6">
+                            <motion.div 
+                              className="flex flex-col items-center"
+                              initial={{ opacity: 0, x: -20 }}
+                              animate={{ opacity: 1, x: 0 }}
+                            >
+                              <span className="text-gray-600 font-medium mb-2 whitespace-nowrap">{selectedMatch.team1.name}</span>
+                              <div className={`text-3xl font-bold ${prediction.winningTeam === selectedMatch.team1.name ? 'text-green-600' : 'text-gray-700'}`}>
+                                {prediction.team1Score}
+                              </div>
+                            </motion.div>
+                            <div className="text-2xl text-gray-500">-</div>
+                            <motion.div 
+                              className="flex flex-col items-center"
+                              initial={{ opacity: 0, x: 20 }}
+                              animate={{ opacity: 1, x: 0 }}
+                            >
+                              <span className="text-gray-600 font-medium mb-2 whitespace-nowrap">{selectedMatch.team2.name}</span>
+                              <div className={`text-3xl font-bold ${prediction.winningTeam === selectedMatch.team2.name ? 'text-green-600' : 'text-gray-700'}`}>
+                                {prediction.team2Score}
+                              </div>
+                            </motion.div>
+                          </div>
+                          <motion.div 
+                            className="flex flex-col items-center"
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ delay: 0.3 }}
+                          >
+                            <div className="relative w-20 h-20">
+                              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-24 h-24 bg-gray-200 rounded-full shadow-lg flex items-center justify-center">
+                                <Image
+                                  src={(selectedMatch.team1.name === prediction.winningTeam ? selectedMatch.team1 : selectedMatch.team2).logo}
+                                  alt="Winner"
+                                  width={72}
+                                  height={72}
+                                  className="rounded-full"
+                                />
+                              </div>
+                            </div>
+                            <span className="text-lg font-bold text-green-600 mt-6">
+                              {prediction.winningTeam}
+                            </span>
+                          </motion.div>
+                        </motion.div>
+                      )}
+                    </motion.div>
+                  ) : (
+                    <motion.p
+                      key="placeholder"
+                      className="text-center text-white"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                    >
+                      Select a match to view comparison and prediction.
+                    </motion.p>
+                  )}
+                </AnimatePresence>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>
-    </main>
+    </motion.div>
   );
 }
