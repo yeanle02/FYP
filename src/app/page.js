@@ -24,7 +24,7 @@ export default function Home() {
         <div className="fixed inset-0 bg-gray-900/80 backdrop-blur-sm z-50 flex items-center justify-center">
           <div className="text-center">
             <h2 className="text-4xl font-bold bg-gradient-to-r from-blue-400 to-blue-100 bg-clip-text text-transparent text-reveal loading-dots">
-              Loading AFL Game Ranking System Home Page...
+              Welcome To AFL Game Ranking System
             </h2>
           </div>
         </div>
