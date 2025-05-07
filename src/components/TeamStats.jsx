@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { motion } from "framer-motion";
 import {
   Table,
   TableBody,
@@ -25,7 +26,18 @@ export function TeamStats() {
 
   return (
     <div>
-      {/* …Current Round panel unchanged… */}
+      <motion.div 
+        className="bg-gradient-to-r from-gray-300 to-gray-200 rounded-lg p-2 mb-4 shadow-md"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.1 }}
+      >
+        <h2 className="text-2xl font-bold text-gray-700 text-center mb-1">Current Round</h2>
+        <p className="text-gray-700 text-center">
+          Round 23<br />
+          20th August 2022
+        </p>
+      </motion.div>
 
       <div className="p-4 bg-gradient-to-br from-gray-200 to-gray-100 rounded-lg shadow-xl ring-1 ring-gray-300/50">
         <h2 className="text-2xl font-bold mb-4 text-gray-700 text-center">
