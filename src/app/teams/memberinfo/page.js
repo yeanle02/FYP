@@ -7,7 +7,6 @@ import TeamInfoCard from "@/components/TeamInfoCard";
 import useTeamMemberHandler from "../../hooks/apiHandlers/useTeamMemberHandler";
 import useTeamLeadersHandler from "../../hooks/apiHandlers/useTeamLeadersHandler";
 import { teams } from "@/app/data/teams";
-<<<<<<< HEAD
 import { motion, AnimatePresence } from "framer-motion";
 
 const containerVariants = {
@@ -35,22 +34,15 @@ const cardVariants = {
     }
   }
 };
-=======
->>>>>>> teampage
 
 export default function MemberInfoPage() {
   const searchParams = useSearchParams();
   const teamName = searchParams.get("teamName") || "Unknown Team";
-  const { loading: tmLoading, errors: tmErrors, results: tmResults, handleGetTeamMembers } = useTeamMemberHandler();
-
-<<<<<<< HEAD
-=======
 
   const { loading: tmLoading, errors: tmErrors, results: tmResults, setTeamName, handleGetTeamMembers } = useTeamMemberHandler();
   const { results:leaderResults, handleGetTeamLeaders } = useTeamLeadersHandler();
 
  
->>>>>>> teampage
   useEffect(() => {
     handleGetTeamMembers(teamName);
     handleGetTeamLeaders(teamName);
@@ -59,47 +51,8 @@ export default function MemberInfoPage() {
   const teamInfo = teams.find((t) => t.name === teamName) || { name: teamName, logo: "/default-logo.png" };
 
   return (
-<<<<<<< HEAD
-    <motion.main 
-      className="min-h-screen bg-gray-100 page-enter"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-    >
-      <Navbar />
-      <motion.div 
-        className="w-full"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
-      >
-        <TeamHeader teamName={teamInfo.name} homeVenue="SCG" teamLogo={teamInfo.logo} />
-      </motion.div>
-
-      <div className="container mx-auto px-4 py-4">
-        <div className="max-w-8xl mx-auto flex gap-10">
-          <motion.div 
-            className="w-[360px] flex flex-col gap-6"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-          >
-            <TeamInfoCard
-              role="Captain"
-              name="Callum Mills"
-              imageSrc={teamInfo.logo}
-              link="#"
-            />
-            <TeamInfoCard
-              role="Coach"
-              name="John Longmire"
-              imageSrc={teamInfo.logo}
-              link="#"
-            />
-          </motion.div>
-=======
     <>
-      <main className="min-h-screen bg-gray-100 page-enter">
+      <motion.main className="min-h-screen bg-gray-100 page-enter">
         <Navbar />
         <div className="w-full">
           <TeamHeader teamName={teamInfo.name} homeVenue="SCG" teamLogo={teamInfo.logo} />
@@ -122,7 +75,6 @@ export default function MemberInfoPage() {
                 link="#"
               />
             </div>
->>>>>>> teampage
           
           <motion.div 
             className="flex-1 pr-1"
@@ -217,6 +169,7 @@ export default function MemberInfoPage() {
           </motion.div>
         </div>
       </div>
-    </motion.main>
+      </motion.main>
+    </>
   );
 }

@@ -89,19 +89,13 @@ export function TeamComparison() {
   const { loading, errors, results, handleGetTeamStatus } = useTeamStatusHandler();
   const { loading: prLoading, errors: prErrors, results: prResults, setHomeTeam, setAwayTeam, predictPageHandler } = usePredictionHandler();
 
-<<<<<<< HEAD
-  // Your existing selectMatch and getRadarData functions
-  const selectMatch = async (match) => {
-=======
-  const { loading:prLoading, errors:prErrors, results:prResults, setHomeTeam, setAwayTeam, predictPageHandler } = usePredictionHandler();
   const { results:leaderBoardResults, handleGetLeaderBoards } = useStatusListHandler();
  
   useEffect(() => {
     handleGetLeaderBoards();
   }, []);
 
-  const selectMatch = (match) => {
->>>>>>> teampage
+  const selectMatch = async (match) => {
     setSelectedMatch(match);
     handleGetTeamStatus(match.team1.name, match.team2.name);
     setHomeTeam(match.team1.name);
@@ -228,62 +222,36 @@ export function TeamComparison() {
     >
       <div className="container mx-auto px-4 py-2">
         <div className="flex flex-col xl:flex-row gap-6 overflow-hidden">
-          {/* Leaderboard */}
-          <motion.div
-            className="bg-gradient-to-br from-gray-800 to-gray-700 p-4 rounded-lg shadow-xl ring-1 ring-gray-600/50 w-full xl:w-72 h-fit"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <h3 className="text-xl font-semibold text-white mb-4 text-center">Leaderboard</h3>
-<<<<<<< HEAD
-            {placeholderTeams.sort((a, b) => a.rank - b.rank).map((team) => (
-              <motion.div
-                key={team.name}
-                className="flex justify-between items-center py-2 px-3 bg-gray-700/50 hover:bg-gray-700 transition-colors duration-200 rounded mb-2"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.3 }}
-              >
-=======
-            {leaderBoardResults.sort((a, b) => a.rank - b.rank).slice(0, 8).map((team) => {
-              const logoPath = `/teams/${team.name.replace(/\s+/g, '_')}.png`;
+{/* Leaderboard */}
+<motion.div
+  className="bg-gradient-to-br from-gray-800 to-gray-700 p-4 rounded-lg shadow-xl ring-1 ring-gray-600/50 w-full xl:w-72 h-fit"
+  initial={{ opacity: 0, x: -20 }}
+  animate={{ opacity: 1, x: 0 }}
+  transition={{ duration: 0.5 }}
+>
+  <h3 className="text-xl font-semibold text-white mb-4 text-center">Leaderboard</h3>
+  {leaderBoardResults.sort((a, b) => a.rank - b.rank).slice(0, 8).map((team) => {
+    const logoPath = `/teams/${team.name.replace(/\s+/g, '_')}.png`;
 
-              return(
-
-              <div key={team.name} className="flex justify-between items-center py-2 px-3 bg-gray-800 rounded mb-2">
->>>>>>> teampage
-                <div className="flex items-center gap-2">
-                  <span className="text-white font-bold">#{team.rank}</span>
-                  <Image src={logoPath}
-              alt={team.name}
-              width={24}
-              height={24}
- />
-                  <span className="text-gray-200 text-sm">{team.name}</span>
-                </div>
-                <div className="flex items-center gap-1">
-<<<<<<< HEAD
-                  {team.movedUp ? (
-                    <ArrowUp size={16} className="text-green-400" />
-                  ) : (
-                    <ArrowDown size={16} className="text-red-400" />
-                  )}
-                  <span className="text-gray-300 text-sm">{team.historyPoints}</span>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-
-          {/* Main Section */}
-=======
-                  {/* {team.movedUp ? <ArrowUp size={16} className="text-green-400" /> : <ArrowDown size={16} className="text-red-400" />} */}
-                  <span className="text-gray-300 text-sm">{team.historyPoints}</span>
-                </div>
-              </div>
-              );
-              })}
-          </div>
+    return(
+      <div key={team.name} className="flex justify-between items-center py-2 px-3 bg-gray-800 rounded mb-2">
+        <div className="flex items-center gap-2">
+          <span className="text-white font-bold">#{team.rank}</span>
+          <Image src={logoPath}
+            alt={team.name}
+            width={24}
+            height={24}
+          />
+          <span className="text-gray-200 text-sm">{team.name}</span>
+        </div>
+        <div className="flex items-center gap-1">
+          {/* {team.movedUp ? <ArrowUp size={16} className="text-green-400" /> : <ArrowDown size={16} className="text-red-400" />} */}
+          <span className="text-gray-300 text-sm">{team.historyPoints}</span>
+        </div>
+      </div>
+    );
+  })}
+</motion.div>
 
 
 {/* Leaderboard
@@ -332,7 +300,6 @@ export function TeamComparison() {
 
 
           {/* Main Section - Match List + Prediction */}
->>>>>>> teampage
           <div className="flex-1 w-full">
             {/* Match List */}
             <motion.div
