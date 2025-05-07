@@ -38,7 +38,7 @@ export default function Welcome() {
         </div>
 
         <button
-          onClick={() => router.push('/home')}
+          onClick={() => router.push('/')}
           className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-full
                     font-semibold transform transition-all duration-300 hover:scale-105
                     shadow-lg hover:shadow-blue-500/50 animate-glow"

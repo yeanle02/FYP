@@ -52,7 +52,9 @@ export function Navbar() {
         <div className="flex h-14 items-center">
           {/* AFL Logo and Title */}
           <div className="flex items-center gap-4">
-            <Image src="/afl_logo.png" alt="AFL Logo" width={100} height={200} className="h-[90px] w-auto" />
+            <Link href="/">
+              <Image src="/afl_logo.png" alt="AFL Logo" width={100} height={200} className="h-[90px] w-auto cursor-pointer hover:scale-105 transition-transform duration-300" />
+            </Link>
             <h1 className="text-3xl font-extrabold tracking-wider bg-gradient-to-r from-blue-200 to-white bg-clip-text text-transparent drop-shadow-[0_2px_2px_rgba(0,0,0,0.3)] hover:scale-105 hover:from-blue-300 hover:to-blue-100 transition-all duration-300">
               No Gambling Pls
             </h1>
@@ -85,12 +87,12 @@ export function Navbar() {
           <div className="flex items-center justify-end flex-1">
             {/* Navigation Buttons */}
             <div className="flex items-center gap-4 ml-8">
-              <Link href="/">
+              <Link href="/home">
                 <Button 
-                  variant={pathname === "/" ? "default" : "secondary"} 
+                  variant={pathname === "/home" ? "default" : "secondary"} 
                   size="default"
                   className={`flex items-center gap-3 px-6 py-2.5 text-base font-medium transition-all duration-300 ${
-                    pathname === "/" ? "shadow-lg shadow-blue-500/50 hover:shadow-blue-500/75" : "hover:shadow-lg hover:shadow-gray-500/50"
+                    pathname === "/home" ? "shadow-lg shadow-blue-500/50 hover:shadow-blue-500/75" : "hover:shadow-lg hover:shadow-gray-500/50"
                   }`}
                 >
                   <Home className="h-5 w-5" />
