@@ -116,6 +116,35 @@ async function getLeaderBoard() {
   }
 }
 
+async function getTeamRanking() {
+  debugLog("getTeamRanking", "Starting query for team rankings");
+  try {
+    const { db } = await connectToDatabase();
+    debugLog("getTeamRanking", "MongoDB connection established");
+
+    
+    const docs = await db
+      .collection("team_status")
+      .find({})
+      .toArray();
+    debugLog("getTeamRanking", `Found ${docs.length} ranking records`);
+
+    
+    return docs.map(doc => ({
+      name: doc.Team,  
+      K: doc.K,            
+      G: doc.G,           
+      FF: doc.FF,          
+      FA: doc.FA,          
+      CL: doc.CL,          
+      CG: doc.CG           
+    }));
+  } catch (error) {
+    return debugLog("getTeamRanking", error, true);
+  }
+}
+
+
 // GET handler
 export async function GET(request) {
   const startTime = Date.now();
@@ -152,7 +181,12 @@ export async function GET(request) {
       debugLog("API", `Processing get_leader_board`);
       result = await getLeaderBoard();
 
-    } else {
+    } else if (action === "get_team_ranking") {
+      debugLog("API", `Processing get_team_ranking`);
+      result = await getTeamRanking();
+
+    } 
+    else {
       debugLog("API", "Invalid request or missing parameters", true);
       return NextResponse.json(
         { error: "Invalid request or missing parameters" },
@@ -170,3 +204,38 @@ export async function GET(request) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
+
+
+
+
+
+// GET handler
+// export async function GET(request) {
+//   const startTime = Date.now();
+//   const url = new URL(request.url);
+//   const action = url.searchParams.get("action");
+//   debugLog("API", `Request received: GET ${url.pathname}`);
+//   debugLog("API", `Query params: ${JSON.stringify(Object.fromEntries(url.searchParams))}`);
+
+//   try {
+//     let result;
+
+//     if (action === "get_team_ranking") {
+//       debugLog("API", `Processing get_team_ranking`);
+//       result = await getTeamRanking();
+//       debugLog("API", `Completed get_team_ranking in ${Date.now() - startTime}ms`);
+
+//     } else {
+//       debugLog("API", "Invalid action or missing parameters", true);
+//       return NextResponse.json(
+//         { error: "Invalid action or missing parameters" },
+//         { status: 400 }
+//       );
+//     }
+
+//     return NextResponse.json(result);
+//   } catch (error) {
+//     debugLog("API", `Error: ${error.message}`, true);
+//     return NextResponse.json({ error: error.message }, { status: 500 });
+//   }
+// }
