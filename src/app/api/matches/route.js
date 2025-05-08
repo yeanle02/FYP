@@ -144,6 +144,43 @@ async function getTeamRanking() {
   }
 }
 
+export async function getTeamPoint(team1, team2) {
+  try {
+    const { db } = await connectToDatabase();
+    const collection = db.collection("history_match");
+
+    // Fetch all records where team_name is either team1 or team2
+    const matches = await collection
+      .find({ team_name: { $in: [team1, team2] } })
+      .sort({ round: 1 }) // Optional: sorts by round
+      .toArray();
+
+    const roundsData = {};
+
+    matches.forEach(match => {
+      const { round, team_name, score } = match;
+
+      if (!roundsData[round]) {
+        roundsData[round] = {};
+      }
+
+      roundsData[round][team_name] = score;
+    });
+
+    return {
+      success: true,
+      data: roundsData
+    };
+
+  } catch (error) {
+    console.error('Error fetching team points:', error);
+    return {
+      success: false,
+      error: 'Failed to fetch team points'
+    };
+  }
+}
+
 
 // GET handler
 export async function GET(request) {
@@ -185,7 +222,10 @@ export async function GET(request) {
       debugLog("API", `Processing get_team_ranking`);
       result = await getTeamRanking();
 
-    } 
+    } else if (action === "get_team_points" && team1 && team2) {
+      debugLog("API", `Processing get_team_points for ${team1} vs ${team2}`);
+      result = await getTeamPoint(team1, team2);
+    }
     else {
       debugLog("API", "Invalid request or missing parameters", true);
       return NextResponse.json(
@@ -204,38 +244,3 @@ export async function GET(request) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
-
-
-
-
-
-// GET handler
-// export async function GET(request) {
-//   const startTime = Date.now();
-//   const url = new URL(request.url);
-//   const action = url.searchParams.get("action");
-//   debugLog("API", `Request received: GET ${url.pathname}`);
-//   debugLog("API", `Query params: ${JSON.stringify(Object.fromEntries(url.searchParams))}`);
-
-//   try {
-//     let result;
-
-//     if (action === "get_team_ranking") {
-//       debugLog("API", `Processing get_team_ranking`);
-//       result = await getTeamRanking();
-//       debugLog("API", `Completed get_team_ranking in ${Date.now() - startTime}ms`);
-
-//     } else {
-//       debugLog("API", "Invalid action or missing parameters", true);
-//       return NextResponse.json(
-//         { error: "Invalid action or missing parameters" },
-//         { status: 400 }
-//       );
-//     }
-
-//     return NextResponse.json(result);
-//   } catch (error) {
-//     debugLog("API", `Error: ${error.message}`, true);
-//     return NextResponse.json({ error: error.message }, { status: 500 });
-//   }
-// }

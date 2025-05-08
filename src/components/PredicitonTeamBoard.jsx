@@ -3,7 +3,7 @@
 export function Leaderboard() {
   const teams = [
     { position: 1, name: "Sydney Swans", logo: "teams/Sydney_Swans.png", score: 23 },
-    { position: 2, name: "Port Adelaide", logo: "teams/Port_Adelaide.png", score: 23 },
+    { position: 2, name: "Port Adelaide", logo: "teams/Port_Adelaide_Power.png", score: 23 },
     { position: 3, name: "Geelong Cats", logo: "teams/Geelong_Cats.png", score: 23 },
     { position: 4, name: "GWS GIANTS", logo: "teams/GWS_Giants.png", score: 23 },
     { position: 5, name: "Brisbane Lions", logo: "teams/Brisbane_Lions.png", score: 23 },

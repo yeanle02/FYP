@@ -17,6 +17,8 @@ import { ArrowUp, ArrowDown } from 'lucide-react';
 import useTeamStatusHandler from '@/app/hooks/apiHandlers/useTeamStatusHandler';
 import usePredictionHandler from '@/app/hooks/apiHandlers/usePredictionHandler';
 import useStatusListHandler from '@/app/hooks/apiHandlers/useStatusListHandler';
+import useTeamPointsHandler from '@/app/hooks/apiHandlers/useTeamPointHandler';
+import TeamComparisonChart from './TeamComparsionChart';
 
 
 ChartJS.register(
@@ -72,6 +74,7 @@ export function TeamComparison() {
   const [prediction, setPrediction] = useState({ team1Score: null, team2Score: null, winningTeam: null });
   const [isScrollable, setIsScrollable] = useState(false);
   const matchesContainerRef = useRef(null);
+  const [showPerformanceChart, setShowPerformanceChart] = useState(false);
 
   useEffect(() => {
     const checkScrollable = () => {
@@ -88,9 +91,9 @@ export function TeamComparison() {
   
   const { loading, errors, results, handleGetTeamStatus } = useTeamStatusHandler();
   const { loading: prLoading, errors: prErrors, results: prResults, setHomeTeam, setAwayTeam, predictPageHandler } = usePredictionHandler();
-
   const { results:leaderBoardResults, handleGetLeaderBoards } = useStatusListHandler();
- 
+  const { loading: tpLoading, errors: tpErrors, pointsData, fetchTeamPoints } = useTeamPointsHandler();
+
   useEffect(() => {
     handleGetLeaderBoards();
   }, []);
@@ -100,6 +103,7 @@ export function TeamComparison() {
     handleGetTeamStatus(match.team1.name, match.team2.name);
     setHomeTeam(match.team1.name);
     setAwayTeam(match.team2.name);
+    await fetchTeamPoints(match.team1.name, match.team2.name);
 
     try {
       const result = await predictPageHandler(match.team1.name, match.team2.name);
@@ -260,52 +264,6 @@ export function TeamComparison() {
   })}
 </motion.div>
 
-
-{/* Leaderboard
-          <div className="bg-gray-900 p-4 rounded-lg shadow-md w-full xl:w-72 h-fit">
-            <h3 className="text-xl font-semibold text-white mb-4 text-center">
-              Leaderboard
-            </h3>
-            {lbLoading && (
-              <p className="text-center text-white">Loading leaderboard…</p>
-            )}
-            {lbError && (
-              <p className="text-center text-red-400">Error: {lbError}</p>
-            )}
-            {!lbLoading && !lbError && (
-              // lbResults 已经是 total_points 排序好的前十条
-              lbResults.map((doc, idx) => {
-                const rank = idx + 1;
-                const name = doc.Team;
-                const pts  = doc.total_points;
-                // 如果你没有 logo 字段，这里先硬编码一个默认图
-                const logo = `/teams/${name.replace(/\s+/g, '_')}.png`;
-                // movedUp 你可以后面再自己实现
-                const movedUp = false;
-                return (
-                  <div
-                    key={name}
-                    className="flex justify-between items-center py-2 px-3 bg-gray-800 rounded mb-2"
-                  >
-                    <div className="flex items-center gap-2">
-                      <span className="text-white font-bold">#{rank}</span>
-                      <Image src={logo} alt={name} width={24} height={24} />
-                      <span className="text-gray-200 text-sm">{name}</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      {movedUp 
-                        ? <ArrowUp   size={16} className="text-green-400" /> 
-                        : <ArrowDown size={16} className="text-red-400"   />}
-                      <span className="text-gray-300 text-sm">{pts}</span>
-                    </div>
-                  </div>
-                );
-              })
-            )}
-          </div> */}
-
-
-
           {/* Main Section - Match List + Prediction */}
           <div className="flex-1 w-full">
             {/* Match List */}
@@ -391,6 +349,20 @@ export function TeamComparison() {
                     </motion.button>
                   )}
                 </motion.div>
+
+                <div className="flex justify-center mb-4">
+                  <motion.button 
+                    onClick={() => setShowPerformanceChart(prev => !prev)}
+                    className="px-4 py-2 bg-gray-700 text-gray-200 rounded-lg hover:bg-gray-600 transition-colors duration-200"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.2 }}
+                  >
+                    {showPerformanceChart ? "Hide Performance Chart" : "Show Performance Chart"}
+                  </motion.button>
+                </div>
 
                 <AnimatePresence mode="wait">
                   {selectedMatch ? (
@@ -561,6 +533,33 @@ export function TeamComparison() {
                               {prediction.winningTeam}
                             </span>
                           </motion.div>
+                        </motion.div>
+                      )}
+
+                      {/* Performance Chart */}
+                      {showPerformanceChart && (
+                        <motion.div 
+                          className="bg-gray-900 rounded-lg shadow p-4"
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          <h2 className="text-xl font-bold mb-4 text-white">Performance History</h2>
+                          <div className="h-96">
+                            {tpLoading ? (
+                              <div className="flex justify-center items-center h-full text-white">Loading performance data...</div>
+                            ) : tpErrors ? (
+                              <div className="flex justify-center items-center h-full text-red-500">Error loading performance data</div>
+                            ) : (
+                              <TeamComparisonChart 
+                                team1={selectedMatch.team1.name}
+                                team2={selectedMatch.team2.name}
+                                pointsData={pointsData}
+                                predictionValue={prediction}
+                              />
+                            )}
+                          </div>
                         </motion.div>
                       )}
                     </motion.div>

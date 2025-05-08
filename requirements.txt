@@ -2,3 +2,6 @@ pandas
 scikit-learn
 numpy
 catboost
+plotly
+plotly.js-dist
+farmer-motion

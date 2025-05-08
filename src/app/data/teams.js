@@ -2,7 +2,7 @@
 export const teams = [
   {
     name: "Collingwood Magpies",
-    logo: "/teams/Collingwood.png",
+    logo: "/teams/Collingwood_Magpies.png",
     captain: "Scott Pendlebury",
     coach:   "Craig McRae",
     stats: {
@@ -81,7 +81,7 @@ export const teams = [
   },
   {
     name: "Port Adelaide Power",
-    logo: "/teams/Port_Adelaide.png",
+    logo: "/teams/Port_Adelaide_Power.png",
     captain: "Connor Rozee",
     coach:   "Ken Hinkley",
     stats: {
@@ -133,7 +133,7 @@ export const teams = [
   },
   {
     name: "Fremantle Dockers",
-    logo: "/teams/Fremantle.png",
+    logo: "/teams/Fremantle_Dockers.png",
     captain: "Nat Fyfe",
     coach:   "Justin Longmuir",
     stats: {
@@ -198,7 +198,7 @@ export const teams = [
   },
   {
     name: "St Kilda Saints",
-    logo: "/teams/St_Kilda.png",
+    logo: "/teams/St_Kilda_Saints.png",
     captain: "Jack Steele",
     coach:   "Ross Lyon",
     stats: {

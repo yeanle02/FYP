@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const mockMatches = [
   {
-    team1: { name: 'Collingwood', logo: '/teams/Collingwood.png' },
+    team1: { name: 'Collingwood', logo: '/teams/Collingwood_Magpies.png' },
     team2: { name: 'Carlton', logo: '/teams/Carlton.svg' },
     time: '2:30 PM'
   },
@@ -22,7 +22,7 @@ const mockMatches = [
   },
   {
     team1: { name: 'Western Bulldogs', logo: '/teams/Western_Bulldogs.png' },
-    team2: { name: 'Collingwood', logo: '/teams/Collingwood.png' },
+    team2: { name: 'Collingwood', logo: '/teams/Collingwood_Magpies.png' },
     time: '1:45 PM'
   },
   {

@@ -10,7 +10,7 @@ const mockMatches = [
     homeLogo: "/teams/Sydney_Swans.png",
     homeScore: "13.11 (89)",
     awayTeam: "Collingwood",
-    awayLogo: "/teams/Collingwood.png",
+    awayLogo: "/teams/Collingwood_Magpies.png",
     awayScore: "12.14 (86)",
   },
   {
@@ -20,7 +20,7 @@ const mockMatches = [
     homeLogo: "/teams/Sydney_Swans.png",
     homeScore: "12.11 (86)",
     awayTeam: "Port Adelaide",
-    awayLogo: "/teams/Port_Adelaide.png",
+    awayLogo: "/teams/Port_Adelaide_Power.png",
     awayScore: "22.16 (148)",
   },
   {
@@ -60,7 +60,7 @@ const mockMatches = [
     homeLogo: "/teams/Sydney_Swans.png",
     homeScore: "11.21 (84)",
     awayTeam: "Fremantle",
-    awayLogo: "/teams/Fremantle.png",
+    awayLogo: "/teams/Fremantle_Dockers.png",
     awayScore: "14.6 (90)",
   },
   {

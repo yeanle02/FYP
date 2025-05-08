@@ -9,6 +9,7 @@ export default function usePredictionHandler() {
     const [errors, setErrors] = useState(null);
     const [results, setResults] = useState([]);
 
+
     const predictPageHandler = async (homeTeam, awayTeam) => {
         setLoading(true);
         setErrors(null);
@@ -19,9 +20,9 @@ export default function usePredictionHandler() {
           const requestData = {
             home_team: homeTeam,
             away_team: awayTeam,
-            round:"R1", 
+            round:"R23", 
             venue:"M.C.G.",
-            year:2024, 
+            year:2022, 
             maxtemp:28.7, 
             mintemp:14
           };
@@ -51,6 +52,7 @@ export default function usePredictionHandler() {
               homeTeamPredictedScore: result.home_score,
               awayTeamPredictedScore: result.away_score,
               winningTeam: result.winning_team
+              // ,confidence: result.confidence
             });
           }
           
