@@ -45,13 +45,13 @@ export default function MemberInfoPage() {
               <TeamInfoCard
                 role="Captain"
                 name={leaderResults.Captain}
-                imageSrc={teamInfo.logo}
+                imageSrc={`/Captain/${encodeURIComponent(teamName)}/${encodeURIComponent(leaderResults.Captain)}.png`}
                 link="#"
               />
               <TeamInfoCard
                 role="Coach"
                 name={leaderResults.Coach}
-                imageSrc={teamInfo.logo}
+                imageSrc={`/Coach/${encodeURIComponent(teamName)}/${encodeURIComponent(leaderResults.Coach)}.png`}
                 link="#"
               />
             </div>
