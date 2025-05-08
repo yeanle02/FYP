@@ -8,48 +8,23 @@ import { motion, AnimatePresence } from 'framer-motion';
 const placeholderTeams = [
   {
     name: "Melbourne Demons",
-    logo: "/teams/Melbournefc.png",
-    historyPoints: 1200,
-    wins: 10,
-    losses: 5,
-    rank: 1,
-    movedUp: true
+    logo: "/teams/Melbournefc.png"
   },
   {
     name: "Richmond Tigers",
-    logo: "/teams/Richmond_Tigers.png",
-    historyPoints: 1250,
-    wins: 12,
-    losses: 4,
-    rank: 2,
-    movedUp: false
+    logo: "/teams/Richmond_Tigers.png"
   },
   {
     name: "Carlton Blues",
-    logo: "/teams/Carlton.svg",
-    historyPoints: 1100,
-    wins: 8,
-    losses: 7,
-    rank: 3,
-    movedUp: true
+    logo: "/teams/Carlton.svg"
   },
   {
     name: "Sydney Swans",
-    logo: "/teams/Sydney_Swans.png",
-    historyPoints: 1150,
-    wins: 9,
-    losses: 6,
-    rank: 4,
-    movedUp: false
+    logo: "/teams/Sydney_Swans.png"
   },
   {
     name: "Brisbane Lions",
-    logo: "/teams/Brisbane_Lions.png",
-    historyPoints: 1220,
-    wins: 11,
-    losses: 5,
-    rank: 5,
-    movedUp: false
+    logo: "/teams/Brisbane_Lions.png"
   }
 ];
 
