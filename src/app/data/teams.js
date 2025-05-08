@@ -29,7 +29,7 @@ export const teams = [
   },
   {
     name: "Melbourne Demons",
-    logo: "/teams/Melbournefc.png",
+    logo: "/teams/Melbourne_Demons.png",
     captain: "Max Gawn",
     coach:   "Simon Goodwin",
     stats: {

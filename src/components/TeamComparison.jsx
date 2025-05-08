@@ -35,7 +35,7 @@ ChartJS.register(
 const placeholderTeams = [
   {
     name: "Melbourne Demons",
-    logo: "/teams/Melbournefc.png",
+    logo: "/teams/Melbourne_Demons.png",
     movedUp: true
   },
   {
@@ -240,7 +240,7 @@ export function TeamComparison() {
                 
                 // Handle special cases
                 if (team.name === "Melbourne Demons") {
-                  logoPath = "/teams/Melbournefc.png";
+                  logoPath = "/teams/Melbourne_Demons.png";
                 } else if (team.name === "Gold Coast Suns") {
                   logoPath = "/teams/Gold_Coast_Suns.svg";
                 }

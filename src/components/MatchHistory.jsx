@@ -30,7 +30,7 @@ const mockMatches = [
     homeLogo: "/teams/Sydney_Swans.png",
     homeScore: "14.61 (90)",
     awayTeam: "Melbourne",
-    awayLogo: "/teams/Melbournefc.png",
+    awayLogo: "/teams/Melbourne_Demons.png",
     awayScore: "15.10 (100)",
   },
   {

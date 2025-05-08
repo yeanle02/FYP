@@ -8,7 +8,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 const placeholderTeams = [
   {
     name: "Melbourne Demons",
-    logo: "/teams/Melbournefc.png"
+    logo: "/teams/Melbourne_Demons.png"
   },
   {
     name: "Richmond Tigers",

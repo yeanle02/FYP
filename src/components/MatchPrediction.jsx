@@ -12,7 +12,7 @@ const mockMatches = [
   },
   {
     team1: { name: 'Brisbane Lions', logo: '/teams/Brisbane_Lions.png' },
-    team2: { name: 'Melbourne', logo: '/teams/Melbournefc.png' },
+    team2: { name: 'Melbourne', logo: '/teams/Melbourne_Demons.png' },
     time: '4:45 PM'
   },
   {
@@ -31,7 +31,7 @@ const mockMatches = [
     time: '3:30 PM'
   },
   {
-    team1: { name: 'Melbourne', logo: '/teams/Melbournefc.png' },
+    team1: { name: 'Melbourne', logo: '/teams/Melbourne_Demons.png' },
     team2: { name: 'Sydney Swans', logo: '/teams/Sydney_Swans.png' },
     time: '5:15 PM'
   }
