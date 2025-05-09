@@ -39,23 +39,27 @@ const placeholderMatches = [
 export function HomeTeamComparison() {
   const [selectedMatch, setSelectedMatch] = useState(null);
   const [prediction, setPrediction] = useState({ team1Score: null, team2Score: null, winningTeam: null, match_confidence: null, isLoading: false });
-  const [isScrollable, setIsScrollable] = useState(false);
   const matchesContainerRef = useRef(null);
+  const [showScrollIndicator, setShowScrollIndicator] = useState(true);
+  
+  const { setHomeTeam, setAwayTeam, predictPageHandler } = usePredictionHandler();
 
   useEffect(() => {
-    const checkScrollable = () => {
-      if (matchesContainerRef.current) {
-        const { scrollHeight, clientHeight } = matchesContainerRef.current;
-        setIsScrollable(scrollHeight > clientHeight);
+    const container = matchesContainerRef.current;
+    
+    const checkScroll = () => {
+      if (container) {
+        const isScrollable = container.scrollHeight > container.clientHeight;
+        const isAtBottom = Math.abs(container.scrollHeight - container.scrollTop - container.clientHeight) < 1;
+        setShowScrollIndicator(isScrollable && !isAtBottom);
       }
     };
 
-    checkScrollable();
-    window.addEventListener('resize', checkScrollable);
-    return () => window.removeEventListener('resize', checkScrollable);
+    container?.addEventListener('scroll', checkScroll);
+    checkScroll();
+
+    return () => container?.removeEventListener('scroll', checkScroll);
   }, []);
-  
-  const { setHomeTeam, setAwayTeam, predictPageHandler } = usePredictionHandler();
   
   const selectMatch = async (match) => {
     setSelectedMatch(match);
@@ -99,7 +103,7 @@ export function HomeTeamComparison() {
     >
       {/* Match Scrollable List */}
       <motion.div 
-        className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-lg shadow-xl p-2 ring-1 ring-gray-600/50 flex flex-col min-h-[420px] h-[calc(100vh-36rem)]"
+        className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-lg shadow-xl p-2 ring-1 ring-gray-600/50 flex flex-col"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -157,69 +161,64 @@ export function HomeTeamComparison() {
             </div>
           </div>
         </motion.h2>
-        <div ref={matchesContainerRef} className="flex-1 overflow-y-auto px-1 pb-2 custom-scrollbar scroll-smooth">
-          <div className="flex flex-col gap-2">
+        <div className="relative">
+          <div ref={matchesContainerRef} className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-64 overflow-y-auto custom-scrollbar px-1 pb-6">
             {placeholderMatches.map((match, idx) => (
               <motion.div
                 key={idx}
                 onClick={async () => await selectMatch(match)}
-                className="group h-28 bg-gradient-to-br from-gray-700 to-gray-600 p-3 rounded-lg cursor-pointer border border-gray-500
-                shadow-[0_8px_16px_rgba(0,0,0,0.2)] hover:from-gray-600 hover:to-gray-500 transition-all duration-300 
-                hover:border-gray-400 hover:shadow-[0_12px_20px_rgba(0,0,0,0.3)] flex items-center w-full"
+                className="bg-gradient-to-br from-gray-700 to-gray-600 rounded-lg p-4 border border-gray-600 hover:border-blue-500 transition cursor-pointer"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: idx * 0.1 }}
                 whileHover={{ scale: 1.01, y: -2 }}
                 whileTap={{ scale: 0.99 }}
               >
-                <div className="flex items-center justify-center w-full gap-24">
-                  <div className="flex flex-col items-center w-40">
-                    <motion.div 
-                      className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mb-3 shadow-lg group-hover:bg-white transition-all duration-300"
-                      whileHover={{ scale: 1.05 }}
-                      transition={{ type: "spring", stiffness: 300, damping: 15 }}
-                    >
-                      <Image src={match.team1.logo} width={55} height={55} alt={match.team1.name} 
-                        className="rounded-full transform transition-transform group-hover:scale-110 duration-300" />
-                    </motion.div>
-                    <span className="text-gray-200 text-sm font-semibold group-hover:text-white transition-colors duration-300 text-center">{match.team1.name}</span>
+                <div className="flex items-center justify-between">
+                  {/* Team 1 */}
+                  <div className="flex flex-col items-center">
+                    <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center mb-2">
+                      <Image src={match.team1.logo} width={40} height={40} alt={match.team1.name} />
+                    </div>
+                    <span className="text-gray-200 text-sm font-medium">{match.team1.name.split(' ')[0]}</span>
                   </div>
                   
-                  <span className="text-gray-200 font-bold text-2xl group-hover:text-white transition-colors duration-300 w-16 text-center">VS</span>
+                  {/* VS */}
+                  <div className="flex flex-col items-center px-2">
+                    <span className="text-gray-300 font-bold text-lg">VS</span>
+                  </div>
                   
-                  <div className="flex flex-col items-center w-40">
-                    <motion.div 
-                      className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mb-3 shadow-lg group-hover:bg-white transition-all duration-300"
-                      whileHover={{ scale: 1.05 }}
-                      transition={{ type: "spring", stiffness: 300, damping: 15 }}
-                    >
-                      <Image src={match.team2.logo} width={55} height={55} alt={match.team2.name} 
-                        className="rounded-full transform transition-transform group-hover:scale-110 duration-300" />
-                    </motion.div>
-                    <span className="text-gray-200 text-sm font-semibold group-hover:text-white transition-colors duration-300 text-center">{match.team2.name}</span>
+                  {/* Team 2 */}
+                  <div className="flex flex-col items-center">
+                    <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center mb-2">
+                      <Image src={match.team2.logo} width={40} height={40} alt={match.team2.name} />
+                    </div>
+                    <span className="text-gray-200 text-sm font-medium">{match.team2.name.split(' ')[0]}</span>
                   </div>
                 </div>
               </motion.div>
             ))}
           </div>
-        </div>
-        {isScrollable && (
-          <div className="relative mt-3 pb-1">
-            <div className="absolute -top-4 left-0 right-0 h-4 bg-gradient-to-t from-gray-800 to-transparent pointer-events-none"></div>
-            <motion.div 
-              className="text-center bg-gradient-to-t from-gray-800/10 to-transparent pt-1 pb-0.5 px-2 rounded-lg"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.8 }}
+          {showScrollIndicator && (
+            <motion.div
+              className="absolute left-1/2 transform -translate-x-1/2 bottom-1 text-white bg-gray-700/50 rounded-full p-1 cursor-pointer hover:bg-gray-600/50 transition-colors z-10"
+              animate={{ y: [0, 5, 0] }}
+              transition={{ repeat: Infinity, duration: 1.5 }}
+              onClick={() => {
+                matchesContainerRef.current?.scrollBy({
+                  top: 100,
+                  behavior: 'smooth'
+                });
+              }}
             >
-              <span className="text-gray-400 text-sm animate-bounce block cursor-default select-none hover:text-gray-300 transition-colors">
-                Scroll for more matches ↓
-              </span>
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+              </svg>
             </motion.div>
-          </div>
-        )}
+          )}
+        </div>
       </motion.div>
-
+      
       {/* Match Prediction */}
       <motion.div 
         className="mt-4 bg-gradient-to-br from-gray-800 to-gray-700 rounded-lg shadow-xl p-4 ring-1 ring-gray-600/50"

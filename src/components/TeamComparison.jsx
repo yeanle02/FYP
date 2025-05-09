@@ -383,7 +383,6 @@ export function TeamComparison() {
                       {/* VS */}
                       <div className="flex flex-col items-center px-2">
                         <span className="text-gray-300 font-bold text-lg">VS</span>
-                        <span className="text-gray-400 text-xs mt-1">7:30 PM</span>
                       </div>
                       
                       {/* Team 2 */}
