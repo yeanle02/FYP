@@ -315,8 +315,8 @@ export function TeamComparison() {
           <div className="lg:col-span-9">
             {/* Upcoming Matches */}
             <div className="bg-gray-800 rounded-xl shadow-xl border border-gray-700 p-4 mb-6">
-              <div className="relative flex items-center mb-4">
-                <h2 className="text-xl font-bold text-white">Today's Matches</h2>
+              <div className="relative flex items-center justify-center w-full mb-4">
+                <h2 className="text-xl font-bold text-white text-center">Today's Matches</h2>
                 <div className="absolute right-0 group">
                   <button
                     className="w-8 h-8 flex items-center justify-center transition-transform duration-200 hover:scale-110 p-1"
@@ -403,10 +403,16 @@ export function TeamComparison() {
             
             {/* Team Comparison Section */}
             <div className="bg-gray-800 rounded-xl shadow-xl border border-gray-700 p-6">
-              <div className="flex justify-between items-center mb-6">
-                <div className="relative flex items-center">
-                  <h2 className="text-xl font-bold text-white">Team Comparison & Prediction</h2>
-                  <div className="ml-3 group">
+              <div className="flex flex-col items-center mb-6 relative">
+                <button 
+                  onClick={() => setSelectedMatch(null)}
+                  className="absolute top-0 left-0 px-3 py-1 text-sm bg-red-600 hover:bg-red-700 text-white rounded-md transition-colors duration-200 flex items-center gap-2"
+                >
+                  <RefreshCw size={16} />
+                  Reset
+                </button>
+                <div className="absolute top-0 right-0">
+                  <div className="group">
                     <button
                       className="w-8 h-8 flex items-center justify-center transition-transform duration-200 hover:scale-110 p-1"
                       aria-label="View comparison information"
@@ -427,10 +433,10 @@ export function TeamComparison() {
                       </svg>
                     </button>
                     <div 
-                      className="absolute mt-2 w-80 bg-gradient-to-br from-white to-gray-50 rounded-lg shadow-xl z-10 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200"
+                      className="absolute right-0 mt-2 w-80 bg-gradient-to-br from-white to-gray-50 rounded-lg shadow-xl z-10 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200"
                     >
                       <div>
-                        <div className="absolute right-full top-0 transform translate-x-2 -translate-y-2">
+                        <div className="absolute right-0 top-0 transform -translate-y-2 translate-x-1/2">
                           <div className="w-3 h-3 bg-gradient-to-br from-white to-gray-50 transform rotate-45 shadow-lg pointer-events-none"></div>
                         </div>
                         <div className="p-4">
@@ -451,13 +457,7 @@ export function TeamComparison() {
                     </div>
                   </div>
                 </div>
-                <button 
-                  onClick={() => setSelectedMatch(null)}
-                  className="bg-gray-700 hover:bg-gray-600 text-gray-200 px-3 py-1 rounded-lg flex items-center gap-2 text-sm transition"
-                >
-                  <RefreshCw size={16} />
-                  Reset
-                </button>
+                <h2 className="text-xl font-bold text-white text-center mt-2">Team Comparison & Prediction</h2>
               </div>
               
               {selectedMatch ? (
@@ -654,8 +654,8 @@ export function TeamComparison() {
                     exit={{ opacity: 0, height: 0 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <div className="relative flex items-center mb-4">
-                      <h2 className="text-xl font-bold text-white">Performance History</h2>
+                    <div className="relative flex items-center justify-center w-full mb-4">
+                      <h2 className="text-xl font-bold text-white text-center">Performance History</h2>
                       <div className="ml-3 group">
                         <button
                           className="w-8 h-8 flex items-center justify-center transition-transform duration-200 hover:scale-110 p-1"
