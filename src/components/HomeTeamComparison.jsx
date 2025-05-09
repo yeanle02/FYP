@@ -397,8 +397,8 @@ export function HomeTeamComparison() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
             >
-              <div className="flex flex-col items-center space-y-2">
-                <span className="text-lg font-semibold text-green-600">
+              <div className="flex flex-col items-center space-y-3">
+                <span className="text-lg font-bold text-green-600">
                   Winner: {prediction.winningTeam}
                 </span>
                 {prediction.match_confidence !== null && (
@@ -408,7 +408,7 @@ export function HomeTeamComparison() {
                     transition={{ delay: 0.4 }}
                   >
                     <div className="flex flex-col items-center gap-2">
-                      <span className="text-md font-medium text-blue-600">
+                      <span className="text-lg font-bold text-blue-600">
                         Prediction Confidence
                       </span>
                       <div className="relative w-48 h-3 bg-gradient-to-r from-gray-200 to-gray-300 rounded-full overflow-hidden shadow-inner">
