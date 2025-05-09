@@ -1,6 +1,7 @@
 "use client";
 import { useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 import { Navbar } from "@/components/Navbar";
 import TeamHeader from "@/components/TeamHeader";
 import TeamInfoCard from "@/components/TeamInfoCard";
@@ -54,7 +55,21 @@ export default function MemberInfoPage() {
     <>
       <motion.main className="min-h-screen bg-gray-100 page-enter">
         <Navbar />
-        <div className="w-full">
+        <div className="w-full relative">
+          <motion.div
+            className="absolute top-4 left-4 z-10"
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+          >
+            <Button
+              onClick={() => window.history.back()}
+              className="rounded-full px-6 py-2 bg-white hover:bg-gray-50 text-gray-700 font-bold shadow-md hover:shadow-lg transition-all duration-200"
+            >
+              <span className="mr-2 text-xl font-black">←</span>
+              Back
+            </Button>
+          </motion.div>
           <TeamHeader teamName={teamInfo.name} homeVenue="SCG" teamLogo={teamInfo.logo} />
         </div>
 
