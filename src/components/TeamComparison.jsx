@@ -234,7 +234,52 @@ export function TeamComparison() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
             >
-            <h3 className="text-xl font-semibold text-white mb-4 text-center">Leaderboard</h3>
+            <div className="relative flex items-center justify-center mb-4">
+              <h3 className="text-xl font-semibold text-white text-center">Leaderboard</h3>
+              <div className="absolute right-0 group">
+                <button
+                  className="w-8 h-8 flex items-center justify-center transition-transform duration-200 hover:scale-110 p-1"
+                  aria-label="View leaderboard information"
+                >
+                  <svg 
+                    xmlns="http://www.w3.org/2000/svg" 
+                    fill="none" 
+                    viewBox="0 0 24 24" 
+                    strokeWidth={2} 
+                    stroke="currentColor" 
+                    className="w-6 h-6 text-white"
+                  >
+                    <path 
+                      strokeLinecap="round" 
+                      strokeLinejoin="round" 
+                      d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" 
+                    />
+                  </svg>
+                </button>
+                <div 
+                  className="absolute right-0 mt-2 w-80 bg-gradient-to-br from-white to-gray-50 rounded-lg shadow-xl z-10 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200"
+                >
+                  <div>
+                    <div className="absolute right-0 top-0 transform -translate-y-2 translate-x-1/2">
+                      <div className="w-3 h-3 bg-gradient-to-br from-white to-gray-50 transform rotate-45 shadow-lg pointer-events-none"></div>
+                    </div>
+                    <div className="p-4">
+                      <div className="text-sm text-gray-600">
+                        <h3 className="font-bold text-gray-800 mb-3 pb-2 border-b border-gray-200">
+                          Leaderboard Information
+                        </h3>
+                        <div className="space-y-2">
+                          <p className="text-gray-700">• Shows top 8 teams ranked by performance</p>
+                          <p className="text-gray-700">• Points are calculated from historical match data</p>
+                          <p className="text-gray-700">• Higher points indicate better overall performance</p>
+                          <p className="text-gray-700">• Rankings update after each match</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
               {leaderBoardResults.sort((a, b) => b.historyPoints - a.historyPoints).slice(0, 8).map((team, index) => {
                 let logoPath = `/teams/${team.name.replace(/\s+/g, '_')}.png`;
                 
@@ -270,7 +315,52 @@ export function TeamComparison() {
           <div className="lg:col-span-9">
             {/* Upcoming Matches */}
             <div className="bg-gray-800 rounded-xl shadow-xl border border-gray-700 p-4 mb-6">
-              <h2 className="text-xl font-bold text-white mb-4">Today's Matches</h2>
+              <div className="relative flex items-center mb-4">
+                <h2 className="text-xl font-bold text-white">Today's Matches</h2>
+                <div className="absolute right-0 group">
+                  <button
+                    className="w-8 h-8 flex items-center justify-center transition-transform duration-200 hover:scale-110 p-1"
+                    aria-label="View matches information"
+                  >
+                    <svg 
+                      xmlns="http://www.w3.org/2000/svg" 
+                      fill="none" 
+                      viewBox="0 0 24 24" 
+                      strokeWidth={2} 
+                      stroke="currentColor" 
+                      className="w-6 h-6 text-white"
+                    >
+                      <path 
+                        strokeLinecap="round" 
+                        strokeLinejoin="round" 
+                        d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" 
+                    />
+                    </svg>
+                  </button>
+                  <div 
+                    className="absolute right-0 mt-2 w-80 bg-gradient-to-br from-white to-gray-50 rounded-lg shadow-xl z-10 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200"
+                  >
+                    <div>
+                      <div className="absolute right-0 top-0 transform -translate-y-2 translate-x-1/2">
+                        <div className="w-3 h-3 bg-gradient-to-br from-white to-gray-50 transform rotate-45 shadow-lg pointer-events-none"></div>
+                      </div>
+                      <div className="p-4">
+                        <div className="text-sm text-gray-600">
+                          <h3 className="font-bold text-gray-800 mb-3 pb-2 border-b border-gray-200">
+                            Match Selection Guide
+                          </h3>
+                          <div className="space-y-2">
+                            <p className="text-gray-700">• Click any match to view detailed comparison</p>
+                            <p className="text-gray-700">• View team logos and scheduled times</p>
+                            <p className="text-gray-700">• Scrollable list shows all today's matches</p>
+                            <p className="text-gray-700">• Selected match will show prediction below</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
               
               <div 
                 ref={matchesContainerRef}
@@ -314,7 +404,53 @@ export function TeamComparison() {
             {/* Team Comparison Section */}
             <div className="bg-gray-800 rounded-xl shadow-xl border border-gray-700 p-6">
               <div className="flex justify-between items-center mb-6">
-                <h2 className="text-xl font-bold text-white">Team Comparison & Prediction</h2>
+                <div className="relative flex items-center">
+                  <h2 className="text-xl font-bold text-white">Team Comparison & Prediction</h2>
+                  <div className="ml-3 group">
+                    <button
+                      className="w-8 h-8 flex items-center justify-center transition-transform duration-200 hover:scale-110 p-1"
+                      aria-label="View comparison information"
+                    >
+                      <svg 
+                        xmlns="http://www.w3.org/2000/svg" 
+                        fill="none" 
+                        viewBox="0 0 24 24" 
+                        strokeWidth={2} 
+                        stroke="currentColor" 
+                        className="w-6 h-6 text-white"
+                      >
+                        <path 
+                          strokeLinecap="round" 
+                          strokeLinejoin="round" 
+                          d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" 
+                        />
+                      </svg>
+                    </button>
+                    <div 
+                      className="absolute mt-2 w-80 bg-gradient-to-br from-white to-gray-50 rounded-lg shadow-xl z-10 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200"
+                    >
+                      <div>
+                        <div className="absolute right-full top-0 transform translate-x-2 -translate-y-2">
+                          <div className="w-3 h-3 bg-gradient-to-br from-white to-gray-50 transform rotate-45 shadow-lg pointer-events-none"></div>
+                        </div>
+                        <div className="p-4">
+                          <div className="text-sm text-gray-600">
+                            <h3 className="font-bold text-gray-800 mb-3 pb-2 border-b border-gray-200">
+                              Team Comparison Guide
+                            </h3>
+                            <div className="space-y-2">
+                              <p className="text-gray-700">• Radar charts show team strengths in 5 key areas</p>
+                              <p className="text-gray-700">• Performance stats are normalized on a 1-10 scale</p>
+                              <p className="text-gray-700">• Predicted scores based on machine learning</p>
+                              <p className="text-gray-700">• Winner prediction shown with score comparison</p>
+                              <p className="text-gray-700">• Reset button clears current comparison</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <button 
                   onClick={() => setSelectedMatch(null)}
                   className="bg-gray-700 hover:bg-gray-600 text-gray-200 px-3 py-1 rounded-lg flex items-center gap-2 text-sm transition"
@@ -518,7 +654,52 @@ export function TeamComparison() {
                     exit={{ opacity: 0, height: 0 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <h2 className="text-xl font-bold mb-4 text-white">Performance History</h2>
+                    <div className="relative flex items-center mb-4">
+                      <h2 className="text-xl font-bold text-white">Performance History</h2>
+                      <div className="ml-3 group">
+                        <button
+                          className="w-8 h-8 flex items-center justify-center transition-transform duration-200 hover:scale-110 p-1"
+                          aria-label="View history information"
+                        >
+                          <svg 
+                            xmlns="http://www.w3.org/2000/svg" 
+                            fill="none" 
+                            viewBox="0 0 24 24" 
+                            strokeWidth={2} 
+                            stroke="currentColor" 
+                            className="w-6 h-6 text-white"
+                          >
+                            <path 
+                              strokeLinecap="round" 
+                              strokeLinejoin="round" 
+                              d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" 
+                            />
+                          </svg>
+                        </button>
+                        <div 
+                          className="absolute mt-2 w-80 bg-gradient-to-br from-white to-gray-50 rounded-lg shadow-xl z-10 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200"
+                        >
+                          <div>
+                            <div className="absolute right-full top-0 transform translate-x-2 -translate-y-2">
+                              <div className="w-3 h-3 bg-gradient-to-br from-white to-gray-50 transform rotate-45 shadow-lg pointer-events-none"></div>
+                            </div>
+                            <div className="p-4">
+                              <div className="text-sm text-gray-600">
+                                <h3 className="font-bold text-gray-800 mb-3 pb-2 border-b border-gray-200">
+                                  Performance History Guide
+                                </h3>
+                                <div className="space-y-2">
+                                  <p className="text-gray-700">• Chart shows historical performance trends</p>
+                                  <p className="text-gray-700">• Compare team performance over time</p>
+                                  <p className="text-gray-700">• Data points show match results</p>
+                                  <p className="text-gray-700">• Hover over points for detailed information</p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                     <div className="w-full" style={{ height: "calc(min(500px, 65vh))" }}>
                       {tpLoading ? (
                         <div className="flex justify-center items-center h-full text-white">Loading performance data...</div>
@@ -550,4 +731,3 @@ export function TeamComparison() {
       </div>
   );
 }
-

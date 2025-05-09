@@ -110,7 +110,52 @@ export function HomeTeamComparison() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          Today's Matches
+          <div className="relative flex items-center justify-center">
+            Today's Matches
+            <div className="absolute right-0 group">
+              <button
+                className="w-8 h-8 flex items-center justify-center transition-transform duration-200 hover:scale-110 p-1"
+                aria-label="View match information"
+              >
+                <svg 
+                  xmlns="http://www.w3.org/2000/svg" 
+                  fill="none" 
+                  viewBox="0 0 24 24" 
+                  strokeWidth={2} 
+                  stroke="currentColor" 
+                  className="w-6 h-6 text-white"
+                >
+                  <path 
+                    strokeLinecap="round" 
+                    strokeLinejoin="round" 
+                    d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" 
+                  />
+                </svg>
+              </button>
+              
+              <div 
+                className="absolute right-0 mt-2 w-80 bg-gradient-to-br from-white to-gray-50 rounded-lg shadow-xl z-10 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200"
+              >
+                <div>
+                  <div className="absolute right-0 top-0 transform -translate-y-2 translate-x-1/2">
+                    <div className="w-3 h-3 bg-gradient-to-br from-white to-gray-50 transform rotate-45 shadow-lg pointer-events-none"></div>
+                  </div>
+                  <div className="p-4">
+                    <div className="text-sm text-gray-600">
+                      <h3 className="font-bold text-gray-800 mb-3 pb-2 border-b border-gray-200">
+                        Match Information Guide
+                      </h3>
+                      <div className="space-y-2">
+                        <p className="text-gray-700">• Click on any match to see the predicted outcome</p>
+                        <p className="text-gray-700">• The match prediction uses advanced machine learning to forecast results</p>
+                        <p className="text-gray-700">• Each match displays team logos and names for easy identification</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </motion.h2>
         <div ref={matchesContainerRef} className="flex-1 overflow-y-auto px-1 pb-2 custom-scrollbar scroll-smooth">
           <div className="flex flex-col gap-2">
@@ -188,7 +233,53 @@ export function HomeTeamComparison() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
         >
-          Match Prediction
+          <div className="relative flex items-center justify-center">
+            Match Prediction
+            <div className="absolute right-0 group">
+              <button
+                className="w-8 h-8 flex items-center justify-center transition-transform duration-200 hover:scale-110 p-1"
+                aria-label="View prediction information"
+              >
+                <svg 
+                  xmlns="http://www.w3.org/2000/svg" 
+                  fill="none" 
+                  viewBox="0 0 24 24" 
+                  strokeWidth={2} 
+                  stroke="currentColor" 
+                  className="w-6 h-6 text-white"
+                >
+                  <path 
+                    strokeLinecap="round" 
+                    strokeLinejoin="round" 
+                    d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" 
+                  />
+                </svg>
+              </button>
+              
+              <div 
+                className="absolute right-0 mt-2 w-80 bg-gradient-to-br from-white to-gray-50 rounded-lg shadow-xl z-10 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200"
+              >
+                <div>
+                  <div className="absolute right-0 top-0 transform -translate-y-2 translate-x-1/2">
+                    <div className="w-3 h-3 bg-gradient-to-br from-white to-gray-50 transform rotate-45 shadow-lg pointer-events-none"></div>
+                  </div>
+                  <div className="p-4">
+                    <div className="text-sm text-gray-600">
+                      <h3 className="font-bold text-gray-800 mb-3 pb-2 border-b border-gray-200">
+                        Prediction Information Guide
+                      </h3>
+                      <div className="space-y-2">
+                        <p className="text-gray-700">• Predicted scores are based on historical performance data</p>
+                        <p className="text-gray-700">• The winning team is highlighted in green</p>
+                        <p className="text-gray-700">• Confidence score indicates prediction reliability percentage</p>
+                        <p className="text-gray-700">• Higher confidence scores suggest more reliable predictions</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </motion.h2>
         <motion.div 
           className="flex justify-center items-center gap-24 mb-6"
