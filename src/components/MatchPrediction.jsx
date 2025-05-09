@@ -67,10 +67,16 @@ export function MatchPrediction() {
       if (team2) selectTeam(team2, 'team2');
 
       predictPageHandler()
-      .then(({ home_score, away_score, winning_team }) => {
+      .then(({ home_score, away_score, winning_team, match_confidence }) => {
+        setPrediction({
+          team1Score: home_score,
+          team2Score: away_score,
+          match_confidence: match_confidence
+        });
         console.log("Home Score:", home_score);
         console.log("Away Score:", away_score);
         console.log("Winning Team:", winning_team);
+        console.log("Match Confidence:", match_confidence);
       })
       .catch(errors => {
         console.error("Error making prediction:", errors);
@@ -278,6 +284,55 @@ export function MatchPrediction() {
                       </motion.div>
                     </motion.div>
                     
+                    {/* Confidence Display */}
+                    {prediction.match_confidence !== undefined && (
+                      <motion.div
+                        className="mb-4 text-center"
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.2 }}
+                      >
+                        <div className="flex flex-col items-center gap-2">
+                          <span className="text-gray-600 font-medium">Prediction Confidence</span>
+                          <div className="relative w-48 h-3 bg-gradient-to-r from-gray-200 to-gray-300 rounded-full overflow-hidden shadow-inner">
+                            <motion.div 
+                              className="absolute left-0 top-0 h-full bg-gradient-to-r from-blue-500 via-blue-400 to-blue-500 rounded-full"
+                              initial={{ width: 0 }}
+                              animate={{ width: `${prediction.match_confidence}%` }}
+                              transition={{ 
+                                duration: 1,
+                                ease: "easeOut",
+                                delay: 0.5
+                              }}
+                            >
+                              <motion.div 
+                                className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-30"
+                                animate={{
+                                  x: ["0%", "200%"]
+                                }}
+                                transition={{
+                                  duration: 1.5,
+                                  repeat: Infinity,
+                                  ease: "linear"
+                                }}
+                              />
+                            </motion.div>
+                          </div>
+                          <motion.span
+                            className="text-lg font-bold text-blue-600"
+                            initial={{ opacity: 0, scale: 0.5 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{
+                              duration: 0.3,
+                              delay: 1
+                            }}
+                          >
+                            {prediction.match_confidence.toFixed(2)}%
+                          </motion.span>
+                        </div>
+                      </motion.div>
+                    )}
+
                     {/* Winner/Draw Display */}
                     {selectedTeams.team1 && selectedTeams.team2 && (
                       <motion.div 

@@ -38,7 +38,7 @@ const placeholderMatches = [
 
 export function HomeTeamComparison() {
   const [selectedMatch, setSelectedMatch] = useState(null);
-  const [prediction, setPrediction] = useState({ team1Score: null, team2Score: null, winningTeam: null, isLoading: false });
+  const [prediction, setPrediction] = useState({ team1Score: null, team2Score: null, winningTeam: null, match_confidence: null, isLoading: false });
   const [isScrollable, setIsScrollable] = useState(false);
   const matchesContainerRef = useRef(null);
 
@@ -78,6 +78,7 @@ export function HomeTeamComparison() {
             team1Score: result.home_score,
             team2Score: result.away_score,
             winningTeam: result.winning_team,
+            match_confidence: result.match_confidence,
             isLoading: false
           });
         }
@@ -338,7 +339,7 @@ export function HomeTeamComparison() {
                   <motion.button
                     onClick={() => {
                       setSelectedMatch(null);
-                      setPrediction({ team1Score: null, team2Score: null, winningTeam: null });
+                      setPrediction({ team1Score: null, team2Score: null, winningTeam: null, match_confidence: null });
                     }}
                     className="px-3 py-1.5 bg-red-600 text-white text-sm rounded-lg hover:bg-red-700 transition-colors duration-200 flex items-center gap-1 group"
                     whileHover={{ scale: 1.05 }}
@@ -396,9 +397,59 @@ export function HomeTeamComparison() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
             >
-              <span className="text-lg font-semibold text-green-600">
-                Winner: {prediction.winningTeam}
-              </span>
+              <div className="flex flex-col items-center space-y-2">
+                <span className="text-lg font-semibold text-green-600">
+                  Winner: {prediction.winningTeam}
+                </span>
+                {prediction.match_confidence !== null && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 5 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4 }}
+                  >
+                    <div className="flex flex-col items-center gap-2">
+                      <span className="text-md font-medium text-blue-600">
+                        Prediction Confidence
+                      </span>
+                      <div className="relative w-48 h-3 bg-gradient-to-r from-gray-200 to-gray-300 rounded-full overflow-hidden shadow-inner">
+                        <motion.div 
+                          className="absolute left-0 top-0 h-full bg-gradient-to-r from-blue-500 via-blue-400 to-blue-500 rounded-full"
+                          initial={{ width: 0 }}
+                          animate={{ width: `${prediction.match_confidence}%` }}
+                          transition={{ 
+                            duration: 1,
+                            ease: "easeOut",
+                            delay: 0.5
+                          }}
+                        >
+                          <motion.div 
+                            className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-30"
+                            animate={{
+                              x: ["0%", "200%"]
+                            }}
+                            transition={{
+                              duration: 1.5,
+                              repeat: Infinity,
+                              ease: "linear"
+                            }}
+                          />
+                        </motion.div>
+                      </div>
+                      <motion.span
+                        className="text-lg font-bold text-blue-600"
+                        initial={{ opacity: 0, scale: 0.5 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{
+                          duration: 0.3,
+                          delay: 1
+                        }}
+                      >
+                        {prediction.match_confidence.toFixed(2)}%
+                      </motion.span>
+                    </div>
+                  </motion.div>
+                )}
+              </div>
             </motion.div>
           )}
         </motion.div>

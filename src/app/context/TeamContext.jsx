@@ -13,7 +13,8 @@ export function TeamProvider({ children }) {
 
   const [prediction, setPrediction] = useState({
     team1Score: null,
-    team2Score: null
+    team2Score: null,
+    match_confidence: null
   });
 
   const selectTeam = (team, position) => {
@@ -45,7 +46,8 @@ export function TeamProvider({ children }) {
     });
     setPrediction({
       team1Score: null,
-      team2Score: null
+      team2Score: null,
+      match_confidence: null
     });
   };
 
