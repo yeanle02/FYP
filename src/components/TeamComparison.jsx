@@ -220,16 +220,14 @@ export function TeamComparison() {
   );
 
   return (
-    <div className="bg-gradient-to-br from-gray-900 to-gray-800 min-h-screen py-8">
+    <div>
       <div className="container mx-auto px-4">
-        <h1 className="text-3xl font-bold text-white text-center mb-8">AFL Team Comparison</h1>
-        
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Leaderboard - Left Sidebar */}
           <div className="lg:col-span-3">
           {/* Leaderboard */}
             <motion.div
-              className="bg-gradient-to-br from-gray-800 to-gray-700 p-4 rounded-lg shadow-xl ring-1 ring-gray-600/50 w-full xl:w-72 h-fit"
+              className="bg-gradient-to-br from-gray-800 to-gray-700 p-4 rounded-lg shadow-xl ring-1 ring-gray-600/50 w-full xl:w-72 h-fit mb-6 lg:mb-0"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
@@ -314,7 +312,7 @@ export function TeamComparison() {
           {/* Main Content Area */}
           <div className="lg:col-span-9">
             {/* Upcoming Matches */}
-            <div className="bg-gray-800 rounded-xl shadow-xl border border-gray-700 p-4 mb-6">
+            <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-xl shadow-xl border border-gray-700 p-4 mb-6">
               <div className="relative flex items-center justify-center w-full mb-4">
                 <h2 className="text-xl font-bold text-white text-center">Today's Matches</h2>
                 <div className="absolute right-0 group">
@@ -402,7 +400,7 @@ export function TeamComparison() {
               </div>
             
             {/* Team Comparison Section */}
-            <div className="bg-gray-800 rounded-xl shadow-xl border border-gray-700 p-6">
+            <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-xl shadow-xl border border-gray-700 p-6">
               <div className="flex flex-col items-center mb-6 relative">
                 <button 
                   onClick={() => setSelectedMatch(null)}
