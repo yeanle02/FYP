@@ -53,9 +53,9 @@ export default function MemberInfoPage() {
 
   return (
     <>
-      <motion.main className="min-h-screen bg-gray-100 page-enter">
+      <motion.main className="min-h-screen bg-gray-100 flex flex-col">
         <Navbar />
-        <div className="w-full relative">
+        <div className="sticky top-0 z-30 bg-gray-100 shadow-sm">
           <motion.div
             className="absolute top-4 left-4 z-10"
             initial={{ opacity: 0, x: -10 }}
