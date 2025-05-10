@@ -294,7 +294,8 @@ export default function TeamComparisonChart({ team1, team2, pointsData, predicti
         
         // Create the plot with error handling
         try {
-          Plotly.newPlot(chartRef.current, data, layout)
+          Plotly.newPlot(chartRef.current, data, layout,{
+            displayModeBar: false})
             .then(() => {
               console.log("Plot successfully rendered");
               setIsLoading(false);
