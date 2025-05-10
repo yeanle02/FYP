@@ -115,7 +115,8 @@ export function TeamComparison() {
         setPrediction({
           team1Score: result.home_score, 
           team2Score: result.away_score,
-          winningTeam: result.winning_team
+          winningTeam: result.winning_team,
+          match_confidence: result.match_confidence
         });
       }
     } catch (error) {
@@ -584,6 +585,18 @@ export function TeamComparison() {
                             {prediction.winningTeam ? prediction.winningTeam.split(' ')[0] : '—'}
                           </div>
                         </div>
+                        {typeof prediction.match_confidence === 'number' && (
+                          <div className="mt-4 w-full flex flex-col items-center">
+                            <span className="text-blue-400 text-sm mb-1">Confidence</span>
+                            <div className="relative w-32 h-3 bg-gray-300 rounded-full overflow-hidden shadow-inner">
+                              <div
+                                className="absolute left-0 top-0 h-full bg-gradient-to-r from-blue-500 via-blue-400 to-blue-500 rounded-full transition-all duration-700"
+                                style={{ width: `${prediction.match_confidence}%` }}
+                              />
+                            </div>
+                            <span className="text-blue-500 font-semibold mt-1">{prediction.match_confidence.toFixed(2)}%</span>
+                          </div>
+                        )}
                       </div>
                       {isLoading && (
                         <div className="absolute inset-0 flex items-center justify-center z-10">

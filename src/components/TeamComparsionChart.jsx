@@ -193,6 +193,32 @@ export default function TeamComparisonChart({ team1, team2, pointsData, predicti
             console.warn(`Invalid prediction value for ${team2}:`, formattedPrediction.team2);
           }
           
+          // Add prediction dot for team 1
+          if (team1Prediction !== null && !isNaN(team1Prediction)) {
+            data.push({
+              x: [nextRound],
+              y: [team1Prediction],
+              type: 'scatter',
+              mode: 'markers',
+              name: `${team1} Prediction Dot`,
+              marker: { size: 14, color: 'rgba(99, 102, 241, 1)', symbol: 'circle' },
+              showlegend: false
+            });
+          }
+          
+          // Add prediction dot for team 2
+          if (team2Prediction !== null && !isNaN(team2Prediction)) {
+            data.push({
+              x: [nextRound],
+              y: [team2Prediction],
+              type: 'scatter',
+              mode: 'markers',
+              name: `${team2} Prediction Dot`,
+              marker: { size: 14, color: 'rgba(239, 68, 68, 1)', symbol: 'circle' },
+              showlegend: false
+            });
+          }
+          
           // Add confidence intervals if available
           if (predictionValue.confidenceInterval) {
             console.log("Processing confidence intervals:", 
