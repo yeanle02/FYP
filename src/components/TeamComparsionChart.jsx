@@ -263,7 +263,7 @@ export default function TeamComparisonChart({ team1, team2, pointsData, predicti
       },
       legend: {
         orientation: 'h',
-        y: -0.2,
+        y: -0.35,
         x: 0.5,
         xanchor: 'center',
         font: {
