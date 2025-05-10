@@ -96,6 +96,8 @@ export function TeamComparison() {
   const { results:leaderBoardResults, handleGetLeaderBoards } = useStatusListHandler();
   const { loading: tpLoading, errors: tpErrors, pointsData, fetchTeamPoints } = useTeamPointsHandler();
 
+  const isLoading = loading || prLoading;
+
   useEffect(() => {
     handleGetLeaderBoards();
   }, []);
@@ -124,35 +126,48 @@ export function TeamComparison() {
   const getRadarData = (team, index = null) => {
     if (results && selectedMatch && index !== null) {
       const teamData = index === 0 ? results.team1Status : results.team2Status;
-      
-      return {
-        labels: ['Attack', 'Defense', 'Speed', 'Teamwork', 'Hustle'],
-        datasets: [{
-            label: teamData.Team || team?.name || 'No Team Selected',
-            data: [
-              teamData.attack_norm || 0, 
-              teamData.defend_norm || 0, 
-              teamData.speed_norm || 0, 
-              teamData.teamwork_norm || 0, 
-              teamData.hustle_norm || 0
-            ],
+      if (!teamData) {
+        // Return default data if teamData is undefined
+        return {
+          labels: ['Attack', 'Defense', 'Speed', 'Teamwork', 'Hustle'],
+          datasets: [{
+            label: team?.name || 'No Team Selected',
+            data: [0, 0, 0, 0, 0],
             backgroundColor: index === 0 ? 'rgba(99, 102, 241, 0.3)' : 'rgba(239, 68, 68, 0.3)',
             borderColor: index === 0 ? 'rgba(99, 102, 241, 1)' : 'rgba(239, 68, 68, 1)',
             borderWidth: 2,
             pointBackgroundColor: index === 0 ? 'rgba(99, 102, 241, 1)' : 'rgba(239, 68, 68, 1)'
+          }]
+        };
+      }
+      return {
+        labels: ['Attack', 'Defense', 'Speed', 'Teamwork', 'Hustle'],
+        datasets: [{
+          label: teamData.Team || team?.name || 'No Team Selected',
+          data: [
+            teamData.attack_norm || 0, 
+            teamData.defend_norm || 0, 
+            teamData.speed_norm || 0, 
+            teamData.teamwork_norm || 0, 
+            teamData.hustle_norm || 0
+          ],
+          backgroundColor: index === 0 ? 'rgba(99, 102, 241, 0.3)' : 'rgba(239, 68, 68, 0.3)',
+          borderColor: index === 0 ? 'rgba(99, 102, 241, 1)' : 'rgba(239, 68, 68, 1)',
+          borderWidth: 2,
+          pointBackgroundColor: index === 0 ? 'rgba(99, 102, 241, 1)' : 'rgba(239, 68, 68, 1)'
         }]
       };
-    } 
-    
+    }
+    // Default fallback
     return {
       labels: ['Attack', 'Defense', 'Speed', 'Teamwork', 'Hustle'],
       datasets: [{
-          label: team?.name || 'No Team Selected',
-          data: [0, 0, 0, 0, 0],
-          backgroundColor: 'rgba(99, 102, 241, 0.3)',
-          borderColor: 'rgba(99, 102, 241, 1)',
-          borderWidth: 2,
-          pointBackgroundColor: 'rgba(99, 102, 241, 1)'
+        label: team?.name || 'No Team Selected',
+        data: [0, 0, 0, 0, 0],
+        backgroundColor: 'rgba(99, 102, 241, 0.3)',
+        borderColor: 'rgba(99, 102, 241, 1)',
+        borderWidth: 2,
+        pointBackgroundColor: 'rgba(99, 102, 241, 1)'
       }]
     };
   };
@@ -471,33 +486,40 @@ export function TeamComparison() {
                       </div>
                       
                       {/* Radar Chart */}
-                      <div className="aspect-square bg-gray-800 rounded-lg flex items-center justify-center mb-4">
-                        {!loading && results && (
-                          <Radar 
-                            data={getRadarData(selectedMatch.team1, 0)} 
-                            options={{
-                              scales: {
-                                r: {
-                                  min: 0,
-                                  max: 10,
-                                  ticks: {  backdropColor: 'transparent', 
-                                    color: '#999',
-                                    max: 10,
+                      <div className="aspect-square bg-gray-800 rounded-lg flex items-center justify-center mb-4 relative">
+                        <div className={`w-full h-full flex items-center justify-center transition-all duration-300 ${isLoading ? 'blur-sm pointer-events-none opacity-60' : ''}`}>
+                          {results && (
+                            <Radar 
+                              data={getRadarData(selectedMatch.team1, 0)} 
+                              options={{
+                                scales: {
+                                  r: {
                                     min: 0,
-                                    stepSize: 2,
-                                    font: {
-                                      size: 18, 
-                                      weight: 'bold'
-                                    } },
-                                  pointLabels: { color: 'rgba(255, 255, 255, 0.9)' },
-                                  grid: { color: 'rgba(255, 255, 255, 0.2)' },
+                                    max: 10,
+                                    ticks: {  backdropColor: 'transparent', 
+                                      color: '#999',
+                                      max: 10,
+                                      min: 0,
+                                      stepSize: 2,
+                                      font: {
+                                        size: 18, 
+                                        weight: 'bold'
+                                      } },
+                                    pointLabels: { color: 'rgba(255, 255, 255, 0.9)' },
+                                    grid: { color: 'rgba(255, 255, 255, 0.2)' },
+                                  }
+                                },
+                                plugins: {
+                                  legend: { display: false }
                                 }
-                              },
-                              plugins: {
-                                legend: { display: false }
-                              }
-                            }}
-                          />
+                              }}
+                            />
+                          )}
+                        </div>
+                        {isLoading && (
+                          <div className="absolute inset-0 flex items-center justify-center z-10">
+                            <div className="w-10 h-10 border-4 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
+                          </div>
                         )}
                       </div>
                       
@@ -540,28 +562,34 @@ export function TeamComparison() {
                     </div>
                     
                     {/* Prediction Center */}
-                    <div className="lg:col-span-1 flex flex-col items-center justify-center">
-                      <div className="bg-gradient-to-b from-gray-600 to-gray-700 p-4 rounded-full h-24 w-24 flex items-center justify-center shadow-lg border border-gray-500">
-                        <div className="text-center">
-                          <div className="text-gray-300 text-xs mb-1">Prediction</div>
-                          <div className="flex items-center gap-2">
-                            <span className={`${prediction.winningTeam === selectedMatch.team1.name ? 'text-green-400' : 'text-gray-300'} font-bold text-xl`}>
-                              {prediction.team1Score || '—'}
-                            </span>
-                            <span className="text-gray-400">-</span>
-                            <span className={`${prediction.winningTeam === selectedMatch.team2.name ? 'text-green-400' : 'text-gray-300'} text-xl`}>
-                              {prediction.team2Score || '—'}
-                            </span>
+                    <div className="lg:col-span-1 flex flex-col items-center justify-center relative">
+                      <div className={`transition-all duration-300 w-full h-full flex flex-col items-center justify-center ${isLoading ? 'blur-sm pointer-events-none opacity-60' : ''}`}> 
+                        <div className="bg-gradient-to-b from-gray-600 to-gray-700 p-4 rounded-full h-24 w-24 flex items-center justify-center shadow-lg border border-gray-500">
+                          <div className="text-center">
+                            <div className="text-gray-300 text-xs mb-1">Prediction</div>
+                            <div className="flex items-center gap-2">
+                              <span className={`${prediction.winningTeam === selectedMatch.team1.name ? 'text-green-400' : 'text-gray-300'} font-bold text-xl`}>
+                                {prediction.team1Score || '—'}
+                              </span>
+                              <span className="text-gray-400">-</span>
+                              <span className={`${prediction.winningTeam === selectedMatch.team2.name ? 'text-green-400' : 'text-gray-300'} text-xl`}>
+                                {prediction.team2Score || '—'}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="mt-4 flex flex-col items-center">
+                          <div className="text-gray-300 text-sm mb-1">Winner</div>
+                          <div className="text-green-400 font-semibold">
+                            {prediction.winningTeam ? prediction.winningTeam.split(' ')[0] : '—'}
                           </div>
                         </div>
                       </div>
-                      
-                      <div className="mt-4 flex flex-col items-center">
-                        <div className="text-gray-300 text-sm mb-1">Winner</div>
-                        <div className="text-green-400 font-semibold">
-                          {prediction.winningTeam ? prediction.winningTeam.split(' ')[0] : '—'}
+                      {isLoading && (
+                        <div className="absolute inset-0 flex items-center justify-center z-10">
+                          <div className="w-10 h-10 border-4 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
                         </div>
-                      </div>
+                      )}
                     </div>
                     
                     {/* Team 2 Stats */}
@@ -574,35 +602,42 @@ export function TeamComparison() {
                       </div>
                       
                       {/* Radar Chart */}
-                      <div className="aspect-square bg-gray-800 rounded-lg flex items-center justify-center mb-4">
-                        {!loading && results && (
-                          <Radar 
-                            data={getRadarData(selectedMatch.team2, 1)} 
-                            options={{
-                              scales: {
-                                r: {
-                                  min: 0,
-                                  max: 10,
-                                  ticks: { backdropColor: 'transparent', 
-                                    color: '#999',
-                                    max: 10,
+                      <div className="aspect-square bg-gray-800 rounded-lg flex items-center justify-center mb-4 relative">
+                        <div className={`w-full h-full flex items-center justify-center transition-all duration-300 ${isLoading ? 'blur-sm pointer-events-none opacity-60' : ''}`}>
+                          {results && (
+                            <Radar 
+                              data={getRadarData(selectedMatch.team2, 1)} 
+                              options={{
+                                scales: {
+                                  r: {
                                     min: 0,
-                                    stepSize: 2,
-                                    font: {
-                                      size: 18,
-                                      weight: 'bold' 
-                                    }},
-                                  pointLabels: { color: 'rgba(255, 255, 255, 0.9)' },
-                                  grid: { color: 'rgba(255, 255, 255, 0.2)' },
+                                    max: 10,
+                                    ticks: { backdropColor: 'transparent', 
+                                      color: '#999',
+                                      max: 10,
+                                      min: 0,
+                                      stepSize: 2,
+                                      font: {
+                                        size: 18,
+                                        weight: 'bold' 
+                                      }},
+                                    pointLabels: { color: 'rgba(255, 255, 255, 0.9)' },
+                                    grid: { color: 'rgba(255, 255, 255, 0.2)' },
+                                  }
+                                },
+                                plugins: {
+                                  legend: { display: false }
                                 }
-                              },
-                              plugins: {
-                                legend: { display: false }
-                              }
-                            }}
-                          />
-                  )}
-                </div>
+                              }}
+                            />
+                          )}
+                        </div>
+                        {isLoading && (
+                          <div className="absolute inset-0 flex items-center justify-center z-10">
+                            <div className="w-10 h-10 border-4 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
+                          </div>
+                        )}
+                      </div>
 
                       {/* Stats Display */}
                       <div className="bg-gray-800/60 rounded-lg p-3">

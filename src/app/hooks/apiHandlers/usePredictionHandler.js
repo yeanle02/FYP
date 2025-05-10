@@ -55,9 +55,10 @@ export default function usePredictionHandler() {
               // ,confidence: result.confidence
             });
           }
-          
+          setLoading(false);
           return result;
         } catch (error) {
+          setLoading(false);
           console.error("Frontend: Error ", error);
           return null;
         }
