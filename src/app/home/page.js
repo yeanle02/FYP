@@ -11,9 +11,13 @@ export default function Home() {
       <div className="transition-all duration-500">
         <Navbar />
         <ReadButton />
-        <div className="flex justify-center mb-6 mt-4">
-          <div className="bg-gradient-to-r from-gray-900 to-gray-700 px-8 py-2 rounded-md shadow-lg">
-            <h1 className="text-white text-xl font-semibold">Home Dashboard</h1>
+        <div className="flex flex-col items-center mb-0 mt-6">
+          <h1 className="text-4xl font-bold text-gray-800 relative group cursor-default">
+            Home Dashboard
+            <span className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-blue-600 to-purple-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></span>
+          </h1>
+          <div className="mt-2 text-gray-500 text-sm tracking-wider animate-fade-in opacity-0" style={{ animationDelay: '0.3s', animationFillMode: 'forwards' }}>
+            AFL Team Analytics & Insights
           </div>
         </div>
         <div className="container mx-auto px-4 py-1">
@@ -24,7 +28,7 @@ export default function Home() {
             </div>
 
             {/* Main Section - Today's Matches */}
-            <div className="lg:col-span-2">
+            <div className="lg:col-span-2 flex flex-col h-full">
               <HomeTeamComparison />
             </div>
           </div>

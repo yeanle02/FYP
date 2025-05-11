@@ -105,6 +105,10 @@
     animation: winnerGlow 2s ease-in-out infinite;
   }
 
+  .animate-gradient-x {
+    animation: gradient-x 15s linear infinite;
+  }
+
   .match-box-3d {
     transform-style: preserve-3d;
     perspective: 1500px;
@@ -205,6 +209,15 @@
     box-shadow: 
       0 0 25px rgba(255, 255, 255, 0.3),
       0 0 50px rgba(96, 165, 250, 0.3);
+  }
+}
+
+@keyframes gradient-x {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
   }
 }
 

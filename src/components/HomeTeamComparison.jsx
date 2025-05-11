@@ -96,7 +96,7 @@ export function HomeTeamComparison() {
 
   return (
     <motion.div 
-      className="flex-1 w-full"
+      className="flex-1 w-full flex flex-col h-full"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
@@ -221,7 +221,7 @@ export function HomeTeamComparison() {
       
       {/* Match Prediction */}
       <motion.div 
-        className="mt-4 bg-gradient-to-br from-gray-800 to-gray-700 rounded-lg shadow-xl p-4 ring-1 ring-gray-600/50"
+        className="mt-4 bg-gradient-to-br from-gray-800 to-gray-700 rounded-lg shadow-xl p-4 ring-1 ring-gray-600/50 flex-1 flex flex-col"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.3 }}
@@ -380,7 +380,7 @@ export function HomeTeamComparison() {
         </motion.div>
 
         <motion.div 
-          className="bg-gray-200 rounded-lg p-4 relative"
+          className="bg-gray-200 rounded-lg p-8 relative flex flex-col flex-1 justify-center"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.6 }}
@@ -470,7 +470,7 @@ export function HomeTeamComparison() {
 
           {prediction.team1Score === null && !prediction.isLoading && (
             <motion.div 
-              className="text-center mt-2"
+              className="text-center mt-6 mb-6"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
             >
