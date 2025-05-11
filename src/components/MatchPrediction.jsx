@@ -4,48 +4,12 @@ import { useState } from 'react';
 import usePredictionHandler from '@/app/hooks/apiHandlers/usePredictionHandler';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const mockMatches = [
-  {
-    team1: { name: 'Collingwood', logo: '/teams/Collingwood_Magpies.png' },
-    team2: { name: 'Carlton', logo: '/teams/Carlton.svg' },
-    time: '2:30 PM'
-  },
-  {
-    team1: { name: 'Brisbane Lions', logo: '/teams/Brisbane_Lions.png' },
-    team2: { name: 'Melbourne', logo: '/teams/Melbourne_Demons.png' },
-    time: '4:45 PM'
-  },
-  {
-    team1: { name: 'Sydney Swans', logo: '/teams/Sydney_Swans.png' },
-    team2: { name: 'Western Bulldogs', logo: '/teams/Western_Bulldogs.png' },
-    time: '7:15 PM'
-  },
-  {
-    team1: { name: 'Western Bulldogs', logo: '/teams/Western_Bulldogs.png' },
-    team2: { name: 'Collingwood', logo: '/teams/Collingwood_Magpies.png' },
-    time: '1:45 PM'
-  },
-  {
-    team1: { name: 'Carlton', logo: '/teams/Carlton.svg' },
-    team2: { name: 'Brisbane Lions', logo: '/teams/Brisbane_Lions.png' },
-    time: '3:30 PM'
-  },
-  {
-    team1: { name: 'Melbourne', logo: '/teams/Melbourne_Demons.png' },
-    team2: { name: 'Sydney Swans', logo: '/teams/Sydney_Swans.png' },
-    time: '5:15 PM'
-  }
-];
-
 export function MatchPrediction() {
   const { teams, selectedTeams, prediction, selectTeam, resetPrediction } = useTeams();
   const [selectedMatch, setSelectedMatch] = useState(null);
   const [animatingLogos, setAnimatingLogos] = useState(false);
 
   const {
-    loading,
-    errors,
-    results,
     setHomeTeam,
     setAwayTeam,
     predictPageHandler
