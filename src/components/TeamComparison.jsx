@@ -74,7 +74,17 @@ export function TeamComparison() {
   const [prediction, setPrediction] = useState({ team1Score: null, team2Score: null, winningTeam: null });
   const [isScrollable, setIsScrollable] = useState(false);
   const matchesContainerRef = useRef(null);
-  // const [showPerformanceChart, setShowPerformanceChart] = useState(false);
+  const comparisonContainerRef = useRef(null);
+  const [showScrollIndicator, setShowScrollIndicator] = useState(false);
+  
+  const handleScrollClick = () => {
+    if (comparisonContainerRef.current) {
+      comparisonContainerRef.current.scrollTo({
+        top: comparisonContainerRef.current.scrollHeight,
+        behavior: 'smooth'
+      });
+    }
+  };
 
 
 
@@ -415,7 +425,17 @@ export function TeamComparison() {
               </div>
             
             {/* Team Comparison Section */}
-            <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-xl shadow-xl border border-gray-700 p-6">
+            <div 
+              ref={comparisonContainerRef}
+              className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-xl shadow-xl border border-gray-700 p-6 max-h-[80vh] overflow-y-auto custom-scrollbar scroll-smooth relative"
+              onScroll={(e) => {
+                const element = e.currentTarget;
+                setShowScrollIndicator(
+                  element.scrollHeight > element.clientHeight &&
+                  element.scrollTop < element.scrollHeight - element.clientHeight
+                );
+              }}
+            >
               <div className="flex flex-col items-center mb-6 relative">
                 <button 
                   onClick={() => setSelectedMatch(null)}
@@ -770,6 +790,29 @@ export function TeamComparison() {
                               </div>
                 )}
               </div>
+              {showScrollIndicator && (
+                <div 
+                  className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-50 cursor-pointer"
+                  onClick={handleScrollClick}
+                >
+                  <div className="p-2 bg-blue-500 rounded-full shadow-lg animate-[bounce_1s_infinite]">
+                    <svg 
+                      xmlns="http://www.w3.org/2000/svg" 
+                      className="h-6 w-6 text-white" 
+                      fill="none" 
+                      viewBox="0 0 24 24" 
+                      stroke="currentColor"
+                    >
+                      <path 
+                        strokeLinecap="round" 
+                        strokeLinejoin="round" 
+                        strokeWidth={2} 
+                        d="M19 14l-7 7m0 0l-7-7m7 7V3" 
+                      />
+                    </svg>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
