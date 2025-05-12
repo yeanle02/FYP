@@ -52,36 +52,33 @@ export default function AboutPage() {
           </div>
         </div>
 
-        <div className="mb-20 bg-gray-800/50 p-8 rounded-lg backdrop-blur-sm animate-card-glow">
-          <h2 className="text-3xl font-semibold text-blue-100 text-center mb-8">Meet Our Team</h2>
-          <div className="flex flex-col items-center">
-            <div className="w-full max-w-3xl h-[400px] relative mb-8 rounded-lg overflow-hidden">
-              <div className="w-full h-full flex items-center justify-center bg-gray-900 text-gray-400">
-                {/* Placeholder until team photo is provided */}
-                <p className="text-lg">We Dont Have One</p>
-              </div>
+        <div className="mb-20 bg-gray-800/50 p-8 rounded-lg backdrop-blur-sm">
+          <h2 className="text-3xl font-semibold text-blue-100 text-center mb-8">Our Team Members</h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+            <div className="bg-gray-900/50 p-6 rounded-xl backdrop-blur-sm border border-gray-700/30 hover:border-blue-500/30 transition-colors duration-300">
+              <h3 className="text-xl font-semibold text-blue-100 mb-2">Ekram</h3>
+              
+              <p className="text-gray-400">Team Member</p>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 text-center">
-              <div className="p-4">
-                <h3 className="text-lg font-semibold text-blue-100">Ekram</h3>
-                <p className="text-gray-300">Team Member</p>
-              </div>
-              <div className="p-4">
-                <h3 className="text-lg font-semibold text-blue-100">Yeanle</h3>
-                <p className="text-gray-300">Team Member</p>
-              </div>
-              <div className="p-4">
-                <h3 className="text-lg font-semibold text-blue-100">Kiyu</h3>
-                <p className="text-gray-300">Team Member</p>
-              </div>
-              <div className="p-4">
-                <h3 className="text-lg font-semibold text-blue-100">Kaixin</h3>
-                <p className="text-gray-300">Team Member</p>
-              </div>
-              <div className="p-4">
-                <h3 className="text-lg font-semibold text-blue-100">Weiyuan</h3>
-                <p className="text-gray-300">Team Member</p>
-              </div>
+            <div className="bg-gray-900/50 p-6 rounded-xl backdrop-blur-sm border border-gray-700/30 hover:border-blue-500/30 transition-colors duration-300">
+              <h3 className="text-xl font-semibold text-blue-100 mb-2">Yeanle</h3>
+            
+              <p className="text-gray-400">Team Member</p>
+            </div>
+            <div className="bg-gray-900/50 p-6 rounded-xl backdrop-blur-sm border border-gray-700/30 hover:border-blue-500/30 transition-colors duration-300">
+              <h3 className="text-xl font-semibold text-blue-100 mb-2">Kiyu</h3>
+              <p className="text-gray-400">Team Member</p>
+          
+            </div>
+            <div className="bg-gray-900/50 p-6 rounded-xl backdrop-blur-sm border border-gray-700/30 hover:border-blue-500/30 transition-colors duration-300">
+              <h3 className="text-xl font-semibold text-blue-100 mb-2">Kaixin</h3>
+              <p className="text-gray-400">Team Member</p>
+            
+            </div>
+            <div className="bg-gray-900/50 p-6 rounded-xl backdrop-blur-sm border border-gray-700/30 hover:border-blue-500/30 transition-colors duration-300">
+              <h3 className="text-xl font-semibold text-blue-100 mb-2">Weiyuan</h3>
+              <p className="text-gray-400">Team Member</p>
+           
             </div>
           </div>
         </div>
