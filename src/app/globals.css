@@ -2,6 +2,49 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  @keyframes send-button {
+    0% {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+    40% {
+      transform: translateY(-100px) scale(0.8);
+      opacity: 0.8;
+    }
+    60% {
+      transform: translateY(-80px) translateX(100px) scale(0.6);
+      opacity: 0.6;
+    }
+    100% {
+      transform: translateY(-130px) translateX(-100px) scale(0.2);
+      opacity: 0;
+    }
+  }
+
+  .animate-send {
+    animation: send-button 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    transform-origin: center;
+    will-change: transform, opacity;
+  }
+
+  @keyframes subtle-glow {
+    0% {
+      box-shadow: 0 0 15px rgba(147,197,253,0.1);
+    }
+    50% {
+      box-shadow: 0 0 20px rgba(147,197,253,0.15);
+    }
+    100% {
+      box-shadow: 0 0 15px rgba(147,197,253,0.1);
+    }
+  }
+  
+  .animate-card-glow {
+    animation: subtle-glow 3s ease-in-out infinite;
+  }
+}
+
 @keyframes marquee {
   0% {
     transform: translateX(0);

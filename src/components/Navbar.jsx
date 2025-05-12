@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
-import { Home, LineChart, Users } from "lucide-react";
+import { Home, LineChart, Users, Info } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useTeams } from "@/app/context/TeamContext";
 import { useState, useEffect } from 'react';
@@ -121,6 +121,18 @@ export function Navbar() {
                 >
                   <Users className="h-5 w-5" />
                   Teams
+                </Button>
+              </Link>
+              <Link href="/about">
+                <Button 
+                  variant={pathname === "/about" ? "default" : "secondary"} 
+                  size="default"
+                  className={`flex items-center gap-3 px-6 py-2.5 text-base font-medium transition-all duration-300 ${
+                    pathname === "/about" ? "shadow-lg shadow-blue-500/50 hover:shadow-blue-500/75" : "hover:shadow-lg hover:shadow-gray-500/50"
+                  }`}
+                >
+                  <Info className="h-5 w-5" />
+                  About Us
                 </Button>
               </Link>
             </div>
