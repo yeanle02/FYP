@@ -2,10 +2,20 @@
 
 import Image from "next/image";
 import { useState, useRef } from "react";
+import { useRouter } from "next/navigation";
 
 export default function AboutPage() {
+  const router = useRouter();
+  
   return (
     <div className="min-h-screen bg-black text-white">
+      <button
+        onClick={() => router.back()}
+        className="fixed top-24 left-6 px-6 py-3 bg-gray-800/40 backdrop-blur-sm hover:bg-gray-700/60 text-white rounded-xl transition-all duration-300 flex items-center space-x-2 border border-gray-600/30 shadow-lg hover:shadow-blue-500/20 group"
+      >
+        <span className="text-xl transform group-hover:-translate-x-1 transition-transform duration-300">←</span>
+        <span className="font-medium tracking-wide">Back</span>
+      </button>
       <div className="container mx-auto px-4 py-16">
         <div className="text-center mb-16">
           <h1 className="text-5xl font-bold mb-6 bg-gradient-to-r from-blue-100 to-white bg-clip-text text-transparent">
