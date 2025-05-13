@@ -259,7 +259,7 @@ export function TeamComparison() {
               transition={{ duration: 0.5 }}
             >
             <div className="relative flex items-center justify-center mb-4">
-              <h3 className="text-xl font-semibold text-white text-center">Leaderboard</h3>
+              <h3 className="text-xl font-semibold text-white text-center">Team Rankings</h3>
               <div className="absolute right-0 group">
                 <button
                   className="w-8 h-8 flex items-center justify-center transition-transform duration-200 hover:scale-110 p-1"

@@ -42,7 +42,7 @@ export function TeamStats() {
       <div className="p-4 bg-gradient-to-r from-gray-300 to-gray-200 rounded-lg shadow-md">
         <div className="relative flex items-center mb-4">
           <h2 className="text-2xl font-bold text-gray-700 w-full text-center">
-            Team Rankings
+            Team Statistics
           </h2>
           <div className="absolute right-0 group">
             <button
