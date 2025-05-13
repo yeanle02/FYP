@@ -56,7 +56,7 @@ export function Navbar() {
               <Image src="/afl_logo.png" alt="AFL Logo" width={100} height={200} className="h-[90px] w-auto cursor-pointer hover:scale-105 transition-transform duration-300" />
             </Link>
             <h1 className="text-3xl font-extrabold tracking-wider bg-gradient-to-r from-blue-200 to-white bg-clip-text text-transparent drop-shadow-[0_2px_2px_rgba(0,0,0,0.3)] hover:scale-105 hover:from-blue-300 hover:to-blue-100 transition-all duration-300">
-              No Gambling Pls
+              AFL System
             </h1>
           </div>
 
